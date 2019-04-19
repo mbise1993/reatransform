@@ -1,6 +1,6 @@
 import { readTestResource } from './util';
 import { adjustTempo } from '../transform/transformFunctions';
-import { rppToObject } from '../project/rppConverter';
+import { rppToElement } from '../project/rppConverter';
 
 it('adjusts the tempo of a single project', () => {
   validateAdjustTempo([
@@ -36,7 +36,7 @@ type TempoTestData = {
 const validateAdjustTempo = async (testData: TempoTestData[]) => {
   const projectPromises = testData.map(async item => {
     const content = readTestResource(`${item.fileName}`);
-    const data = await rppToObject(content);
+    const data = await rppToElement(content);
     return {
       name: item.fileName,
       data: data

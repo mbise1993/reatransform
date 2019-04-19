@@ -1,11 +1,24 @@
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 
-import { rppToObject, objectToRpp } from './rppConverter';
+import { rppToElement, elementToRpp } from './rppConverter';
+
+export interface IRppProperty {
+  name: string;
+  attributes: Array<string | number>;
+}
+
+export interface IRppElement {
+  name: string;
+  attributes: Array<string | number>;
+  properties: Array<IRppProperty>;
+  elements: Array<IRppElement>;
+  data?: string;
+}
 
 export interface IRppData {
   name: string;
-  data: any;
+  rootElement: IRppElement;
 }
 
 let currentId = 1;
@@ -35,7 +48,7 @@ export class RppProject {
     if (this._data === null) {
       this._data = {
         name: this._name,
-        data: await rppToObject(this._content)
+        rootElement: await rppToElement(this._content)
       };
     }
 
@@ -80,7 +93,7 @@ const readFile = async (file: File) => {
 export const saveProjects = async (projects: IRppData[]) => {
   let zip = new JSZip();
   for (const proj of projects) {
-    const content = await objectToRpp(proj.data);
+    const content = await elementToRpp(proj.rootElement);
     zip.file(getName(proj), content);
   }
 

@@ -1,16 +1,16 @@
 import { readTestResource } from './util';
-import { rppToObject } from '../project/rppConverter';
+import { rppToElement } from '../project/rppConverter';
 
 it('can convert EmptyProject.rpp to object', async () => {
   const content = readTestResource('EmptyProject.rpp');
-  const root = await rppToObject(content);
+  const root = await rppToElement(content);
 
   validateReaperProject(root, 8);
 });
 
 it('can convert OneEmptyTrack.rpp to object', async () => {
   const content = readTestResource('OneEmptyTrack.rpp');
-  const root = await rppToObject(content);
+  const root = await rppToElement(content);
 
   validateReaperProject(root, 9);
 
@@ -20,7 +20,7 @@ it('can convert OneEmptyTrack.rpp to object', async () => {
 
 it('can convert OneTrackWithMidiData.rpp to object', async () => {
   const content = readTestResource('OneTrackWithMidiData.rpp');
-  const root = await rppToObject(content);
+  const root = await rppToElement(content);
 
   validateReaperProject(root, 9);
 
@@ -33,7 +33,7 @@ it('can convert OneTrackWithMidiData.rpp to object', async () => {
 
 it('can convert OneTrackWithOneVst.rpp to object', async () => {
   const content = readTestResource('OneTrackWithOneVst.rpp');
-  const root = await rppToObject(content);
+  const root = await rppToElement(content);
 
   validateReaperProject(root, 9);
 

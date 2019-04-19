@@ -1,14 +1,16 @@
-export const rppToObject = async (content: string) => {
+import { IRppElement, IRppProperty } from '../project/rppProject';
+
+export const rppToElement = async (content: string) => {
   return await new Promise<any>((resolve, reject) => {
     try {
-      resolve(_rppToObject(content));
+      resolve(_rppToElement(content));
     } catch (e) {
       reject(e);
     }
   });
 };
 
-const _rppToObject = (content: string) => {
+const _rppToElement = (content: string) => {
   let lines = content.split('\n').map(l => l.trim());
   let lineNum = 0;
 
@@ -26,7 +28,7 @@ const _rppToObject = (content: string) => {
     return {
       name: tokens[0],
       attributes: tokens.slice(1).map(tok => getValue(tok))
-    };
+    } as IRppProperty;
   };
 
   const readElement = () => {
@@ -34,7 +36,7 @@ const _rppToObject = (content: string) => {
     assert(line.charAt(0) === '<', `Error at line ${lineNum}: expected element`);
 
     const tokens = line.substring(1).split(' ');
-    const element: any = {
+    const element: IRppElement = {
       name: tokens[0],
       attributes: tokens.slice(1).map(tok => getValue(tok)),
       properties: [],
@@ -70,17 +72,17 @@ const _rppToObject = (content: string) => {
   return readElement();
 };
 
-export const objectToRpp = async (obj: any) => {
+export const elementToRpp = async (element: IRppElement) => {
   return new Promise<string>((resolve, reject) => {
     try {
-      resolve(_objectToRpp(obj));
+      resolve(_elementToRpp(element));
     } catch (e) {
       reject(e);
     }
   });
 };
 
-const _objectToRpp = (obj: any): string => {
+const _elementToRpp = (element: IRppElement): string => {
   let lines: string[] = [];
   let indent = 0;
 
@@ -103,7 +105,7 @@ const _objectToRpp = (obj: any): string => {
     lines.push(`${' '.repeat(indent)}>`);
   };
 
-  writeElement(obj);
+  writeElement(element);
   return lines.join('\n');
 };
 
