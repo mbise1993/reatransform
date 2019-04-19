@@ -10,13 +10,17 @@ import colors from './colors';
 
 export default () => {
   const [projects, setProjects] = React.useState<RppProject[]>([]);
-  const [selectedProject, setSelectedProject] = React.useState<RppProject>(null);
-  const [sourceProject, setSourceProject] = React.useState<RppProject>(null);
+  const [selectedProject, setSelectedProject] = React.useState<RppProject | null>(null);
+  const [sourceProject, setSourceProject] = React.useState<RppProject | null>(null);
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
   const [projectJson, setProjectJson] = React.useState('');
 
   const handleTransformClick = async () => {
+    if (sourceProject === null) {
+      return;
+    }
+
     try {
       const source = await sourceProject.getData();
       const othersPromise = projects
@@ -37,6 +41,10 @@ export default () => {
     }
 
     const importedProjects = await importProjects(files);
+    if (!importedProjects) {
+      return;
+    }
+
     if (!selectedProject) {
       setSelectedProject(importedProjects[0]);
       updateProjectJson(importedProjects[0]);
@@ -73,8 +81,10 @@ export default () => {
 
   const handleScriptChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedScript = allScripts.find(s => s.name === e.target.value);
-    setScript(selectedScript);
-    setScriptText(selectedScript.script);
+    if (selectedScript) {
+      setScript(selectedScript);
+      setScriptText(selectedScript.script);
+    }
   };
 
   const handleScriptTextChange = (text: string) => {
@@ -111,8 +121,8 @@ export default () => {
       <FlexRow>
         <ProjectsView
           projects={projects}
-          selectedProject={selectedProject}
-          sourceProject={sourceProject}
+          selectedProject={selectedProject!}
+          sourceProject={sourceProject!}
           onFileImport={files => handleFileImport(files)}
           onProjectClick={project => handleProjectClick(project)}
           onSetSourceClick={project => handleSetSourceClick(project)}

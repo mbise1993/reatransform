@@ -5,24 +5,24 @@ import { FlexColumn, FlexRow, FlexDiv } from './Layout';
 
 const borderRadius = '4px';
 
-const PanelRoot = styled(FlexColumn)`
-  border-color: ${(props: any) => props.borderColor};
+const PanelRoot = styled(FlexColumn)<{ borderColor: string, flexBasis: string }>`
+  border-color: ${props => props.borderColor};
   border-radius: ${borderRadius};
-  flex-basis: ${(props: any) => props.flexBasis};
+  flex-basis: ${props => props.flexBasis};
   border-style: solid;
   border-width: 1px;
   margin: 4px;
   flex-shrink: 0;
 `;
 
-const Header = styled(FlexRow)`
-  background-color: ${(props: any) => props.backgroundColor};
+const Header = styled(FlexRow)<{ justifyContent: string, backgroundColor: string }>`
+  background-color: ${props => props.backgroundColor};
   border-top-left-radius: ${borderRadius};
   border-top-right-radius: ${borderRadius};
   padding: 8px;
 `;
 
-const Body = styled(FlexDiv)`
+const Body = styled(FlexDiv)<{ backgroundColor: string }>`
   background-color: ${(props: any) => props.backgroundColor};
 `;
 
@@ -45,7 +45,7 @@ export const Panel = ({
   children
 }: IPanelProps) => {
   return (
-    <PanelRoot borderColor={borderColor} flexBasis={flexBasis}>
+    <PanelRoot borderColor={borderColor} flexBasis={flexBasis || 'auto'}>
       <Header justifyContent="space-between" backgroundColor={headerBackgroundColor}>
         {renderHeaderLeft()}
         {renderHeaderRight && renderHeaderRight()}

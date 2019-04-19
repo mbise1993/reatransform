@@ -35,7 +35,7 @@ interface IButtonProps extends React.PropsWithChildren<{}> {
 
 export const Button = ({ tooltip, style, onClick, children }: IButtonProps) => {
   return (
-    <StyledButton title={tooltip} style={style} onClick={e => onClick(e)}>
+    <StyledButton title={tooltip} style={style} onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => onClick(e)}>
       {children}
     </StyledButton>
   );

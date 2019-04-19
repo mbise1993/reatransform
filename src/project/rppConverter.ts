@@ -92,8 +92,8 @@ const _objectToRpp = (obj: any): string => {
     lines.push(`${' '.repeat(indent)}<${el.name} ${el.attributes.join(' ')}`);
     indent += 2;
 
-    el.properties.forEach(prop => writeProperty(prop));
-    el.elements.forEach(e => writeElement(e));
+    el.properties.forEach((prop: any) => writeProperty(prop));
+    el.elements.forEach((e: any) => writeElement(e));
 
     if (el.data) {
       lines.push(`${' '.repeat(indent)}${el.data}`);

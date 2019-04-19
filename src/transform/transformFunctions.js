@@ -1,7 +1,3 @@
-const getBodyText = func => {
-  return func.slice(func.indexOf('{') + 1, func.lastIndexOf('}'));
-};
-
 export function adjustTempo(allProjects) {
   // Adjustment amount
   const modifier = 1.5;

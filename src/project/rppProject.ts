@@ -12,7 +12,7 @@ let currentId = 1;
 
 export class RppProject {
   private _id: number;
-  private _data: IRppData;
+  private _data: IRppData | null = null;
 
   constructor(private _name: string, private _content: string) {
     this._id = currentId;
@@ -32,14 +32,14 @@ export class RppProject {
   }
 
   async getData() {
-    if (!this._data) {
+    if (this._data === null) {
       this._data = {
         name: this._name,
         data: await rppToObject(this._content)
       };
     }
 
-    return this._data;
+    return this._data!;
   }
 }
 

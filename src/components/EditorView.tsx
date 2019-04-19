@@ -17,7 +17,6 @@ export default ({ text, isEditable, height, onTextChange }: IEditorViewProps) =>
     <AceEditor
       mode="javascript"
       theme="github"
-      placeholder="Enter Javascript code"
       editorProps={{
         $blockScrolling: Infinity
       }}

@@ -24,10 +24,12 @@ export default ({
   onDeleteClick
 }: IProjectsViewProps) => {
   const renderHeaderRight = () => {
+    let importFileInput: HTMLInputElement;
+
     return (
       <FlexSpan>
         <input
-          ref={ref => (importFileInput = ref)}
+          ref={ref => (importFileInput = ref!)}
           multiple
           type="file"
           id="import-file-input"
@@ -35,7 +37,7 @@ export default ({
           style={{ display: 'none' }}
           onChange={e => onFileImport(e.target.files)}
         />
-        <Button tooltip="Import project" onClick={() => importFileInput.click()}>
+        <Button tooltip="Import project" onClick={() => importFileInput!.click()}>
           <PlusSquare size={20} />
         </Button>
       </FlexSpan>
@@ -76,8 +78,6 @@ export default ({
       </FlexSpan>
     );
   };
-
-  let importFileInput: HTMLInputElement;
 
   return (
     <Panel
