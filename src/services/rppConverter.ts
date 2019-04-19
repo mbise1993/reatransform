@@ -12,6 +12,10 @@ const _rppToObject = (content: string) => {
   let lines = content.split('\n').map(l => l.trim());
   let lineNum = 0;
 
+  const getValue = (data: any) => {
+    return isNaN(data) ? data : +data;
+  };
+
   const readProperty = () => {
     const tokens = lines[lineNum].split(' ');
     assert(
@@ -21,7 +25,7 @@ const _rppToObject = (content: string) => {
 
     return {
       name: tokens[0],
-      attributes: tokens.slice(1)
+      attributes: tokens.slice(1).map(tok => getValue(tok))
     };
   };
 
@@ -32,7 +36,7 @@ const _rppToObject = (content: string) => {
     const tokens = line.substring(1).split(' ');
     const element: any = {
       name: tokens[0],
-      attributes: tokens.slice(1),
+      attributes: tokens.slice(1).map(tok => getValue(tok)),
       properties: [],
       elements: []
     };

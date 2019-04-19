@@ -4,9 +4,10 @@ import Header from './Header';
 import ProjectsView from './ProjectsView';
 import EditorView from './EditorView';
 import { FlexColumn, FlexRow, Panel, Select } from './base';
-import { RppProject, scripts } from '../models';
+import { RppProject } from '../models';
 import { saveProjects } from '../services/saveProjects';
 import { runTransformScript } from '../services/transform';
+import { allScripts } from '../transform/transformScript';
 import colors from './colors';
 
 interface IAppProps {
@@ -17,8 +18,8 @@ export default ({ importProjects }: IAppProps) => {
   const [projects, setProjects] = React.useState(new Array<RppProject>());
   const [selectedProject, setSelectedProject] = React.useState(null as RppProject);
   const [sourceProject, setSourceProject] = React.useState(null as RppProject);
-  const [script, setScript] = React.useState(scripts[0]);
-  const [scriptText, setScriptText] = React.useState(scripts[0].text);
+  const [script, setScript] = React.useState(allScripts[0]);
+  const [scriptText, setScriptText] = React.useState(allScripts[0].script);
   const [projectJson, setProjectJson] = React.useState('');
 
   const handleTransformClick = async () => {
@@ -77,9 +78,9 @@ export default ({ importProjects }: IAppProps) => {
   };
 
   const handleScriptChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedScript = scripts.find(s => s.name === e.target.value);
+    const selectedScript = allScripts.find(s => s.name === e.target.value);
     setScript(selectedScript);
-    setScriptText(selectedScript.text);
+    setScriptText(selectedScript.script);
   };
 
   const handleScriptTextChange = (text: string) => {
@@ -96,7 +97,7 @@ export default ({ importProjects }: IAppProps) => {
   const renderScriptSelect = () => {
     return (
       <Select style={{ width: 200 }} onChange={e => handleScriptChange(e)}>
-        {scripts.map(s => {
+        {allScripts.map(s => {
           return (
             <option key={s.name} selected={s.name === script.name} value={s.name}>
               {s.name}
