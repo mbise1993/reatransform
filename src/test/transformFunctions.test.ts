@@ -1,4 +1,5 @@
-import { adjustTempo } from './transformFunctions';
+import { readTestResource } from './util';
+import { adjustTempo } from '../transform/transformFunctions';
 import { rppToObject } from '../project/rppConverter';
 
 it('adjusts the tempo of a single project', () => {
@@ -34,7 +35,7 @@ type TempoTestData = {
 
 const validateAdjustTempo = async (testData: TempoTestData[]) => {
   const projectPromises = testData.map(async item => {
-    const content = require(`../../testResources/${item.fileName}`);
+    const content = readTestResource(`${item.fileName}`);
     const data = await rppToObject(content);
     return {
       name: item.fileName,
@@ -46,14 +47,14 @@ const validateAdjustTempo = async (testData: TempoTestData[]) => {
   adjustTempo(projects);
 
   for (const project of projects) {
-    const testDatum = testData.find(item => item.fileName === project.name);
+    const testDatum: any = testData.find(item => item.fileName === project.name);
     let tempoProp = getProperty(project.data, 'TEMPO');
     expect(tempoProp.attributes[0]).toBe(testDatum.originalTempo * 1.5);
   }
 };
 
 const getProperty = (el: any, name: string) => {
-  const prop = el.properties.find(p => p.name === name);
+  const prop = el.properties.find((p: any) => p.name === name);
   expect(prop).toBeDefined();
   return prop;
 };
