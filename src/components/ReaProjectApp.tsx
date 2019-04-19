@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import Header from './Header';
-import ProjectsView from './ProjectsView';
+import ProjectsView from './ProjectsPanel';
 import EditorView from './EditorView';
 import { FlexColumn, FlexRow, Panel, Select } from './base';
 import { RppProject, importProjects, saveProjects } from '../project/rppProject';
@@ -116,20 +117,24 @@ export default () => {
   const editorHeight = '500px';
 
   return (
-    <FlexColumn>
-      <Header title="ReaProject" onTransformClick={() => handleTransformClick()} />
-      <FlexRow>
-        <ProjectsView
-          projects={projects}
-          selectedProject={selectedProject!}
-          sourceProject={sourceProject!}
-          onFileImport={files => handleFileImport(files)}
-          onProjectClick={project => handleProjectClick(project)}
-          onSetSourceClick={project => handleSetSourceClick(project)}
-          onDeleteClick={project => handleDeleteClick(project)}
-        />
+    <Container>
+      <Row>
+        <Header title="ReaProject" onTransformClick={() => handleTransformClick()} />
+      </Row>
+      <Row>
+        <Col>
+          <ProjectsView
+            projects={projects}
+            selectedProject={selectedProject!}
+            sourceProject={sourceProject!}
+            onFileImport={files => handleFileImport(files)}
+            onProjectClick={project => handleProjectClick(project)}
+            onSetSourceClick={project => handleSetSourceClick(project)}
+            onDeleteClick={project => handleDeleteClick(project)}
+          />
+        </Col>
 
-        <FlexRow>
+        <Col>
           <Panel
             headerBackgroundColor={colors.primary}
             bodyBackgroundColor="transparent"
@@ -143,7 +148,9 @@ export default () => {
               onTextChange={text => handleScriptTextChange(text)}
             />
           </Panel>
+        </Col>
 
+        <Col>
           <Panel
             headerBackgroundColor={colors.primary}
             bodyBackgroundColor="transparent"
@@ -156,8 +163,8 @@ export default () => {
               onTextChange={text => {}}
             />
           </Panel>
-        </FlexRow>
-      </FlexRow>
-    </FlexColumn>
+        </Col>
+      </Row>
+    </Container>
   );
 };
