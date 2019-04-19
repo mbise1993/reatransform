@@ -1,5 +1,5 @@
 import { adjustTempo } from './transformFunctions';
-import { rppToObject } from '../services/rppConverter';
+import { rppToObject } from '../project/rppConverter';
 
 it('adjusts the tempo of a single project', () => {
   validateAdjustTempo([

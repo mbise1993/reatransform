@@ -4,20 +4,14 @@ import Header from './Header';
 import ProjectsView from './ProjectsView';
 import EditorView from './EditorView';
 import { FlexColumn, FlexRow, Panel, Select } from './base';
-import { RppProject } from '../models';
-import { saveProjects } from '../services/saveProjects';
-import { runTransformScript } from '../services/transform';
-import { allScripts } from '../transform/transformScript';
+import { RppProject, importProjects, saveProjects } from '../project/rppProject';
+import { allScripts, runTransformScript } from '../transform/transformScript';
 import colors from './colors';
 
-interface IAppProps {
-  importProjects: (files: FileList | null) => Promise<RppProject[]>;
-}
-
-export default ({ importProjects }: IAppProps) => {
-  const [projects, setProjects] = React.useState(new Array<RppProject>());
-  const [selectedProject, setSelectedProject] = React.useState(null as RppProject);
-  const [sourceProject, setSourceProject] = React.useState(null as RppProject);
+export default () => {
+  const [projects, setProjects] = React.useState<RppProject[]>([]);
+  const [selectedProject, setSelectedProject] = React.useState<RppProject>(null);
+  const [sourceProject, setSourceProject] = React.useState<RppProject>(null);
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
   const [projectJson, setProjectJson] = React.useState('');

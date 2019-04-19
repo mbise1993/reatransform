@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PlusSquare, Square, CheckSquare, MinusSquare } from 'styled-icons/feather';
 
 import { FlexSpan, Button, ListBox, Panel } from './base';
-import { RppProject } from '../models';
+import { RppProject } from '../project/rppProject';
 
 interface IProjectsViewProps {
   projects: RppProject[];
