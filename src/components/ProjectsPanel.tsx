@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Card, Row, Button, ListGroup } from 'react-bootstrap';
-import { PlusSquare, Square, CheckSquare, MinusSquare } from 'styled-icons/feather';
+import { Square, CheckSquare, MinusSquare } from 'styled-icons/feather';
 
 import { RppProject } from '../project/rppProject';
+import colors from './colors';
 
 interface IProjectsPanelProps {
   projects: RppProject[];
@@ -31,9 +32,9 @@ export default ({
   };
 
   return (
-    <Card>
-      <Card.Header>
-        <Row style={{justifyContent: 'space-between'}}>
+    <Card className="h-100" bg="dark" text="light" border="light">
+      <Card.Header style={{ backgroundColor: colors.primary }}>
+        <Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           Projects
           <span>
             <input
@@ -45,10 +46,11 @@ export default ({
               style={{ display: 'none' }}
               onChange={e => onFileImport(e.target.files)}
             />
-            <Button 
-              variant="outline-light" 
+            <Button
+              variant="outline-light"
+              size="sm"
               onClick={() => importFileInput!.click()}>
-              <PlusSquare size={20} />
+              Import
             </Button>
           </span>
         </Row>
@@ -57,8 +59,8 @@ export default ({
       <Card.Body>
         <ListGroup as="ul">
           {projects.map(project => (
-            <ListGroup.Item 
-              style={{justifyContent: 'space-between'}} 
+            <ListGroup.Item
+              style={{ justifyContent: 'space-between' }}
               active={project.id === selectedProject.id}
               onClick={() => onProjectClick(project)}>
               {project.name}
@@ -69,9 +71,9 @@ export default ({
                   onClick={() => onSetSourceClick(project)}>
                   {project.id === sourceProject.id ? <CheckSquare size={20} /> : <Square size={20} />}
                 </Button>
-                <Button 
-                  variant="outline-light" 
-                  style={padLeft} 
+                <Button
+                  variant="outline-light"
+                  style={padLeft}
                   onClick={() => onDeleteClick(project)}>
                   <MinusSquare size={20} />
                 </Button>

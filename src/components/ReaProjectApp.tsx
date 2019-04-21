@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import Header from './Header';
-import ProjectsView from './ProjectsPanel';
+import ProjectsPanel from './ProjectsPanel';
 import EditorView from './EditorView';
 import { FlexColumn, FlexRow, Panel, Select } from './base';
 import { RppProject, importProjects, saveProjects } from '../project/rppProject';
@@ -117,13 +117,13 @@ export default () => {
   const editorHeight = '500px';
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Header title="ReaProject" onTransformClick={() => handleTransformClick()} />
       </Row>
-      <Row>
-        <Col>
-          <ProjectsView
+      <Row style={{ height: '' }} noGutters>
+        <Col lg>
+          <ProjectsPanel
             projects={projects}
             selectedProject={selectedProject!}
             sourceProject={sourceProject!}
@@ -134,7 +134,7 @@ export default () => {
           />
         </Col>
 
-        <Col>
+        <Col lg>
           <Panel
             headerBackgroundColor={colors.primary}
             bodyBackgroundColor="transparent"
@@ -150,7 +150,7 @@ export default () => {
           </Panel>
         </Col>
 
-        <Col>
+        <Col lg>
           <Panel
             headerBackgroundColor={colors.primary}
             bodyBackgroundColor="transparent"
@@ -160,7 +160,7 @@ export default () => {
               text={projectJson}
               isEditable={false}
               height={editorHeight}
-              onTextChange={text => {}}
+              onTextChange={text => { }}
             />
           </Panel>
         </Col>
