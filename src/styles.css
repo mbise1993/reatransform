@@ -3,7 +3,7 @@
   --text: white;
   --dark-gray: #1F1F1F;
   --med-gray: #272722;
-  --light-gray: lightgray;
+  --light-gray: #333333;
 }
 
 html,
@@ -59,4 +59,8 @@ body,
 .list-group-item.active {
   background-color: var(--med-gray);
   filter: brightness(150%);
+}
+
+.modal-content {
+  background-color: var(--med-gray);
 }

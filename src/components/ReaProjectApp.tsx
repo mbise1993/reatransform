@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Container, Row, Col, CardGroup } from 'react-bootstrap';
+import { Container, Row, Col, CardGroup, Spinner } from 'react-bootstrap';
 
 import ProjectsPanel from './ProjectsPanel';
 import TransformScriptPanel from './TransformScriptPanel';
 import ProjectJsonPanel from './ProjectJsonPanel';
-import { RppProject, importProjects, saveProjects } from '../project/rppProject';
-import { allScripts, runTransformScript, ITransformScript } from '../transform/transformScript';
+import TransformDialog from './TransformDialog';
+import { RppProject, IRppData, importProjects } from '../project/rppProject';
+import { allScripts, ITransformScript, runTransformScript } from '../transform/transformScript';
 
 export default () => {
   const [projects, setProjects] = React.useState<RppProject[]>([]);
@@ -14,11 +15,15 @@ export default () => {
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
   const [projectJson, setProjectJson] = React.useState('');
+  const [isRunning, setRunning] = React.useState(false);
+  const [transformedRpps, setTransformedRpps] = React.useState<IRppData[]>([]);
 
   const handleTransformClick = async () => {
     if (sourceProject === null) {
       return;
     }
+
+    setRunning(true);
 
     try {
       const source = await sourceProject.getData();
@@ -28,11 +33,17 @@ export default () => {
 
       const others = await Promise.all(othersPromise);
       const transformedRpps = await runTransformScript(scriptText, source, others);
-      await saveProjects(transformedRpps);
+      setTransformedRpps(transformedRpps);
+
+      setRunning(false);
     } catch (e) {
       alert(`Error: ${e.message}`);
+      setTransformedRpps([]);
+      setRunning(false);
     }
   };
+
+  const handleTransformDialogClose = () => setTransformedRpps([]);
 
   const handleFileImport = async (files: FileList | null) => {
     if (!files) {
@@ -129,6 +140,7 @@ export default () => {
               scriptText={scriptText}
               allScripts={allScripts}
               canRun={projects.length > 0}
+              isRunning={isRunning}
               onScriptChange={s => handleScriptChange(s)}
               onScriptTextChange={t => handleScriptTextChange(t)}
               onTransformClick={() => handleTransformClick()} />
@@ -139,6 +151,11 @@ export default () => {
           </CardGroup>
         </Col>
       </Row>
+
+      <TransformDialog
+        show={transformedRpps.length > 0}
+        transformedRpps={transformedRpps}
+        onClose={() => handleTransformDialogClose()} />
     </Container>
   );
 };

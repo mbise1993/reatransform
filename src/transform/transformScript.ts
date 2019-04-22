@@ -36,7 +36,7 @@ export const runTransformScript = async (
 export const allScripts: ITransformScript[] = [
   {
     name: 'New Script',
-    script: '// New script'
+    script: '// New script\n'
   },
   {
     name: 'Adjust Tempo',

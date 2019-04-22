@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, ButtonGroup, DropdownButton, Dropdown, Button } from 'react-bootstrap';
+import { Card, ButtonGroup, DropdownButton, Dropdown, Button, Spinner } from 'react-bootstrap';
 
 import EditorView from './EditorView';
 import { ITransformScript } from '../transform/transformScript';
@@ -9,6 +9,7 @@ type TransformScriptPanelProps = {
   scriptText: string;
   allScripts: ITransformScript[];
   canRun: boolean;
+  isRunning: boolean;
   onScriptChange: (script: ITransformScript) => void;
   onScriptTextChange: (text: string) => void;
   onTransformClick: () => void;
@@ -19,6 +20,7 @@ export default ({
   scriptText,
   allScripts,
   canRun,
+  isRunning,
   onScriptChange,
   onScriptTextChange,
   onTransformClick
@@ -28,7 +30,7 @@ export default ({
     <Card>
       <Card.Header>
         Transform Script
-                  <ButtonGroup>
+        <ButtonGroup>
           <DropdownButton
             id="script-dropdown"
             size="sm"
@@ -49,8 +51,8 @@ export default ({
             variant="outline-light"
             disabled={!canRun}
             onClick={() => onTransformClick()}>
-            Run
-                    </Button>
+            {isRunning ? <Spinner animation="border" size="sm" /> : 'Run'}
+          </Button>
         </ButtonGroup>
       </Card.Header>
       <Card.Body>
