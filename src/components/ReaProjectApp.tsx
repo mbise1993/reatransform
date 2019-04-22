@@ -1,13 +1,20 @@
 import * as React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  CardGroup,
+  Card,
+  Button,
+  ButtonGroup,
+  DropdownButton,
+  Dropdown
+} from 'react-bootstrap';
 
-import Header from './Header';
 import ProjectsPanel from './ProjectsPanel';
 import EditorView from './EditorView';
-import { FlexColumn, FlexRow, Panel, Select } from './base';
 import { RppProject, importProjects, saveProjects } from '../project/rppProject';
-import { allScripts, runTransformScript } from '../transform/transformScript';
-import colors from './colors';
+import { allScripts, runTransformScript, ITransformScript } from '../transform/transformScript';
 
 export default () => {
   const [projects, setProjects] = React.useState<RppProject[]>([]);
@@ -80,12 +87,9 @@ export default () => {
     }
   };
 
-  const handleScriptChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedScript = allScripts.find(s => s.name === e.target.value);
-    if (selectedScript) {
-      setScript(selectedScript);
-      setScriptText(selectedScript.script);
-    }
+  const handleScriptChange = (selectedScript: ITransformScript) => {
+    setScript(selectedScript);
+    setScriptText(selectedScript.script);
   };
 
   const handleScriptTextChange = (text: string) => {
@@ -99,30 +103,16 @@ export default () => {
       .catch(error => console.log((error as Error).message));
   };
 
-  const renderScriptSelect = () => {
-    return (
-      <Select style={{ width: 200 }} onChange={e => handleScriptChange(e)}>
-        {allScripts.map(s => {
-          return (
-            <option key={s.name} selected={s.name === script.name} value={s.name}>
-              {s.name}
-            </option>
-          );
-        })}
-      </Select>
-    );
-  };
-
   const message = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
-  const editorHeight = '500px';
 
   return (
     <Container fluid>
-      <Row>
-        <Header title="ReaProject" onTransformClick={() => handleTransformClick()} />
+      <Row className="app-header">
+        ReaProject
       </Row>
-      <Row style={{ height: '' }} noGutters>
-        <Col lg>
+
+      <Row className="app-content">
+        <Col lg="3">
           <ProjectsPanel
             projects={projects}
             selectedProject={selectedProject!}
@@ -135,34 +125,51 @@ export default () => {
         </Col>
 
         <Col lg>
-          <Panel
-            headerBackgroundColor={colors.primary}
-            bodyBackgroundColor="transparent"
-            borderColor={colors.secondary}
-            renderHeaderLeft={() => 'Transform Script'}
-            renderHeaderRight={() => renderScriptSelect()}>
-            <EditorView
-              text={scriptText}
-              isEditable={true}
-              height={editorHeight}
-              onTextChange={text => handleScriptTextChange(text)}
-            />
-          </Panel>
-        </Col>
+          <CardGroup className="h-100">
+            <Card>
+              <Card.Header>
+                Transform Script
+                  <ButtonGroup>
+                  <DropdownButton
+                    id="script-dropdown"
+                    size="sm"
+                    variant="outline-light"
+                    title={script.name}>
+                    {allScripts.map(s => {
+                      return (
+                        <Dropdown.Item
+                          key={s.name}
+                          onClick={() => handleScriptChange(s)}>
+                          {s.name}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </DropdownButton>
+                  <Button size="sm" variant="outline-light" onClick={() => handleTransformClick()}>
+                    Run
+                    </Button>
+                </ButtonGroup>
+              </Card.Header>
+              <Card.Body>
+                <EditorView
+                  text={scriptText}
+                  isEditable={true}
+                  onTextChange={text => handleScriptTextChange(text)}
+                />
+              </Card.Body>
+            </Card>
 
-        <Col lg>
-          <Panel
-            headerBackgroundColor={colors.primary}
-            bodyBackgroundColor="transparent"
-            borderColor={colors.secondary}
-            renderHeaderLeft={() => message}>
-            <EditorView
-              text={projectJson}
-              isEditable={false}
-              height={editorHeight}
-              onTextChange={text => { }}
-            />
-          </Panel>
+            <Card>
+              <Card.Header>{message}</Card.Header>
+              <Card.Body>
+                <EditorView
+                  text={projectJson}
+                  isEditable={false}
+                  onTextChange={text => { }}
+                />
+              </Card.Body>
+            </Card>
+          </CardGroup>
         </Col>
       </Row>
     </Container>

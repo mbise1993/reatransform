@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { Card, Row, Button, ListGroup } from 'react-bootstrap';
-import { Square, CheckSquare, MinusSquare } from 'styled-icons/feather';
+import { Card, Button, ButtonGroup, ListGroup } from 'react-bootstrap';
 
 import { RppProject } from '../project/rppProject';
-import colors from './colors';
 
 interface IProjectsPanelProps {
   projects: RppProject[];
@@ -32,52 +30,51 @@ export default ({
   };
 
   return (
-    <Card className="h-100" bg="dark" text="light" border="light">
-      <Card.Header style={{ backgroundColor: colors.primary }}>
-        <Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-          Projects
+    <Card className="h-100">
+      <Card.Header>
+        Projects
           <span>
-            <input
-              ref={ref => (importFileInput = ref!)}
-              multiple
-              type="file"
-              id="import-file-input"
-              name="files[]"
-              style={{ display: 'none' }}
-              onChange={e => onFileImport(e.target.files)}
-            />
-            <Button
-              variant="outline-light"
-              size="sm"
-              onClick={() => importFileInput!.click()}>
-              Import
+          <input
+            ref={ref => (importFileInput = ref!)}
+            multiple
+            type="file"
+            id="import-file-input"
+            name="files[]"
+            style={{ display: 'none' }}
+            onChange={e => onFileImport(e.target.files)}
+          />
+          <Button
+            variant="outline-light"
+            size="sm"
+            onClick={() => importFileInput!.click()}>
+            Import
             </Button>
-          </span>
-        </Row>
+        </span>
       </Card.Header>
 
       <Card.Body>
         <ListGroup as="ul">
           {projects.map(project => (
             <ListGroup.Item
-              style={{ justifyContent: 'space-between' }}
               active={project.id === selectedProject.id}
               onClick={() => onProjectClick(project)}>
               {project.name}
-              <span>
+              <ButtonGroup>
                 <Button
-                  variant="outline-light"
+                  variant={project.id === sourceProject.id ? "light" : "outline-light"}
+                  size="sm"
                   style={padLeft}
                   onClick={() => onSetSourceClick(project)}>
-                  {project.id === sourceProject.id ? <CheckSquare size={20} /> : <Square size={20} />}
+                  Source
                 </Button>
                 <Button
                   variant="outline-light"
+                  size="sm"
                   style={padLeft}
                   onClick={() => onDeleteClick(project)}>
-                  <MinusSquare size={20} />
+                  Delete
                 </Button>
-              </span>
+              </ButtonGroup>
             </ListGroup.Item>
           ))}
         </ListGroup>
