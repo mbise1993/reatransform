@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card, Button, ButtonGroup, ListGroup } from "react-bootstrap";
 
-import { RppProject } from "../project/rppProject";
+import { RppProject } from "./rppProject";
 
 interface IProjectsPanelProps {
   projects: RppProject[];
