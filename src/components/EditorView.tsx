@@ -3,26 +3,30 @@ import AceEditor from 'react-ace';
 
 import brace from 'brace';
 import 'brace/mode/javascript';
-import 'brace/theme/github';
+import 'brace/theme/monokai';
 
 interface IEditorViewProps {
   text: string;
   isEditable: boolean;
-  height: string;
   onTextChange: (text: string) => void;
 }
 
-export default ({ text, isEditable, height, onTextChange }: IEditorViewProps) => {
+export default ({ text, isEditable, onTextChange }: IEditorViewProps) => {
+  const editorStyle = {
+    width: '100%',
+    height: '100%'
+  };
+
   return (
     <AceEditor
       mode="javascript"
-      theme="github"
+      theme="monokai"
       editorProps={{
         $blockScrolling: Infinity
       }}
       value={text}
       readOnly={!isEditable}
-      height={height}
+      style={editorStyle}
       onChange={text => onTextChange(text)}
     />
   );

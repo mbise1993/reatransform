@@ -1,12 +1,12 @@
 import * as React from 'react';
+import { Container, Row, Col, CardGroup, Spinner } from 'react-bootstrap';
 
-import Header from './Header';
-import ProjectsView from './ProjectsView';
-import EditorView from './EditorView';
-import { FlexColumn, FlexRow, Panel, Select } from './base';
-import { RppProject, importProjects, saveProjects } from '../project/rppProject';
-import { allScripts, runTransformScript } from '../transform/transformScript';
-import colors from './colors';
+import ProjectsPanel from './ProjectsPanel';
+import TransformScriptPanel from './TransformScriptPanel';
+import ProjectJsonPanel from './ProjectJsonPanel';
+import TransformDialog from './TransformDialog';
+import { RppProject, IRppData, importProjects } from '../project/rppProject';
+import { allScripts, ITransformScript, runTransformScript } from '../transform/transformScript';
 
 export default () => {
   const [projects, setProjects] = React.useState<RppProject[]>([]);
@@ -15,11 +15,15 @@ export default () => {
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
   const [projectJson, setProjectJson] = React.useState('');
+  const [isRunning, setRunning] = React.useState(false);
+  const [transformedRpps, setTransformedRpps] = React.useState<IRppData[]>([]);
 
   const handleTransformClick = async () => {
     if (sourceProject === null) {
       return;
     }
+
+    setRunning(true);
 
     try {
       const source = await sourceProject.getData();
@@ -29,11 +33,17 @@ export default () => {
 
       const others = await Promise.all(othersPromise);
       const transformedRpps = await runTransformScript(scriptText, source, others);
-      await saveProjects(transformedRpps);
+      setTransformedRpps(transformedRpps);
+
+      setRunning(false);
     } catch (e) {
       alert(`Error: ${e.message}`);
+      setTransformedRpps([]);
+      setRunning(false);
     }
   };
+
+  const handleTransformDialogClose = () => setTransformedRpps([]);
 
   const handleFileImport = async (files: FileList | null) => {
     if (!files) {
@@ -46,8 +56,7 @@ export default () => {
     }
 
     if (!selectedProject) {
-      setSelectedProject(importedProjects[0]);
-      updateProjectJson(importedProjects[0]);
+      updateSelectedProject(importedProjects[0]);
     }
 
     if (!sourceProject) {
@@ -57,107 +66,96 @@ export default () => {
     setProjects([...projects, ...importedProjects]);
   };
 
-  const handleProjectClick = (project: RppProject) => {
-    setSelectedProject(project);
-    updateProjectJson(project);
-  };
-
   const handleSetSourceClick = (project: RppProject) => {
     setSourceProject(project);
   };
 
   const handleDeleteClick = (project: RppProject) => {
+    const index = projects.findIndex(proj => proj.id === project.id);
     const newProjects = projects.filter(proj => proj.id !== project.id);
     setProjects(newProjects);
 
+    const newIndex = index < newProjects.length ? index : newProjects.length - 1;
+    if (newIndex < 0) {
+      updateSelectedProject(null);
+      setSourceProject(null);
+      return;
+    }
+
     if (selectedProject && project.id === selectedProject.id) {
-      setSelectedProject(newProjects[0]);
+      updateSelectedProject(newProjects[newIndex]);
     }
 
     if (sourceProject && project.id === sourceProject.id) {
-      setSourceProject(newProjects[0]);
+      setSourceProject(newProjects[newIndex]);
     }
   };
 
-  const handleScriptChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedScript = allScripts.find(s => s.name === e.target.value);
-    if (selectedScript) {
-      setScript(selectedScript);
-      setScriptText(selectedScript.script);
-    }
+  const handleScriptChange = (selectedScript: ITransformScript) => {
+    setScript(selectedScript);
+    setScriptText(selectedScript.script);
   };
 
   const handleScriptTextChange = (text: string) => {
     setScriptText(text);
   };
 
-  const updateProjectJson = (project: RppProject) => {
-    project
-      .getData()
-      .then(obj => setProjectJson(JSON.stringify(obj, null, 2)))
-      .catch(error => console.log((error as Error).message));
+  const updateSelectedProject = (project: RppProject | null) => {
+    setSelectedProject(project);
+
+    if (project) {
+      project
+        .getData()
+        .then(obj => setProjectJson(JSON.stringify(obj, null, 2)))
+        .catch(error => console.log((error as Error).message));
+    } else {
+      setProjectJson('');
+    }
   };
 
-  const renderScriptSelect = () => {
-    return (
-      <Select style={{ width: 200 }} onChange={e => handleScriptChange(e)}>
-        {allScripts.map(s => {
-          return (
-            <option key={s.name} selected={s.name === script.name} value={s.name}>
-              {s.name}
-            </option>
-          );
-        })}
-      </Select>
-    );
-  };
-
-  const message = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
-  const editorHeight = '500px';
+  const title = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
 
   return (
-    <FlexColumn>
-      <Header title="ReaProject" onTransformClick={() => handleTransformClick()} />
-      <FlexRow>
-        <ProjectsView
-          projects={projects}
-          selectedProject={selectedProject!}
-          sourceProject={sourceProject!}
-          onFileImport={files => handleFileImport(files)}
-          onProjectClick={project => handleProjectClick(project)}
-          onSetSourceClick={project => handleSetSourceClick(project)}
-          onDeleteClick={project => handleDeleteClick(project)}
-        />
+    <Container fluid>
+      <Row className="app-header">
+        ReaProject
+      </Row>
 
-        <FlexRow>
-          <Panel
-            headerBackgroundColor={colors.primary}
-            bodyBackgroundColor="transparent"
-            borderColor={colors.secondary}
-            renderHeaderLeft={() => 'Transform Script'}
-            renderHeaderRight={() => renderScriptSelect()}>
-            <EditorView
-              text={scriptText}
-              isEditable={true}
-              height={editorHeight}
-              onTextChange={text => handleScriptTextChange(text)}
-            />
-          </Panel>
+      <Row className="app-content">
+        <Col lg="3">
+          <ProjectsPanel
+            projects={projects}
+            selectedProject={selectedProject!}
+            sourceProject={sourceProject!}
+            onFileImport={files => handleFileImport(files)}
+            onProjectClick={project => updateSelectedProject(project)}
+            onSetSourceClick={project => handleSetSourceClick(project)}
+            onDeleteClick={project => handleDeleteClick(project)} />
+        </Col>
 
-          <Panel
-            headerBackgroundColor={colors.primary}
-            bodyBackgroundColor="transparent"
-            borderColor={colors.secondary}
-            renderHeaderLeft={() => message}>
-            <EditorView
-              text={projectJson}
-              isEditable={false}
-              height={editorHeight}
-              onTextChange={text => {}}
-            />
-          </Panel>
-        </FlexRow>
-      </FlexRow>
-    </FlexColumn>
+        <Col lg>
+          <CardGroup className="h-100">
+            <TransformScriptPanel
+              script={script}
+              scriptText={scriptText}
+              allScripts={allScripts}
+              canRun={projects.length > 0}
+              isRunning={isRunning}
+              onScriptChange={s => handleScriptChange(s)}
+              onScriptTextChange={t => handleScriptTextChange(t)}
+              onTransformClick={() => handleTransformClick()} />
+
+            <ProjectJsonPanel
+              title={title}
+              json={projectJson} />
+          </CardGroup>
+        </Col>
+      </Row>
+
+      <TransformDialog
+        show={transformedRpps.length > 0}
+        transformedRpps={transformedRpps}
+        onClose={() => handleTransformDialogClose()} />
+    </Container>
   );
 };

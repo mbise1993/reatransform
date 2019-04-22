@@ -1,0 +1,66 @@
+:root {
+  --primary: #078CF2;
+  --text: white;
+  --dark-gray: #1F1F1F;
+  --med-gray: #272722;
+  --light-gray: #333333;
+}
+
+html,
+body,
+#app {
+  height: 100vh;
+  color: var(--text);
+  background-color: var(--dark-gray);
+}
+
+.container-fluid {
+  height: 80%;
+}
+
+.app-header {
+  font-size: 26px;
+  font-weight: 200;
+  letter-spacing: 2px;
+  padding: 18px 24px;
+}
+
+.app-content {
+  height: 100%;
+}
+
+.card-header {
+  background-color: var(--primary);
+  padding: 0px 12px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body {
+  background-color: var(--med-gray);
+  padding: 0px;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--med-gray);
+  padding: 8px;
+  border: none;
+}
+
+.list-group-item:first-child {
+  border-radius: 0px;
+}
+
+.list-group-item.active {
+  background-color: var(--med-gray);
+  filter: brightness(150%);
+}
+
+.modal-content {
+  background-color: var(--med-gray);
+}
