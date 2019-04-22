@@ -14,7 +14,7 @@ interface IEditorViewProps {
 export default ({ text, isEditable, onTextChange }: IEditorViewProps) => {
   const editorStyle = {
     width: "100%",
-    height: "100%"
+    height: "100%",
   };
 
   return (
@@ -22,7 +22,7 @@ export default ({ text, isEditable, onTextChange }: IEditorViewProps) => {
       mode="javascript"
       theme="monokai"
       editorProps={{
-        $blockScrolling: Infinity
+        $blockScrolling: Infinity,
       }}
       value={text}
       readOnly={!isEditable}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card, ButtonGroup, DropdownButton, Dropdown, Button, Spinner } from "react-bootstrap";
 
-import EditorView from "../core/EditorView";
+import EditorView from "../common/EditorView";
 import { ITransformScript } from "./transformScript";
 
 type TransformScriptPanelProps = {
@@ -23,7 +23,7 @@ export default ({
   isRunning,
   onScriptChange,
   onScriptTextChange,
-  onTransformClick
+  onTransformClick,
 }: TransformScriptPanelProps) => {
   return (
     <Card>
