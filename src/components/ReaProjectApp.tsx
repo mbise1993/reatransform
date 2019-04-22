@@ -153,7 +153,11 @@ export default () => {
                       );
                     })}
                   </DropdownButton>
-                  <Button size="sm" variant="outline-light" onClick={() => handleTransformClick()}>
+                  <Button
+                    size="sm"
+                    variant="outline-light"
+                    disabled={projects.length === 0}
+                    onClick={() => handleTransformClick()}>
                     Run
                     </Button>
                 </ButtonGroup>
