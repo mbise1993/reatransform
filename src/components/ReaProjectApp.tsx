@@ -1,18 +1,9 @@
 import * as React from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  CardGroup,
-  Card,
-  Button,
-  ButtonGroup,
-  DropdownButton,
-  Dropdown
-} from 'react-bootstrap';
+import { Container, Row, Col, CardGroup } from 'react-bootstrap';
 
 import ProjectsPanel from './ProjectsPanel';
-import EditorView from './EditorView';
+import TransformScriptPanel from './TransformScriptPanel';
+import ProjectJsonPanel from './ProjectJsonPanel';
 import { RppProject, importProjects, saveProjects } from '../project/rppProject';
 import { allScripts, runTransformScript, ITransformScript } from '../transform/transformScript';
 
@@ -111,7 +102,7 @@ export default () => {
     }
   };
 
-  const message = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
+  const title = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
 
   return (
     <Container fluid>
@@ -128,59 +119,23 @@ export default () => {
             onFileImport={files => handleFileImport(files)}
             onProjectClick={project => updateSelectedProject(project)}
             onSetSourceClick={project => handleSetSourceClick(project)}
-            onDeleteClick={project => handleDeleteClick(project)}
-          />
+            onDeleteClick={project => handleDeleteClick(project)} />
         </Col>
 
         <Col lg>
           <CardGroup className="h-100">
-            <Card>
-              <Card.Header>
-                Transform Script
-                  <ButtonGroup>
-                  <DropdownButton
-                    id="script-dropdown"
-                    size="sm"
-                    variant="outline-light"
-                    title={script.name}>
-                    {allScripts.map(s => {
-                      return (
-                        <Dropdown.Item
-                          key={s.name}
-                          onClick={() => handleScriptChange(s)}>
-                          {s.name}
-                        </Dropdown.Item>
-                      );
-                    })}
-                  </DropdownButton>
-                  <Button
-                    size="sm"
-                    variant="outline-light"
-                    disabled={projects.length === 0}
-                    onClick={() => handleTransformClick()}>
-                    Run
-                    </Button>
-                </ButtonGroup>
-              </Card.Header>
-              <Card.Body>
-                <EditorView
-                  text={scriptText}
-                  isEditable={true}
-                  onTextChange={text => handleScriptTextChange(text)}
-                />
-              </Card.Body>
-            </Card>
+            <TransformScriptPanel
+              script={script}
+              scriptText={scriptText}
+              allScripts={allScripts}
+              canRun={projects.length > 0}
+              onScriptChange={s => handleScriptChange(s)}
+              onScriptTextChange={t => handleScriptTextChange(t)}
+              onTransformClick={() => handleTransformClick()} />
 
-            <Card>
-              <Card.Header>{message}</Card.Header>
-              <Card.Body>
-                <EditorView
-                  text={projectJson}
-                  isEditable={false}
-                  onTextChange={text => { }}
-                />
-              </Card.Body>
-            </Card>
+            <ProjectJsonPanel
+              title={title}
+              json={projectJson} />
           </CardGroup>
         </Col>
       </Row>
