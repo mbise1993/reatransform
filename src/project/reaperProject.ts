@@ -1,7 +1,8 @@
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 
-import { rppToElement, elementToRpp } from "./rppConverter";
+import rppToElement from "./rppToElement";
+import elementToRpp from "./elementToRpp";
 
 export interface IRppProperty {
   name: string;
@@ -23,7 +24,7 @@ export interface IRppData {
 
 let currentId = 1;
 
-export class RppProject {
+export class ReaperProject {
   private _id: number;
   private _data: IRppData | null = null;
 
@@ -61,7 +62,7 @@ export const importProjects = async (files: FileList | null) => {
     return;
   }
 
-  const fileReadResults: Promise<RppProject>[] = [];
+  const fileReadResults: Promise<ReaperProject>[] = [];
 
   for (let i = 0; i < files.length; ++i) {
     fileReadResults.push(readFile(files[i]));
@@ -71,7 +72,7 @@ export const importProjects = async (files: FileList | null) => {
 };
 
 const readFile = async (file: File) => {
-  return await new Promise<RppProject>((resolve, reject) => {
+  return await new Promise<ReaperProject>((resolve, reject) => {
     const reader = new FileReader();
 
     reader.onload = e => {
@@ -79,7 +80,7 @@ const readFile = async (file: File) => {
         reject("Result was null");
       }
 
-      resolve(new RppProject(file.name, reader.result as string));
+      resolve(new ReaperProject(file.name, reader.result as string));
     };
 
     reader.onerror = e => {

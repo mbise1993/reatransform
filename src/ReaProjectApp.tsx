@@ -5,13 +5,13 @@ import ProjectsPanel from "./project/ProjectsPanel";
 import TransformScriptPanel from "./transform/TransformScriptPanel";
 import ProjectJsonPanel from "./project/ProjectJsonPanel";
 import TransformDialog from "./transform/TransformDialog";
-import { RppProject, IRppData, importProjects } from "./project/rppProject";
+import { ReaperProject, IRppData, importProjects } from "./project/reaperProject";
 import { allScripts, ITransformScript, runTransformScript } from "./transform/transformScript";
 
 export default () => {
-  const [projects, setProjects] = React.useState<RppProject[]>([]);
-  const [selectedProject, setSelectedProject] = React.useState<RppProject | null>(null);
-  const [sourceProject, setSourceProject] = React.useState<RppProject | null>(null);
+  const [projects, setProjects] = React.useState<ReaperProject[]>([]);
+  const [selectedProject, setSelectedProject] = React.useState<ReaperProject | null>(null);
+  const [sourceProject, setSourceProject] = React.useState<ReaperProject | null>(null);
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
   const [projectJson, setProjectJson] = React.useState("");
@@ -64,11 +64,11 @@ export default () => {
     setProjects([...projects, ...importedProjects]);
   };
 
-  const handleSetSourceClick = (project: RppProject) => {
+  const handleSetSourceClick = (project: ReaperProject) => {
     setSourceProject(project);
   };
 
-  const handleDeleteClick = (project: RppProject) => {
+  const handleDeleteClick = (project: ReaperProject) => {
     const index = projects.findIndex(proj => proj.id === project.id);
     const newProjects = projects.filter(proj => proj.id !== project.id);
     setProjects(newProjects);
@@ -98,7 +98,7 @@ export default () => {
     setScriptText(text);
   };
 
-  const updateSelectedProject = (project: RppProject | null) => {
+  const updateSelectedProject = (project: ReaperProject | null) => {
     setSelectedProject(project);
 
     if (project) {

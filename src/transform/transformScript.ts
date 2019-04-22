@@ -2,7 +2,7 @@ import safeEval from "safe-eval";
 import _ from "lodash";
 
 import { adjustTempoBody } from "./transformFunctions";
-import { IRppData } from "../project/rppProject";
+import { IRppData } from "../project/reaperProject";
 
 export interface ITransformScript {
   name: string;

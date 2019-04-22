@@ -1,6 +1,6 @@
 import { readTestResource } from "../test/util";
 import { adjustTempo } from "./transformFunctions";
-import { rppToElement } from "../project/rppConverter";
+import rppToElement from "../project/rppToElement";
 
 it("adjusts the tempo of a single project", () => {
   validateAdjustTempo([

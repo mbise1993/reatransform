@@ -1,5 +1,6 @@
 import { readTestResource } from "../test/util";
-import { rppToElement, elementToRpp } from "./rppConverter";
+import elementToRpp from "./elementToRpp";
+import rppToElement from "./rppToElement";
 
 it("Can convert EmptyProject.rpp to object and back", async () => {
   const content = readTestResource("EmptyProject.rpp");

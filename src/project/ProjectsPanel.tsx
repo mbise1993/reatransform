@@ -1,16 +1,16 @@
 import * as React from "react";
 import { Card, Button, ButtonGroup, ListGroup } from "react-bootstrap";
 
-import { RppProject } from "./rppProject";
+import { ReaperProject } from "./reaperProject";
 
 interface IProjectsPanelProps {
-  projects: RppProject[];
-  selectedProject: RppProject;
-  sourceProject: RppProject;
+  projects: ReaperProject[];
+  selectedProject: ReaperProject;
+  sourceProject: ReaperProject;
   onFileImport: (file: FileList | null) => void;
-  onProjectClick: (project: RppProject) => void;
-  onSetSourceClick: (project: RppProject) => void;
-  onDeleteClick: (project: RppProject) => void;
+  onProjectClick: (project: ReaperProject) => void;
+  onSetSourceClick: (project: ReaperProject) => void;
+  onDeleteClick: (project: ReaperProject) => void;
 }
 
 export default ({
@@ -22,7 +22,7 @@ export default ({
   onSetSourceClick,
   onDeleteClick
 }: IProjectsPanelProps) => {
-  const stopPropogation = (e: React.MouseEvent, handler: (project: RppProject) => void, project: RppProject) => {
+  const stopPropogation = (e: React.MouseEvent, handler: (project: ReaperProject) => void, project: ReaperProject) => {
     e.stopPropagation();
     handler(project);
   };
