@@ -23,6 +23,11 @@ export default ({
   onDeleteClick
 }: IProjectsPanelProps) => {
 
+  const stopPropogation = (e: React.MouseEvent, handler: (project: RppProject) => void, project: RppProject) => {
+    e.stopPropagation();
+    handler(project);
+  }
+
   let importFileInput: HTMLInputElement;
 
   const padLeft = {
@@ -56,6 +61,7 @@ export default ({
         <ListGroup as="ul">
           {projects.map(project => (
             <ListGroup.Item
+              key={project.id}
               active={project.id === selectedProject.id}
               onClick={() => onProjectClick(project)}>
               {project.name}
@@ -64,14 +70,14 @@ export default ({
                   variant={project.id === sourceProject.id ? "light" : "outline-light"}
                   size="sm"
                   style={padLeft}
-                  onClick={() => onSetSourceClick(project)}>
+                  onClick={(e: React.MouseEvent) => stopPropogation(e, onSetSourceClick, project)}>
                   Source
                 </Button>
                 <Button
                   variant="outline-light"
                   size="sm"
                   style={padLeft}
-                  onClick={() => onDeleteClick(project)}>
+                  onClick={(e: React.MouseEvent) => stopPropogation(e, onDeleteClick, project)}>
                   Delete
                 </Button>
               </ButtonGroup>

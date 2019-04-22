@@ -54,8 +54,7 @@ export default () => {
     }
 
     if (!selectedProject) {
-      setSelectedProject(importedProjects[0]);
-      updateProjectJson(importedProjects[0]);
+      updateSelectedProject(importedProjects[0]);
     }
 
     if (!sourceProject) {
@@ -65,25 +64,28 @@ export default () => {
     setProjects([...projects, ...importedProjects]);
   };
 
-  const handleProjectClick = (project: RppProject) => {
-    setSelectedProject(project);
-    updateProjectJson(project);
-  };
-
   const handleSetSourceClick = (project: RppProject) => {
     setSourceProject(project);
   };
 
   const handleDeleteClick = (project: RppProject) => {
+    const index = projects.findIndex(proj => proj.id === project.id);
     const newProjects = projects.filter(proj => proj.id !== project.id);
     setProjects(newProjects);
 
+    const newIndex = index < newProjects.length ? index : newProjects.length - 1;
+    if (newIndex < 0) {
+      updateSelectedProject(null);
+      setSourceProject(null);
+      return;
+    }
+
     if (selectedProject && project.id === selectedProject.id) {
-      setSelectedProject(newProjects[0]);
+      updateSelectedProject(newProjects[newIndex]);
     }
 
     if (sourceProject && project.id === sourceProject.id) {
-      setSourceProject(newProjects[0]);
+      setSourceProject(newProjects[newIndex]);
     }
   };
 
@@ -96,11 +98,17 @@ export default () => {
     setScriptText(text);
   };
 
-  const updateProjectJson = (project: RppProject) => {
-    project
-      .getData()
-      .then(obj => setProjectJson(JSON.stringify(obj, null, 2)))
-      .catch(error => console.log((error as Error).message));
+  const updateSelectedProject = (project: RppProject | null) => {
+    setSelectedProject(project);
+
+    if (project) {
+      project
+        .getData()
+        .then(obj => setProjectJson(JSON.stringify(obj, null, 2)))
+        .catch(error => console.log((error as Error).message));
+    } else {
+      setProjectJson('');
+    }
   };
 
   const message = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
@@ -118,7 +126,7 @@ export default () => {
             selectedProject={selectedProject!}
             sourceProject={sourceProject!}
             onFileImport={files => handleFileImport(files)}
-            onProjectClick={project => handleProjectClick(project)}
+            onProjectClick={project => updateSelectedProject(project)}
             onSetSourceClick={project => handleSetSourceClick(project)}
             onDeleteClick={project => handleDeleteClick(project)}
           />
