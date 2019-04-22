@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { Container, Row, Col, CardGroup, Spinner } from 'react-bootstrap';
+import * as React from "react";
+import { Container, Row, Col, CardGroup, Spinner } from "react-bootstrap";
 
-import ProjectsPanel from './ProjectsPanel';
-import TransformScriptPanel from './TransformScriptPanel';
-import ProjectJsonPanel from './ProjectJsonPanel';
-import TransformDialog from './TransformDialog';
-import { RppProject, IRppData, importProjects } from '../project/rppProject';
-import { allScripts, ITransformScript, runTransformScript } from '../transform/transformScript';
+import ProjectsPanel from "./ProjectsPanel";
+import TransformScriptPanel from "./TransformScriptPanel";
+import ProjectJsonPanel from "./ProjectJsonPanel";
+import TransformDialog from "./TransformDialog";
+import { RppProject, IRppData, importProjects } from "../project/rppProject";
+import { allScripts, ITransformScript, runTransformScript } from "../transform/transformScript";
 
 export default () => {
   const [projects, setProjects] = React.useState<RppProject[]>([]);
@@ -14,7 +14,7 @@ export default () => {
   const [sourceProject, setSourceProject] = React.useState<RppProject | null>(null);
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
-  const [projectJson, setProjectJson] = React.useState('');
+  const [projectJson, setProjectJson] = React.useState("");
   const [isRunning, setRunning] = React.useState(false);
   const [transformedRpps, setTransformedRpps] = React.useState<IRppData[]>([]);
 
@@ -27,9 +27,7 @@ export default () => {
 
     try {
       const source = await sourceProject.getData();
-      const othersPromise = projects
-        .filter(proj => proj.id !== sourceProject.id)
-        .map(proj => proj.getData());
+      const othersPromise = projects.filter(proj => proj.id !== sourceProject.id).map(proj => proj.getData());
 
       const others = await Promise.all(othersPromise);
       const transformedRpps = await runTransformScript(scriptText, source, others);
@@ -109,17 +107,15 @@ export default () => {
         .then(obj => setProjectJson(JSON.stringify(obj, null, 2)))
         .catch(error => console.log((error as Error).message));
     } else {
-      setProjectJson('');
+      setProjectJson("");
     }
   };
 
-  const title = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
+  const title = selectedProject ? `JSON for ${selectedProject.name}` : "No Project Selected";
 
   return (
     <Container fluid>
-      <Row className="app-header">
-        ReaProject
-      </Row>
+      <Row className="app-header">ReaProject</Row>
 
       <Row className="app-content">
         <Col lg="3">
@@ -130,7 +126,8 @@ export default () => {
             onFileImport={files => handleFileImport(files)}
             onProjectClick={project => updateSelectedProject(project)}
             onSetSourceClick={project => handleSetSourceClick(project)}
-            onDeleteClick={project => handleDeleteClick(project)} />
+            onDeleteClick={project => handleDeleteClick(project)}
+          />
         </Col>
 
         <Col lg>
@@ -143,11 +140,10 @@ export default () => {
               isRunning={isRunning}
               onScriptChange={s => handleScriptChange(s)}
               onScriptTextChange={t => handleScriptTextChange(t)}
-              onTransformClick={() => handleTransformClick()} />
+              onTransformClick={() => handleTransformClick()}
+            />
 
-            <ProjectJsonPanel
-              title={title}
-              json={projectJson} />
+            <ProjectJsonPanel title={title} json={projectJson} />
           </CardGroup>
         </Col>
       </Row>
@@ -155,7 +151,8 @@ export default () => {
       <TransformDialog
         show={transformedRpps.length > 0}
         transformedRpps={transformedRpps}
-        onClose={() => handleTransformDialogClose()} />
+        onClose={() => handleTransformDialogClose()}
+      />
     </Container>
   );
 };

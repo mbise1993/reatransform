@@ -1,7 +1,7 @@
-import { saveAs } from 'file-saver';
-import JSZip from 'jszip';
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 
-import { rppToElement, elementToRpp } from './rppConverter';
+import { rppToElement, elementToRpp } from "./rppConverter";
 
 export interface IRppProperty {
   name: string;
@@ -76,14 +76,14 @@ const readFile = async (file: File) => {
 
     reader.onload = e => {
       if (reader.result === null) {
-        reject('Result was null');
+        reject("Result was null");
       }
 
       resolve(new RppProject(file.name, reader.result as string));
     };
 
     reader.onerror = e => {
-      reject('Error reading file');
+      reject("Error reading file");
     };
 
     reader.readAsText(file);
@@ -97,12 +97,12 @@ export const saveProjects = async (projects: IRppData[]) => {
     zip.file(getName(proj), content);
   }
 
-  const blob = await zip.generateAsync({ type: 'blob' });
-  saveAs(blob, 'transforms.zip');
+  const blob = await zip.generateAsync({ type: "blob" });
+  saveAs(blob, "transforms.zip");
 };
 
 const getName = (project: IRppData) => {
-  const index = project.name.lastIndexOf('.');
+  const index = project.name.lastIndexOf(".");
   const nameWithoutExt = index > -1 ? project.name.substring(0, index) : project.name;
   return `${nameWithoutExt}_Transformed.rpp`;
 };

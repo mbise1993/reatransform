@@ -1,19 +1,15 @@
-import safeEval from 'safe-eval';
-import _ from 'lodash';
+import safeEval from "safe-eval";
+import _ from "lodash";
 
-import { adjustTempoBody } from './transformFunctions';
-import { IRppData } from '../project/rppProject';
+import { adjustTempoBody } from "./transformFunctions";
+import { IRppData } from "../project/rppProject";
 
 export interface ITransformScript {
   name: string;
   script: string;
 }
 
-export const runTransformScript = async (
-  script: string,
-  sourceProject: IRppData,
-  otherProjects: IRppData[]
-) => {
+export const runTransformScript = async (script: string, sourceProject: IRppData, otherProjects: IRppData[]) => {
   return new Promise<IRppData[]>((resolve, reject) => {
     try {
       const sourceProjectClone: IRppData = _.cloneDeep(sourceProject);
@@ -35,11 +31,11 @@ export const runTransformScript = async (
 
 export const allScripts: ITransformScript[] = [
   {
-    name: 'New Script',
-    script: '// New script\n'
+    name: "New Script",
+    script: "// New script\n"
   },
   {
-    name: 'Adjust Tempo',
+    name: "Adjust Tempo",
     script: adjustTempoBody
   }
 ];

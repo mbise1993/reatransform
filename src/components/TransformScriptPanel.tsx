@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { Card, ButtonGroup, DropdownButton, Dropdown, Button, Spinner } from 'react-bootstrap';
+import * as React from "react";
+import { Card, ButtonGroup, DropdownButton, Dropdown, Button, Spinner } from "react-bootstrap";
 
-import EditorView from './EditorView';
-import { ITransformScript } from '../transform/transformScript';
+import EditorView from "./EditorView";
+import { ITransformScript } from "../transform/transformScript";
 
 type TransformScriptPanelProps = {
   script: ITransformScript;
@@ -25,42 +25,27 @@ export default ({
   onScriptTextChange,
   onTransformClick
 }: TransformScriptPanelProps) => {
-
   return (
     <Card>
       <Card.Header>
         Transform Script
         <ButtonGroup>
-          <DropdownButton
-            id="script-dropdown"
-            size="sm"
-            variant="outline-light"
-            title={script.name}>
+          <DropdownButton id="script-dropdown" size="sm" variant="outline-light" title={script.name}>
             {allScripts.map(s => {
               return (
-                <Dropdown.Item
-                  key={s.name}
-                  onClick={() => onScriptChange(s)}>
+                <Dropdown.Item key={s.name} onClick={() => onScriptChange(s)}>
                   {s.name}
                 </Dropdown.Item>
               );
             })}
           </DropdownButton>
-          <Button
-            size="sm"
-            variant="outline-light"
-            disabled={!canRun}
-            onClick={() => onTransformClick()}>
-            {isRunning ? <Spinner animation="border" size="sm" /> : 'Run'}
+          <Button size="sm" variant="outline-light" disabled={!canRun} onClick={() => onTransformClick()}>
+            {isRunning ? <Spinner animation="border" size="sm" /> : "Run"}
           </Button>
         </ButtonGroup>
       </Card.Header>
       <Card.Body>
-        <EditorView
-          text={scriptText}
-          isEditable={true}
-          onTextChange={text => onScriptTextChange(text)}
-        />
+        <EditorView text={scriptText} isEditable={true} onTextChange={text => onScriptTextChange(text)} />
       </Card.Body>
     </Card>
   );

@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Modal, Button, ListGroup } from 'react-bootstrap';
+import * as React from "react";
+import { Modal, Button, ListGroup } from "react-bootstrap";
 
-import { IRppData, saveProjects } from '../project/rppProject';
+import { IRppData, saveProjects } from "../project/rppProject";
 
 type TransformDialogProps = {
   show: boolean;
@@ -30,9 +30,7 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
       <Modal.Body>
         <ListGroup as="ul">
           {transformedRpps.map((rpp, i) => (
-            <ListGroup.Item>
-              {rpp.name}
-            </ListGroup.Item>
+            <ListGroup.Item>{rpp.name}</ListGroup.Item>
           ))}
         </ListGroup>
       </Modal.Body>

@@ -1,5 +1,5 @@
-import fs from 'fs';
+import fs from "fs";
 
 export const readTestResource = (filename: string) => {
-  return fs.readFileSync(`./src/test/resources/${filename}`, 'utf8');
+  return fs.readFileSync(`./src/test/resources/${filename}`, "utf8");
 };

@@ -3,7 +3,7 @@ export function adjustTempo(allProjects) {
   const modifier = 1.5;
 
   for (const project of allProjects) {
-    const tempoProp = project.data.properties.find(prop => prop.name === 'TEMPO');
+    const tempoProp = project.data.properties.find(prop => prop.name === "TEMPO");
     if (tempoProp) {
       const tempo = tempoProp.attributes[0];
       tempoProp.attributes[0] = tempo * modifier;

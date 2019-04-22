@@ -1,28 +1,28 @@
-import { readTestResource } from './util';
-import { adjustTempo } from '../transform/transformFunctions';
-import { rppToElement } from '../project/rppConverter';
+import { readTestResource } from "./util";
+import { adjustTempo } from "../transform/transformFunctions";
+import { rppToElement } from "../project/rppConverter";
 
-it('adjusts the tempo of a single project', () => {
+it("adjusts the tempo of a single project", () => {
   validateAdjustTempo([
     {
-      fileName: 'EmptyProject.rpp',
+      fileName: "EmptyProject.rpp",
       originalTempo: 120
     }
   ]);
 });
 
-it('adjusts the tempos of all projects', () => {
+it("adjusts the tempos of all projects", () => {
   validateAdjustTempo([
     {
-      fileName: 'EmptyProject.rpp',
+      fileName: "EmptyProject.rpp",
       originalTempo: 120
     },
     {
-      fileName: 'OneTrackWithMidiData.rpp',
+      fileName: "OneTrackWithMidiData.rpp",
       originalTempo: 120
     },
     {
-      fileName: 'OneTrackWithOneVst.rpp',
+      fileName: "OneTrackWithOneVst.rpp",
       originalTempo: 120
     }
   ]);
@@ -48,7 +48,7 @@ const validateAdjustTempo = async (testData: TempoTestData[]) => {
 
   for (const project of projects) {
     const testDatum: any = testData.find(item => item.fileName === project.name);
-    let tempoProp = getProperty(project.data, 'TEMPO');
+    let tempoProp = getProperty(project.data, "TEMPO");
     expect(tempoProp.attributes[0]).toBe(testDatum.originalTempo * 1.5);
   }
 };

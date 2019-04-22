@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Card, Button, ButtonGroup, ListGroup } from 'react-bootstrap';
+import * as React from "react";
+import { Card, Button, ButtonGroup, ListGroup } from "react-bootstrap";
 
-import { RppProject } from '../project/rppProject';
+import { RppProject } from "../project/rppProject";
 
 interface IProjectsPanelProps {
   projects: RppProject[];
@@ -22,38 +22,34 @@ export default ({
   onSetSourceClick,
   onDeleteClick
 }: IProjectsPanelProps) => {
-
   const stopPropogation = (e: React.MouseEvent, handler: (project: RppProject) => void, project: RppProject) => {
     e.stopPropagation();
     handler(project);
-  }
+  };
 
   let importFileInput: HTMLInputElement;
 
   const padLeft = {
-    paddingLeft: '4px'
+    paddingLeft: "4px"
   };
 
   return (
     <Card className="h-100">
       <Card.Header>
         Projects
-          <span>
+        <span>
           <input
             ref={ref => (importFileInput = ref!)}
             multiple
             type="file"
             id="import-file-input"
             name="files[]"
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             onChange={e => onFileImport(e.target.files)}
           />
-          <Button
-            variant="outline-light"
-            size="sm"
-            onClick={() => importFileInput!.click()}>
+          <Button variant="outline-light" size="sm" onClick={() => importFileInput!.click()}>
             Import
-            </Button>
+          </Button>
         </span>
       </Card.Header>
 
@@ -63,21 +59,24 @@ export default ({
             <ListGroup.Item
               key={project.id}
               active={project.id === selectedProject.id}
-              onClick={() => onProjectClick(project)}>
+              onClick={() => onProjectClick(project)}
+            >
               {project.name}
               <ButtonGroup>
                 <Button
                   variant={project.id === sourceProject.id ? "light" : "outline-light"}
                   size="sm"
                   style={padLeft}
-                  onClick={(e: React.MouseEvent) => stopPropogation(e, onSetSourceClick, project)}>
+                  onClick={(e: React.MouseEvent) => stopPropogation(e, onSetSourceClick, project)}
+                >
                   Source
                 </Button>
                 <Button
                   variant="outline-light"
                   size="sm"
                   style={padLeft}
-                  onClick={(e: React.MouseEvent) => stopPropogation(e, onDeleteClick, project)}>
+                  onClick={(e: React.MouseEvent) => stopPropogation(e, onDeleteClick, project)}
+                >
                   Delete
                 </Button>
               </ButtonGroup>

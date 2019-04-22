@@ -1,4 +1,4 @@
-import { IRppElement, IRppProperty } from '../project/rppProject';
+import { IRppElement, IRppProperty } from "../project/rppProject";
 
 export const rppToElement = async (content: string) => {
   return await new Promise<any>((resolve, reject) => {
@@ -11,7 +11,7 @@ export const rppToElement = async (content: string) => {
 };
 
 const _rppToElement = (content: string) => {
-  let lines = content.split('\n').map(l => l.trim());
+  let lines = content.split("\n").map(l => l.trim());
   let lineNum = 0;
 
   const getValue = (data: any) => {
@@ -19,11 +19,8 @@ const _rppToElement = (content: string) => {
   };
 
   const readProperty = () => {
-    const tokens = lines[lineNum].split(' ');
-    assert(
-      tokens.length > 1,
-      `Error at line ${lineNum + 1} ('${lines[lineNum]}') expected property, got data`
-    );
+    const tokens = lines[lineNum].split(" ");
+    assert(tokens.length > 1, `Error at line ${lineNum + 1} ('${lines[lineNum]}') expected property, got data`);
 
     return {
       name: tokens[0],
@@ -33,9 +30,9 @@ const _rppToElement = (content: string) => {
 
   const readElement = () => {
     let line = lines[lineNum];
-    assert(line.charAt(0) === '<', `Error at line ${lineNum}: expected element`);
+    assert(line.charAt(0) === "<", `Error at line ${lineNum}: expected element`);
 
-    const tokens = line.substring(1).split(' ');
+    const tokens = line.substring(1).split(" ");
     const element: IRppElement = {
       name: tokens[0],
       attributes: tokens.slice(1).map(tok => getValue(tok)),
@@ -49,13 +46,13 @@ const _rppToElement = (content: string) => {
       line = lines[lineNum];
 
       // Check for start or end of element
-      if (line.charAt(0) === '<') {
+      if (line.charAt(0) === "<") {
         element.elements.push(readElement());
-      } else if (line === '>') {
+      } else if (line === ">") {
         return element;
       } else {
         // Determine whether line is property or data
-        var numTokens = line.split(' ').length;
+        var numTokens = line.split(" ").length;
         if (numTokens > 1) {
           element.properties.push(readProperty());
         } else if (numTokens === 1) {
@@ -66,7 +63,7 @@ const _rppToElement = (content: string) => {
       lineNum++;
     }
 
-    throw new Error('No closing tag found for element');
+    throw new Error("No closing tag found for element");
   };
 
   return readElement();
@@ -87,26 +84,26 @@ const _elementToRpp = (element: IRppElement): string => {
   let indent = 0;
 
   const writeProperty = (prop: any) => {
-    lines.push(`${' '.repeat(indent)}${prop.name} ${prop.attributes.join(' ')}`);
+    lines.push(`${" ".repeat(indent)}${prop.name} ${prop.attributes.join(" ")}`);
   };
 
   const writeElement = (el: any) => {
-    lines.push(`${' '.repeat(indent)}<${el.name} ${el.attributes.join(' ')}`);
+    lines.push(`${" ".repeat(indent)}<${el.name} ${el.attributes.join(" ")}`);
     indent += 2;
 
     el.properties.forEach((prop: any) => writeProperty(prop));
     el.elements.forEach((e: any) => writeElement(e));
 
     if (el.data) {
-      lines.push(`${' '.repeat(indent)}${el.data}`);
+      lines.push(`${" ".repeat(indent)}${el.data}`);
     }
 
     indent -= 2;
-    lines.push(`${' '.repeat(indent)}>`);
+    lines.push(`${" ".repeat(indent)}>`);
   };
 
   writeElement(element);
-  return lines.join('\n');
+  return lines.join("\n");
 };
 
 const assert = (expression: boolean, message: string) => {

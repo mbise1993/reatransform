@@ -1,9 +1,9 @@
-import * as React from 'react';
-import AceEditor from 'react-ace';
+import * as React from "react";
+import AceEditor from "react-ace";
 
-import brace from 'brace';
-import 'brace/mode/javascript';
-import 'brace/theme/monokai';
+import brace from "brace";
+import "brace/mode/javascript";
+import "brace/theme/monokai";
 
 interface IEditorViewProps {
   text: string;
@@ -13,8 +13,8 @@ interface IEditorViewProps {
 
 export default ({ text, isEditable, onTextChange }: IEditorViewProps) => {
   const editorStyle = {
-    width: '100%',
-    height: '100%'
+    width: "100%",
+    height: "100%"
   };
 
   return (
