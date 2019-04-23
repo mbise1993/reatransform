@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Container, Row, Col, CardGroup, Spinner } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 
 import ProjectsPanel from "../project/ProjectsPanel";
 import ProjectJsonPanel from "../project/ProjectJsonPanel";
@@ -118,6 +119,10 @@ export default () => {
 
   return (
     <Container fluid>
+      <Helmet>
+        <title>ReaTransform</title>
+      </Helmet>
+
       <Row className="app-header">ReaTransform</Row>
 
       <Row className="app-content">
