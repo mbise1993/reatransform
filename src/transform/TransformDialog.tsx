@@ -32,6 +32,15 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
     onClose();
   };
 
+  const rppTextStyle: React.CSSProperties = {
+    padding: "8px",
+    height: "100%",
+    overflow: "auto",
+    whiteSpace: "pre",
+    fontSize: 12,
+    fontFamily: "monospace",
+  };
+
   return (
     <Modal size="lg" show={show} onHide={onClose}>
       <Modal.Header>
@@ -51,9 +60,7 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
           </Col>
 
           <Col lg="7" style={{ height: "100%" }}>
-            <div style={{ padding: "8px", height: "100%", overflow: "auto", whiteSpace: "pre", fontSize: 12 }}>
-              {rppText}
-            </div>
+            <div style={rppTextStyle}>{rppText}</div>
           </Col>
         </Row>
       </Modal.Body>
