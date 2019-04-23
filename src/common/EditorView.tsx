@@ -17,6 +17,10 @@ export default ({ text, isEditable, onTextChange }: IEditorViewProps) => {
     height: "100%",
   };
 
+  if (typeof window === "undefined" || !AceEditor) {
+    return null;
+  }
+
   return (
     <AceEditor
       mode="javascript"

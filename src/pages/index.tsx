@@ -9,7 +9,7 @@ import { ReaperProject, IRppData, importProjects } from "../project/reaperProjec
 import { allScripts, ITransformScript, runTransformScript } from "../transform/transformScript";
 
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "./styles.css";
+import "../styles.css";
 
 export default () => {
   const [projects, setProjects] = React.useState<ReaperProject[]>([]);
