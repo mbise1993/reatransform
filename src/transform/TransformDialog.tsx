@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Modal, Button, ListGroup } from "react-bootstrap";
+import { Modal, Button, ListGroup, Row, Col } from "react-bootstrap";
 
 import { IRppData, saveProjects } from "../project/reaperProject";
+import elementToRpp from "../project/elementToRpp";
 
 type TransformDialogProps = {
   show: boolean;
@@ -15,6 +16,16 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
   }
 
   const [selectedRpp, setSelectedRpp] = React.useState(transformedRpps[0]);
+  const [rppText, setRppText] = React.useState("");
+
+  React.useEffect(() => {
+    elementToRpp(transformedRpps[0].rootElement).then(text => setRppText(text));
+  }, []);
+
+  const handleRppClick = async (rpp: IRppData) => {
+    setSelectedRpp(rpp);
+    setRppText(await elementToRpp(rpp.rootElement));
+  };
 
   const handleDownloadClick = async () => {
     await saveProjects(transformedRpps);
@@ -22,17 +33,29 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
   };
 
   return (
-    <Modal show={show} onHide={onClose}>
+    <Modal size="lg" show={show} onHide={onClose}>
       <Modal.Header>
         <Modal.Title>Transformed Projects</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
-        <ListGroup as="ul">
-          {transformedRpps.map((rpp, i) => (
-            <ListGroup.Item>{rpp.name}</ListGroup.Item>
-          ))}
-        </ListGroup>
+      <Modal.Body style={{ height: "50vh" }}>
+        <Row style={{ height: "100%" }} noGutters>
+          <Col lg="5">
+            <ListGroup as="ul" style={{ height: "100%", borderRight: "1px solid white" }}>
+              {transformedRpps.map((rpp, i) => (
+                <ListGroup.Item key={i} active={rpp === selectedRpp} onClick={() => handleRppClick(rpp)}>
+                  {rpp.name}
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Col>
+
+          <Col lg="7" style={{ height: "100%" }}>
+            <div style={{ padding: "8px", height: "100%", overflow: "auto", whiteSpace: "pre", fontSize: 12 }}>
+              {rppText}
+            </div>
+          </Col>
+        </Row>
       </Modal.Body>
 
       <Modal.Footer>
