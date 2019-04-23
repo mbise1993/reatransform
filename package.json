@@ -1,5 +1,5 @@
 {
-  "name": "reaproject",
+  "name": "reatransform",
   "version": "1.0.0",
   "description": "REAPER project batch transformations via scripting",
   "author": "Matt Bise <mbise1993@gmail.com>",
@@ -50,9 +50,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mbise1993/reaproject-react"
+    "url": "https://github.com/mbise1993/reatransform"
   },
   "bugs": {
-    "url": "https://github.com/mbise1993/reaproject-react/issues"
+    "url": "https://github.com/mbise1993/reatransform/issues"
   }
 }
