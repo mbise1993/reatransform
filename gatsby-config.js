@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `ReaProject`,
+    title: `ReaTransform`,
     description: `Run batch transform scripts agains REAPER projects`,
     author: `@matthewbise`,
   },
