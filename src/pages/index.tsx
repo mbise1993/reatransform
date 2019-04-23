@@ -118,7 +118,7 @@ export default () => {
 
   return (
     <Container fluid>
-      <Row className="app-header">ReaProject</Row>
+      <Row className="app-header">ReaTransform</Row>
 
       <Row className="app-content">
         <Col lg="3">
