@@ -51,6 +51,7 @@ body,
   background-color: var(--med-gray);
   padding: 8px;
   border: none;
+  cursor: default;
 }
 
 .list-group-item:first-child {
@@ -64,4 +65,8 @@ body,
 
 .modal-content {
   background-color: var(--med-gray);
+}
+
+.modal-body {
+  padding: 0px;
 }
