@@ -30,6 +30,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-typescript": "^7.3.3",
     "@storybook/addon-actions": "^5.0.10",
     "@storybook/react": "^5.0.10",
     "@types/file-saver": "^2.0.0",
@@ -42,7 +44,9 @@
     "@types/storybook__react": "^4.0.1",
     "@types/styled-components": "4.1.14",
     "awesome-typescript-loader": "^5.2.1",
+    "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
+    "jest": "^24.7.1",
     "prettier": "^1.17.0",
     "typescript": "3.3.3",
     "webpack": "^4.30.0"
@@ -53,7 +57,7 @@
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "test": "jest",
     "storybook": "start-storybook"
   },
   "repository": {
