@@ -1,22 +1,32 @@
 {
   "name": "reaproject",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "main": "src/index.tsx",
+  "description": "REAPER project batch transformations via scripting",
+  "author": "Matt Bise <mbise1993@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "core-js": "^2.6.5",
     "file-saver": "2.0.1",
+    "gatsby": "^2.3.25",
+    "gatsby-image": "^2.0.39",
+    "gatsby-plugin-manifest": "^2.0.29",
+    "gatsby-plugin-offline": "^2.0.25",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "gatsby-plugin-sharp": "^2.0.35",
+    "gatsby-plugin-typescript": "^2.0.12",
+    "gatsby-source-filesystem": "^2.0.29",
+    "gatsby-transformer-sharp": "^2.1.18",
+    "jquery": "^3.4.0",
     "jszip": "3.2.1",
     "lodash": "4.17.11",
-    "react": "16.8.4",
+    "react": "^16.8.6",
     "react-ace": "6.4.0",
     "react-bootstrap": "^1.0.0-beta.8",
-    "react-dom": "16.8.4",
-    "react-scripts": "^2.1.8",
-    "safe-eval": "0.4.1",
-    "styled-components": "4.2.0",
-    "styled-icons": "7.9.0"
+    "react-dom": "^16.8.6",
+    "react-error-overlay": "^5.1.5",
+    "react-helmet": "^5.2.0",
+    "safe-eval": "0.4.1"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.0",
@@ -26,18 +36,23 @@
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.2",
     "@types/styled-components": "4.1.14",
-    "typescript": "3.3.3"
+    "prettier": "^1.17.0",
+    "typescript": "3.3.3",
+    "webpack": "^4.30.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mbise1993/reaproject-react"
+  },
+  "bugs": {
+    "url": "https://github.com/mbise1993/reaproject-react/issues"
+  }
 }

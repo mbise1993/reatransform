@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card } from "react-bootstrap";
 
-import EditorView from "../core/EditorView";
+import EditorView from "../common/EditorView";
 
 type ProjectJsonPanelProps = {
   title: string;

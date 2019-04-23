@@ -1,12 +1,15 @@
 import * as React from "react";
 import { Container, Row, Col, CardGroup, Spinner } from "react-bootstrap";
 
-import ProjectsPanel from "./project/ProjectsPanel";
-import TransformScriptPanel from "./transform/TransformScriptPanel";
-import ProjectJsonPanel from "./project/ProjectJsonPanel";
-import TransformDialog from "./transform/TransformDialog";
-import { ReaperProject, IRppData, importProjects } from "./project/reaperProject";
-import { allScripts, ITransformScript, runTransformScript } from "./transform/transformScript";
+import ProjectsPanel from "../project/ProjectsPanel";
+import ProjectJsonPanel from "../project/ProjectJsonPanel";
+import TransformScriptPanel from "../transform/TransformScriptPanel";
+import TransformDialog from "../transform/TransformDialog";
+import { ReaperProject, IRppData, importProjects } from "../project/reaperProject";
+import { allScripts, ITransformScript, runTransformScript } from "../transform/transformScript";
+
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
 
 export default () => {
   const [projects, setProjects] = React.useState<ReaperProject[]>([]);
