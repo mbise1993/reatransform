@@ -8,8 +8,9 @@
 
 html,
 body,
-#app {
-  height: 100vh;
+#___gatsby,
+#___gatsby > div {
+  height: 100%;
   color: var(--text);
   background-color: var(--dark-gray);
 }
