@@ -37,7 +37,7 @@ node_modules/
 jspm_packages/
 
 # Typescript v1 declaration files
-typings/
+# typings/
 
 # Optional npm cache directory
 .npm
@@ -67,3 +67,5 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
+react-app-env.d.ts
