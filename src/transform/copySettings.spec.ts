@@ -2,7 +2,20 @@ import { readTestResource } from "../test/util";
 import { copySettings } from "./copySettings";
 import rppToElement from "../project/rppToElement";
 import { IRppData, IRppElement } from "../project/reaperProject";
-import console = require("console");
+
+it("does not error when there are no other projects", async () => {
+  await validateCopySettings({
+    sourceFileName: "EmptyProject.rpp",
+    otherFileNames: [],
+  });
+});
+
+it("copies the settings to a project with no tracks", async () => {
+  await validateCopySettings({
+    sourceFileName: "OneTrackWithOneVst.rpp",
+    otherFileNames: ["EmptyProject.rpp"],
+  });
+});
 
 it("copies the settings to a single project", async () => {
   await validateCopySettings({

@@ -10,6 +10,10 @@ export function copySettings(sourceProject, otherProjects) {
   sourceProject.rootElement.elements
     .filter(el => el.name === "TRACK")
     .forEach(sourceTrack => {
+      if (otherProjects.length === 0) {
+        return;
+      }
+
       const otherTracks = otherProjects
         .map(proj => proj.rootElement.elements)
         .reduce((all, current) => [...all, ...current])
@@ -54,6 +58,10 @@ export const copySettingsBody = `// Copy master settings
   sourceProject.rootElement.elements
     .filter(el => el.name === "TRACK")
     .forEach(sourceTrack => {
+      if (otherProjects.length === 0) {
+        return;
+      }
+      
       const otherTracks = otherProjects
         .map(proj => proj.rootElement.elements)
         .reduce((all, current) => [...all, ...current])
