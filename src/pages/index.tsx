@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Container, Row, Col, CardGroup, Spinner } from "react-bootstrap";
+import { CardGroup } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 
+import HeaderPanel from "../common/HeaderPanel";
 import ProjectsPanel from "../project/ProjectsPanel";
 import ProjectJsonPanel from "../project/ProjectJsonPanel";
 import TransformScriptPanel from "../transform/TransformScriptPanel";
@@ -121,7 +122,7 @@ export default () => {
   const title = selectedProject ? `JSON for ${selectedProject.name}` : "No Project Selected";
 
   return (
-    <Container fluid>
+    <div id="app-container">
       <Helmet>
         <html lang="en" />
         <title>ReaTransform</title>
@@ -131,42 +132,42 @@ export default () => {
         <meta name="Description" content="Use JavaScript to batch transform REAPER project files." />
       </Helmet>
 
-      <Row className="app-header">ReaTransform</Row>
+      <div id="app-header">
+        <HeaderPanel />
+      </div>
 
-      <Row className="app-content">
-        <Col>
-          <CardGroup className="h-100">
-            <ProjectsPanel
-              projects={projects}
-              selectedProject={selectedProject!}
-              sourceProject={sourceProject!}
-              onFileImport={files => handleFileImport(files)}
-              onProjectClick={project => updateSelectedProject(project)}
-              onSetSourceClick={project => handleSetSourceClick(project)}
-              onDeleteClick={project => handleDeleteClick(project)}
-            />
+      <div id="app-content">
+        <CardGroup className="h-100">
+          <ProjectsPanel
+            projects={projects}
+            selectedProject={selectedProject!}
+            sourceProject={sourceProject!}
+            onFileImport={files => handleFileImport(files)}
+            onProjectClick={project => updateSelectedProject(project)}
+            onSetSourceClick={project => handleSetSourceClick(project)}
+            onDeleteClick={project => handleDeleteClick(project)}
+          />
 
-            <ProjectJsonPanel title={title} json={projectJson} />
+          <ProjectJsonPanel title={title} json={projectJson} />
 
-            <TransformScriptPanel
-              script={script}
-              scriptText={scriptText}
-              allScripts={allScripts}
-              canRun={projects.length > 0}
-              isRunning={isRunning}
-              onScriptChange={s => handleScriptChange(s)}
-              onScriptTextChange={t => handleScriptTextChange(t)}
-              onTransformClick={() => handleTransformClick()}
-            />
-          </CardGroup>
-        </Col>
-      </Row>
+          <TransformScriptPanel
+            script={script}
+            scriptText={scriptText}
+            allScripts={allScripts}
+            canRun={projects.length > 0}
+            isRunning={isRunning}
+            onScriptChange={s => handleScriptChange(s)}
+            onScriptTextChange={t => handleScriptTextChange(t)}
+            onTransformClick={() => handleTransformClick()}
+          />
+        </CardGroup>
+      </div>
 
       <TransformDialog
         show={transformedRpps.length > 0}
         transformedRpps={transformedRpps}
         onClose={() => handleTransformDialogClose()}
       />
-    </Container>
+    </div>
   );
 };

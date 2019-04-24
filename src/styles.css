@@ -15,19 +15,27 @@ body,
   background-color: var(--dark-gray);
 }
 
-.container-fluid {
-  height: 85%;
+#app-container {
+  height: 100%;
+  padding: 0px 20px 20px 20px;
+  display: grid;
+  grid:
+    "header" 60px
+    "content" 1fr
+    / 1fr;
 }
 
-.app-header {
+#app-header {
+  align-self: center;
+  grid-area: header;
   font-size: 26px;
   font-weight: 200;
   letter-spacing: 2px;
   padding: 18px 24px;
 }
 
-.app-content {
-  height: 100%;
+#app-content {
+  grid-area: content;
 }
 
 .card-header {
