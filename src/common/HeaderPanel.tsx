@@ -10,7 +10,7 @@ export default ({ className, ...otherProps }: React.ComponentProps<"div">) => {
 
   return (
     <div className={className} style={style.root} {...otherProps}>
-      <span style={style.inline}>ReaProject</span>
+      <span style={style.inline}>ReaProject 🎚</span>
       <span style={style.inline}>
         <Button variant="outline-light" size="sm" onClick={handleReadClick}>
           Read the Docs!
@@ -30,15 +30,13 @@ export default ({ className, ...otherProps }: React.ComponentProps<"div">) => {
           </p>
           <ul style={style.list}>
             <li>
-              The project marked <b>Source</b> is accessible via the <span style={style.code}>sourceProject</span>{" "}
-              variable.
+              <span style={style.code}>sourceProject</span> - the project selected as <b>Source</b>
             </li>
             <li>
-              The projects <i>not</i> marked <b>Source</b> are accessible via the{" "}
-              <span style={style.code}>otherProjects</span> variable.
+              <span style={style.code}>otherProjects</span> - the rest of the projects not selected as <b>Source</b>
             </li>
             <li>
-              All of the projects are accessible via the <span style={style.code}>allProjects</span> variable.
+              <span style={style.code}>allProjects</span> - all of the projects
             </li>
           </ul>
         </Modal.Body>

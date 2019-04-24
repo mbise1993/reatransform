@@ -3,6 +3,7 @@ import { CardGroup } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 
 import HeaderPanel from "../common/HeaderPanel";
+import FooterPanel from "../common/FooterPanel";
 import ProjectsPanel from "../project/ProjectsPanel";
 import ProjectJsonPanel from "../project/ProjectJsonPanel";
 import TransformScriptPanel from "../transform/TransformScriptPanel";
@@ -132,9 +133,7 @@ export default () => {
         <meta name="Description" content="Use JavaScript to batch transform REAPER project files." />
       </Helmet>
 
-      <div id="app-header">
-        <HeaderPanel />
-      </div>
+      <HeaderPanel id="app-header" />
 
       <div id="app-content">
         <CardGroup className="h-100">
@@ -162,6 +161,8 @@ export default () => {
           />
         </CardGroup>
       </div>
+
+      <FooterPanel id="app-footer" />
 
       <TransformDialog
         show={transformedRpps.length > 0}
