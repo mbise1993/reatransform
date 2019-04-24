@@ -123,10 +123,12 @@ export default () => {
   return (
     <Container fluid>
       <Helmet>
+        <html lang="en" />
         <title>ReaTransform</title>
         <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
         <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
         <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
+        <meta name="Description" content="Use JavaScript to batch transform REAPER project files." />
       </Helmet>
 
       <Row className="app-header">ReaTransform</Row>
