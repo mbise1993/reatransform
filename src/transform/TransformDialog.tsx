@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, Button, ListGroup, Row, Col } from "react-bootstrap";
+import { Modal, Button, ListGroup } from "react-bootstrap";
 
 import { IRppData, saveProjects } from "../project/reaperProject";
 import elementToRpp from "../project/elementToRpp";
@@ -32,37 +32,24 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
     onClose();
   };
 
-  const rppTextStyle: React.CSSProperties = {
-    padding: "8px",
-    height: "100%",
-    overflow: "auto",
-    whiteSpace: "pre",
-    fontSize: 12,
-    fontFamily: "monospace",
-  };
-
   return (
     <Modal size="lg" show={show} onHide={onClose}>
       <Modal.Header>
         <Modal.Title>Transformed Projects</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body style={{ height: "50vh" }}>
-        <Row style={{ height: "100%" }} noGutters>
-          <Col lg="5">
-            <ListGroup as="ul" style={{ height: "100%", borderRight: "1px solid white" }}>
-              {transformedRpps.map((rpp, i) => (
-                <ListGroup.Item key={i} active={rpp === selectedRpp} onClick={() => handleRppClick(rpp)}>
-                  {rpp.name}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Col>
+      <Modal.Body style={styles.body}>
+        <div style={styles.list}>
+          <ListGroup as="ul">
+            {transformedRpps.map((rpp, i) => (
+              <ListGroup.Item key={i} active={rpp === selectedRpp} onClick={() => handleRppClick(rpp)}>
+                {rpp.name}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </div>
 
-          <Col lg="7" style={{ height: "100%" }}>
-            <div style={rppTextStyle}>{rppText}</div>
-          </Col>
-        </Row>
+        <div style={styles.rppText}>{rppText}</div>
       </Modal.Body>
 
       <Modal.Footer>
@@ -72,4 +59,26 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+const styles = {
+  body: {
+    display: "flex",
+    height: "50vh",
+    padding: "0px",
+  },
+  list: {
+    flexGrow: 1,
+    height: "100%",
+    borderRight: "1px solid white",
+  },
+  rppText: {
+    flexGrow: 1,
+    padding: "8px",
+    height: "100%",
+    overflow: "auto",
+    whiteSpace: "pre",
+    fontSize: 12,
+    fontFamily: "monospace",
+  } as React.CSSProperties,
 };
