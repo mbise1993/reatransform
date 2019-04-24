@@ -1,10 +1,10 @@
 import { readTestResource } from "../test/util";
-import { adjustTempo } from "./transformFunctions";
+import { adjustTempo } from "./adjustTempo";
 import rppToElement from "../project/rppToElement";
 import { IRppData } from "../project/reaperProject";
 
-it("adjusts the tempo of a single project", () => {
-  validateAdjustTempo([
+it("adjusts the tempo of a single project", async () => {
+  await validateAdjustTempo([
     {
       fileName: "EmptyProject.rpp",
       originalTempo: 120,
@@ -12,8 +12,8 @@ it("adjusts the tempo of a single project", () => {
   ]);
 });
 
-it("adjusts the tempos of all projects", () => {
-  validateAdjustTempo([
+it("adjusts the tempos of multiple projects", async () => {
+  await validateAdjustTempo([
     {
       fileName: "EmptyProject.rpp",
       originalTempo: 120,
