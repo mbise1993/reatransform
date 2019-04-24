@@ -10,7 +10,7 @@ type ProjectJsonPanelProps = {
 
 export default ({ title, json }: ProjectJsonPanelProps) => {
   return (
-    <Card>
+    <Card id="project-json-panel">
       <Card.Header>{title}</Card.Header>
       <Card.Body>
         <EditorView text={json} isEditable={false} onTextChange={text => {}} />

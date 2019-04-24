@@ -134,20 +134,20 @@ export default () => {
       <Row className="app-header">ReaTransform</Row>
 
       <Row className="app-content">
-        <Col lg="3">
-          <ProjectsPanel
-            projects={projects}
-            selectedProject={selectedProject!}
-            sourceProject={sourceProject!}
-            onFileImport={files => handleFileImport(files)}
-            onProjectClick={project => updateSelectedProject(project)}
-            onSetSourceClick={project => handleSetSourceClick(project)}
-            onDeleteClick={project => handleDeleteClick(project)}
-          />
-        </Col>
-
-        <Col lg>
+        <Col>
           <CardGroup className="h-100">
+            <ProjectsPanel
+              projects={projects}
+              selectedProject={selectedProject!}
+              sourceProject={sourceProject!}
+              onFileImport={files => handleFileImport(files)}
+              onProjectClick={project => updateSelectedProject(project)}
+              onSetSourceClick={project => handleSetSourceClick(project)}
+              onDeleteClick={project => handleDeleteClick(project)}
+            />
+
+            <ProjectJsonPanel title={title} json={projectJson} />
+
             <TransformScriptPanel
               script={script}
               scriptText={scriptText}
@@ -158,8 +158,6 @@ export default () => {
               onScriptTextChange={t => handleScriptTextChange(t)}
               onTransformClick={() => handleTransformClick()}
             />
-
-            <ProjectJsonPanel title={title} json={projectJson} />
           </CardGroup>
         </Col>
       </Row>

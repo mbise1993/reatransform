@@ -16,7 +16,7 @@ body,
 }
 
 .container-fluid {
-  height: 80%;
+  height: 85%;
 }
 
 .app-header {
@@ -69,4 +69,16 @@ body,
 
 .modal-body {
   padding: 0px;
+}
+
+#projects-panel {
+  flex-basis: 25%;
+}
+
+#project-json-panel {
+  flex-basis: 30%;
+}
+
+#transform-script-panel {
+  flex-basis: 45%;
 }

@@ -25,6 +25,7 @@ export default ({ text, isEditable, onTextChange }: IEditorViewProps) => {
     <AceEditor
       mode="javascript"
       theme="monokai"
+      showPrintMargin={false}
       editorProps={{
         $blockScrolling: Infinity,
       }}

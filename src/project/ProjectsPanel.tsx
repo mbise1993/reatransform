@@ -20,7 +20,7 @@ export default ({
   onFileImport,
   onProjectClick,
   onSetSourceClick,
-  onDeleteClick
+  onDeleteClick,
 }: IProjectsPanelProps) => {
   const stopPropogation = (e: React.MouseEvent, handler: (project: ReaperProject) => void, project: ReaperProject) => {
     e.stopPropagation();
@@ -30,11 +30,11 @@ export default ({
   let importFileInput: HTMLInputElement;
 
   const padLeft = {
-    paddingLeft: "4px"
+    paddingLeft: "4px",
   };
 
   return (
-    <Card className="h-100">
+    <Card id="projects-panel">
       <Card.Header>
         Projects
         <span>
@@ -61,7 +61,8 @@ export default ({
               active={project.id === selectedProject.id}
               onClick={() => onProjectClick(project)}
             >
-              {project.name}
+              <span style={{ textOverflow: "ellipsis" }}>{project.name}</span>
+
               <ButtonGroup>
                 <Button
                   variant={project.id === sourceProject.id ? "light" : "outline-light"}
