@@ -5,8 +5,8 @@ import { ReaperProject } from "./reaperProject";
 
 type ProjectsPanelProps = {
   projects: ReaperProject[];
-  selectedProject: ReaperProject;
-  sourceProject: ReaperProject;
+  selectedProject: ReaperProject | null;
+  sourceProject: ReaperProject | null;
   onFileImport: (file: FileList | null) => void;
   onProjectClick: (project: ReaperProject) => void;
   onSetSourceClick: (project: ReaperProject) => void;
@@ -59,14 +59,16 @@ export default ({
           {projects.map(project => (
             <ListGroup.Item
               key={project.id}
-              active={project.id === selectedProject.id}
+              active={!!selectedProject && project.id === selectedProject.id}
               onClick={() => onProjectClick(project)}
             >
               <span style={{ textOverflow: "ellipsis" }}>{project.name}</span>
 
               <ButtonGroup>
                 <Button
-                  variant={project.id === sourceProject.id ? "light" : "outline-light"}
+                  variant={
+                    !sourceProject ? "outline-light" : project.id === sourceProject.id ? "light" : "outline-light"
+                  }
                   size="sm"
                   style={padLeft}
                   onClick={(e: React.MouseEvent) => stopPropogation(e, onSetSourceClick, project)}

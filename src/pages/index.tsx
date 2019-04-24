@@ -140,8 +140,8 @@ export default () => {
           <ProjectsPanel
             id="projects-panel"
             projects={projects}
-            selectedProject={selectedProject!}
-            sourceProject={sourceProject!}
+            selectedProject={selectedProject}
+            sourceProject={sourceProject}
             onFileImport={files => handleFileImport(files)}
             onProjectClick={project => updateSelectedProject(project)}
             onSetSourceClick={project => handleSetSourceClick(project)}
