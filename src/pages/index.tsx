@@ -9,6 +9,9 @@ import TransformDialog from "../transform/TransformDialog";
 import { ReaperProject, IRppData, importProjects } from "../project/reaperProject";
 import { allScripts, ITransformScript, runTransformScript } from "../transform/transformScript";
 
+import appleTouchIcon from "../images/apple-touch-icon.png";
+import favicon16 from "../images/favicon-16x16.png";
+import favicon32 from "../images/favicon-32x32.png";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../styles.css";
 
@@ -121,6 +124,9 @@ export default () => {
     <Container fluid>
       <Helmet>
         <title>ReaTransform</title>
+        <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
+        <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+        <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
       </Helmet>
 
       <Row className="app-header">ReaTransform</Row>
