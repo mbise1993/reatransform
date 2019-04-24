@@ -87,7 +87,3 @@ body,
 .modal-content {
   background-color: var(--med-gray);
 }
-
-.modal-body {
-  padding: 0px;
-}

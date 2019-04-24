@@ -9,9 +9,9 @@ export default ({ ...otherProps }: React.ComponentProps<"div">) => {
   const handleDialogClose = () => setShowDialog(false);
 
   return (
-    <div style={style.root} {...otherProps}>
-      <span style={style.inline}>ReaProject 🎚</span>
-      <span style={style.inline}>
+    <div style={styles.root} {...otherProps}>
+      <span style={styles.inline}>ReaProject 🎚</span>
+      <span style={styles.inline}>
         <Button variant="outline-light" size="sm" onClick={handleReadClick}>
           Read the Docs!
         </Button>
@@ -22,21 +22,21 @@ export default ({ ...otherProps }: React.ComponentProps<"div">) => {
           <Modal.Title>ReaTransform Usage 🤓</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body style={style.body}>
+        <Modal.Body style={styles.body}>
           <p>
             Upload your .rpp files, set one of them as the <b>Source</b>, and select the transform script to run. You
             can modify any of the available transform scripts or create your own from scratch. These global variables
             are available to use in your script:
           </p>
-          <ul style={style.list}>
+          <ul style={styles.list}>
             <li>
-              <span style={style.code}>sourceProject</span> - the project selected as <b>Source</b>
+              <span style={styles.code}>sourceProject</span> - the project selected as <b>Source</b>
             </li>
             <li>
-              <span style={style.code}>otherProjects</span> - the rest of the projects not selected as <b>Source</b>
+              <span style={styles.code}>otherProjects</span> - the rest of the projects not selected as <b>Source</b>
             </li>
             <li>
-              <span style={style.code}>allProjects</span> - all of the projects
+              <span style={styles.code}>allProjects</span> - all of the projects
             </li>
           </ul>
         </Modal.Body>
@@ -45,7 +45,7 @@ export default ({ ...otherProps }: React.ComponentProps<"div">) => {
   );
 };
 
-const style = {
+const styles = {
   root: {
     display: "flex",
     justifyContent: "space-between",
