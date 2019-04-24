@@ -28,21 +28,27 @@ body,
 
 #app-header {
   grid-area: header;
-  align-self: center;
-  font-size: 26px;
-  font-weight: 200;
-  letter-spacing: 2px;
 }
 
 #app-footer {
   grid-area: footer;
-  align-self: center;
   padding: 10px 0px;
-  font-size: 12px;
 }
 
 #app-content {
   grid-area: content;
+}
+
+#projects-panel {
+  flex-basis: 25%;
+}
+
+#project-json-panel {
+  flex-basis: 30%;
+}
+
+#transform-script-panel {
+  flex-basis: 45%;
 }
 
 .card-header {
@@ -84,16 +90,4 @@ body,
 
 .modal-body {
   padding: 0px;
-}
-
-#projects-panel {
-  flex-basis: 25%;
-}
-
-#project-json-panel {
-  flex-basis: 30%;
-}
-
-#transform-script-panel {
-  flex-basis: 45%;
 }

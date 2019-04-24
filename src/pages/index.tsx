@@ -138,6 +138,7 @@ export default () => {
       <div id="app-content">
         <CardGroup className="h-100">
           <ProjectsPanel
+            id="projects-panel"
             projects={projects}
             selectedProject={selectedProject!}
             sourceProject={sourceProject!}
@@ -147,9 +148,10 @@ export default () => {
             onDeleteClick={project => handleDeleteClick(project)}
           />
 
-          <ProjectJsonPanel title={title} json={projectJson} />
+          <ProjectJsonPanel id="project-json-panel" title={title} json={projectJson} />
 
           <TransformScriptPanel
+            id="transform-script-panel"
             script={script}
             scriptText={scriptText}
             allScripts={allScripts}

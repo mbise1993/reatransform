@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 
-export default ({ className, ...otherProps }: React.ComponentProps<"div">) => {
+export default ({ ...otherProps }: React.ComponentProps<"div">) => {
   const [showDialog, setShowDialog] = React.useState(false);
 
   const handleReadClick = () => setShowDialog(true);
@@ -9,7 +9,7 @@ export default ({ className, ...otherProps }: React.ComponentProps<"div">) => {
   const handleDialogClose = () => setShowDialog(false);
 
   return (
-    <div className={className} style={style.root} {...otherProps}>
+    <div style={style.root} {...otherProps}>
       <span style={style.inline}>ReaProject 🎚</span>
       <span style={style.inline}>
         <Button variant="outline-light" size="sm" onClick={handleReadClick}>
@@ -50,6 +50,9 @@ const style = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    fontSize: "26px",
+    fontWeight: 200,
+    letterSpacing: "2px",
   },
   inline: {
     display: "flex",

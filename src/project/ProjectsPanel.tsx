@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Card, Button, ButtonGroup, ListGroup } from "react-bootstrap";
+import { Card, Button, ButtonGroup, ListGroup, CardProps } from "react-bootstrap";
 
 import { ReaperProject } from "./reaperProject";
 
-interface IProjectsPanelProps {
+type ProjectsPanelProps = {
   projects: ReaperProject[];
   selectedProject: ReaperProject;
   sourceProject: ReaperProject;
@@ -11,7 +11,7 @@ interface IProjectsPanelProps {
   onProjectClick: (project: ReaperProject) => void;
   onSetSourceClick: (project: ReaperProject) => void;
   onDeleteClick: (project: ReaperProject) => void;
-}
+} & React.ComponentPropsWithoutRef<"div">;
 
 export default ({
   projects,
@@ -21,7 +21,8 @@ export default ({
   onProjectClick,
   onSetSourceClick,
   onDeleteClick,
-}: IProjectsPanelProps) => {
+  ...otherProps
+}: ProjectsPanelProps) => {
   const stopPropogation = (e: React.MouseEvent, handler: (project: ReaperProject) => void, project: ReaperProject) => {
     e.stopPropagation();
     handler(project);
@@ -34,7 +35,7 @@ export default ({
   };
 
   return (
-    <Card id="projects-panel">
+    <Card {...otherProps}>
       <Card.Header>
         Projects
         <span>

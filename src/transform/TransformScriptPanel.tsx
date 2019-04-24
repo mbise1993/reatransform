@@ -13,7 +13,7 @@ type TransformScriptPanelProps = {
   onScriptChange: (script: ITransformScript) => void;
   onScriptTextChange: (text: string) => void;
   onTransformClick: () => void;
-};
+} & React.ComponentPropsWithoutRef<"div">;
 
 export default ({
   script,
@@ -24,9 +24,10 @@ export default ({
   onScriptChange,
   onScriptTextChange,
   onTransformClick,
+  ...otherProps
 }: TransformScriptPanelProps) => {
   return (
-    <Card id="transform-script-panel">
+    <Card {...otherProps}>
       <Card.Header>
         Transform Script
         <ButtonGroup>
