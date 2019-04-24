@@ -10,7 +10,7 @@ export default ({ ...otherProps }: React.ComponentProps<"div">) => {
 
   return (
     <div style={styles.root} {...otherProps}>
-      <span style={styles.inline}>ReaProject 🎚</span>
+      <span style={styles.inline}>ReaTransform 🎚</span>
       <span style={styles.inline}>
         <Button variant="outline-light" size="sm" onClick={handleReadClick}>
           Read the Docs!
