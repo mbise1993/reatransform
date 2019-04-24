@@ -26,7 +26,7 @@ export default ({
   onTransformClick,
 }: TransformScriptPanelProps) => {
   return (
-    <Card>
+    <Card id="transform-script-panel">
       <Card.Header>
         Transform Script
         <ButtonGroup>
