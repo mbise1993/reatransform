@@ -1,6 +1,7 @@
 import * as React from "react";
 import AceEditor from "react-ace";
 
+// eslint-disable-next-line
 import brace from "brace";
 import "brace/mode/javascript";
 import "brace/theme/monokai";

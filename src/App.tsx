@@ -1,21 +1,14 @@
 import * as React from "react";
 import { CardGroup } from "react-bootstrap";
-import { Helmet } from "react-helmet";
 
-import HeaderPanel from "../common/HeaderPanel";
-import FooterPanel from "../common/FooterPanel";
-import ProjectsPanel from "../project/ProjectsPanel";
-import ProjectJsonPanel from "../project/ProjectJsonPanel";
-import TransformScriptPanel from "../transform/TransformScriptPanel";
-import TransformDialog from "../transform/TransformDialog";
-import { ReaperProject, IRppData, importProjects } from "../project/reaperProject";
-import { allScripts, ITransformScript, runTransformScript } from "../transform/transformScript";
-
-import appleTouchIcon from "../images/apple-touch-icon.png";
-import favicon16 from "../images/favicon-16x16.png";
-import favicon32 from "../images/favicon-32x32.png";
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "../styles.css";
+import HeaderPanel from "./common/HeaderPanel";
+import FooterPanel from "./common/FooterPanel";
+import ProjectsPanel from "./project/ProjectsPanel";
+import ProjectJsonPanel from "./project/ProjectJsonPanel";
+import TransformScriptPanel from "./transform/TransformScriptPanel";
+import TransformDialog from "./transform/TransformDialog";
+import { ReaperProject, IRppData, importProjects } from "./project/reaperProject";
+import { allScripts, ITransformScript, runTransformScript } from "./transform/transformScript";
 
 export default () => {
   const [projects, setProjects] = React.useState<ReaperProject[]>([]);
@@ -124,15 +117,6 @@ export default () => {
 
   return (
     <div id="app-container">
-      <Helmet>
-        <html lang="en" />
-        <title>ReaTransform</title>
-        <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
-        <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
-        <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
-        <meta name="Description" content="Use JavaScript to batch transform REAPER project files." />
-      </Helmet>
-
       <HeaderPanel id="app-header" />
 
       <div id="app-content">

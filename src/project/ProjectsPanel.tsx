@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card, Button, ButtonGroup, ListGroup, CardProps } from "react-bootstrap";
+import { Card, Button, ButtonGroup, ListGroup } from "react-bootstrap";
 
 import { ReaperProject } from "./reaperProject";
 

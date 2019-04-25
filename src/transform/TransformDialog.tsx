@@ -20,7 +20,7 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
 
   React.useEffect(() => {
     elementToRpp(transformedRpps[0].rootElement).then(text => setRppText(text));
-  }, []);
+  });
 
   const handleRppClick = async (rpp: IRppData) => {
     setSelectedRpp(rpp);

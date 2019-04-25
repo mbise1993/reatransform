@@ -19,7 +19,12 @@ export default ({ ...otherProps }: React.ComponentProps<"div">) => {
 
       <Modal size="lg" show={showDialog} onHide={handleDialogClose}>
         <Modal.Header>
-          <Modal.Title>ReaTransform Usage 🤓</Modal.Title>
+          <Modal.Title>
+            ReaTransform Usage&nbsp;
+            <span role="img" aria-label="Nerd emoji">
+              🤓
+            </span>
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body style={styles.body}>
