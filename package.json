@@ -4,72 +4,67 @@
   "description": "REAPER project batch transformations via scripting",
   "author": "Matt Bise <mbise1993@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@types/react-helmet": "^5.0.8",
-    "bootstrap": "^4.3.1",
-    "core-js": "^2.6.5",
-    "file-saver": "2.0.1",
-    "gatsby": "^2.3.25",
-    "gatsby-image": "^2.0.39",
-    "gatsby-plugin-manifest": "^2.0.29",
-    "gatsby-plugin-offline": "^2.0.25",
-    "gatsby-plugin-react-helmet": "^3.0.12",
-    "gatsby-plugin-sharp": "^2.0.35",
-    "gatsby-plugin-typescript": "^2.0.12",
-    "gatsby-source-filesystem": "^2.0.29",
-    "gatsby-transformer-sharp": "^2.1.18",
-    "jquery": "^3.4.0",
-    "jszip": "3.2.1",
-    "lodash": "4.17.11",
-    "react": "^16.8.6",
-    "react-ace": "6.4.0",
-    "react-bootstrap": "^1.0.0-beta.8",
-    "react-dom": "^16.8.6",
-    "react-error-overlay": "^5.1.5",
-    "react-helmet": "^5.2.0",
-    "safe-eval": "0.4.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-typescript": "^7.3.3",
-    "@storybook/addon-actions": "^5.0.10",
-    "@storybook/react": "^5.0.10",
-    "@types/file-saver": "^2.0.0",
-    "@types/jest": "^24.0.11",
-    "@types/jszip": "^3.1.5",
-    "@types/lodash": "^4.14.123",
-    "@types/react": "16.8.8",
-    "@types/react-dom": "16.8.2",
-    "@types/storybook__addon-actions": "^3.4.2",
-    "@types/storybook__react": "^4.0.1",
-    "@types/styled-components": "4.1.14",
-    "awesome-typescript-loader": "^5.2.1",
-    "babel-jest": "^24.7.1",
-    "babel-loader": "^8.0.5",
-    "babel-preset-gatsby": "^0.1.11",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.7.1",
-    "prettier": "^1.17.0",
-    "react-test-renderer": "^16.8.6",
-    "ts-jest": "^24.0.2",
-    "typescript": "3.3.3",
-    "webpack": "^4.30.0"
-  },
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "jest --watchAll",
-    "storybook": "start-storybook"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mbise1993/reatransform"
   },
   "bugs": {
     "url": "https://github.com/mbise1993/reatransform/issues"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "file-saver": "2.0.1",
+    "jquery": "^3.4.0",
+    "jszip": "3.2.1",
+    "lodash": "4.17.11",
+    "popper.js": "^1.15.0",
+    "react": "^16.8.6",
+    "react-ace": "6.4.0",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.0",
+    "react-scripts": "3.0.0",
+    "safe-eval": "0.4.1",
+    "typescript": "3.4.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@storybook/addon-actions": "^5.0.10",
+    "@storybook/react": "^5.0.10",
+    "@types/file-saver": "^2.0.0",
+    "@types/jest": "^24.0.11",
+    "@types/jszip": "^3.1.5",
+    "@types/lodash": "^4.14.123",
+    "@types/node": "11.13.7",
+    "@types/react": "16.8.14",
+    "@types/react-dom": "16.8.4",
+    "@types/react-helmet": "^5.0.8",
+    "@types/storybook__addon-actions": "^3.4.2",
+    "@types/storybook__react": "^4.0.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.5",
+    "prettier": "^1.17.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
