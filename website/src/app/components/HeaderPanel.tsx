@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-import AuthDialog from './AuthDialog';
+import { AuthDialog } from '../../users/components';
 import DocsDialog from './DocsDialog';
 
 export default ({ ...otherProps }: React.ComponentProps<'div'>) => {
