@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   # POST /login
   def login
-    authenticate params[:email], params[:password]
+    authenticate params[:username], params[:password]
   end
 
   def test
@@ -24,11 +24,11 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:name, :email, :password)
+    params.permit(:username, :password)
   end
 
-  def authenticate(email, password)
-    command = AuthenticateUser.call(email, password)
+  def authenticate(username, password)
+    command = AuthenticateUser.call(username, password)
     if command.success?
       render json: {
         access_token: command.result,
