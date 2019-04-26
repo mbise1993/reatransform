@@ -1,29 +1,29 @@
-import { readTestResource } from "../test/util";
-import { adjustTempo } from "./adjustTempo";
-import rppToElement from "../project/rppToElement";
-import { IRppData } from "../project/reaperProject";
+import { readTestResource } from '../../test/util';
+import { adjustTempo } from './adjustTempo';
+import rppToElement from '../../projects/models/rppToElement';
+import { IRppData } from '../../projects/models/reaperProject';
 
-it("adjusts the tempo of a single project", async () => {
+it('adjusts the tempo of a single project', async () => {
   await validateAdjustTempo([
     {
-      fileName: "EmptyProject.rpp",
+      fileName: 'EmptyProject.rpp',
       originalTempo: 120,
     },
   ]);
 });
 
-it("adjusts the tempos of multiple projects", async () => {
+it('adjusts the tempos of multiple projects', async () => {
   await validateAdjustTempo([
     {
-      fileName: "EmptyProject.rpp",
+      fileName: 'EmptyProject.rpp',
       originalTempo: 120,
     },
     {
-      fileName: "OneTrackWithMidiData.rpp",
+      fileName: 'OneTrackWithMidiData.rpp',
       originalTempo: 120,
     },
     {
-      fileName: "OneTrackWithOneVst.rpp",
+      fileName: 'OneTrackWithOneVst.rpp',
       originalTempo: 120,
     },
   ]);
@@ -49,7 +49,7 @@ const validateAdjustTempo = async (testData: TempoTestData[]) => {
 
   for (const project of projects) {
     const testDatum: any = testData.find(item => item.fileName === project.name);
-    let tempoProp = getProperty(project.rootElement, "TEMPO");
+    let tempoProp = getProperty(project.rootElement, 'TEMPO');
     expect(tempoProp.attributes[0]).toBe(testDatum.originalTempo * 1.5);
   }
 };

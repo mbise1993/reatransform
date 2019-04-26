@@ -1,33 +1,33 @@
-import { readTestResource } from "../test/util";
-import { copySettings } from "./copySettings";
-import rppToElement from "../project/rppToElement";
-import { IRppData, IRppElement } from "../project/reaperProject";
+import { readTestResource } from '../../test/util';
+import { copySettings } from './copySettings';
+import rppToElement from '../../projects/models/rppToElement';
+import { IRppData, IRppElement } from '../../projects/models/reaperProject';
 
-it("does not error when there are no other projects", async () => {
+it('does not error when there are no other projects', async () => {
   await validateCopySettings({
-    sourceFileName: "EmptyProject.rpp",
+    sourceFileName: 'EmptyProject.rpp',
     otherFileNames: [],
   });
 });
 
-it("copies the settings to a project with no tracks", async () => {
+it('copies the settings to a project with no tracks', async () => {
   await validateCopySettings({
-    sourceFileName: "OneTrackWithOneVst.rpp",
-    otherFileNames: ["EmptyProject.rpp"],
+    sourceFileName: 'OneTrackWithOneVst.rpp',
+    otherFileNames: ['EmptyProject.rpp'],
   });
 });
 
-it("copies the settings to a single project", async () => {
+it('copies the settings to a single project', async () => {
   await validateCopySettings({
-    sourceFileName: "OneTrackWithOneVst.rpp",
-    otherFileNames: ["OneTrackWithMidiData.rpp"],
+    sourceFileName: 'OneTrackWithOneVst.rpp',
+    otherFileNames: ['OneTrackWithMidiData.rpp'],
   });
 });
 
-it("copies the settings to multiple projects", async () => {
+it('copies the settings to multiple projects', async () => {
   await validateCopySettings({
-    sourceFileName: "OneTrackWithOneVst.rpp",
-    otherFileNames: ["OneTrackWithMidiData.rpp"],
+    sourceFileName: 'OneTrackWithOneVst.rpp',
+    otherFileNames: ['OneTrackWithMidiData.rpp'],
   });
 });
 
@@ -61,26 +61,26 @@ const validateCopySettings = async (testData: CopySettingsTestData) => {
 const validateMasterSettings = (source: IRppData, others: IRppData[]) => {
   const sourceRoot = source.rootElement;
   const otherRoots = others.map(proj => proj.rootElement);
-  validateProperty(sourceRoot, otherRoots, "MASTERMUTESOLO");
-  validateProperty(sourceRoot, otherRoots, "MASTER_VOLUME");
-  validateProperty(sourceRoot, otherRoots, "MASTER_FX");
+  validateProperty(sourceRoot, otherRoots, 'MASTERMUTESOLO');
+  validateProperty(sourceRoot, otherRoots, 'MASTER_VOLUME');
+  validateProperty(sourceRoot, otherRoots, 'MASTER_FX');
 };
 
 const validateTrackSettings = (source: IRppData, others: IRppData[]) => {
   source.rootElement.elements
-    .filter(el => el.name === "TRACK")
+    .filter(el => el.name === 'TRACK')
     .forEach(sourceTrack => {
       const otherTracks = others
         .map(proj => proj.rootElement.elements)
         .reduce((all, current) => [...all, ...current])
         .filter(el => areTracksSame(sourceTrack, el));
 
-      validateProperty(sourceTrack, otherTracks, "VOLPAN");
-      validateProperty(sourceTrack, otherTracks, "MUTESOLO");
-      validateProperty(sourceTrack, otherTracks, "IPHASE");
-      validateProperty(sourceTrack, otherTracks, "FX");
-      validateProperty(sourceTrack, otherTracks, "MAINSEND");
-      validateElement(sourceTrack, otherTracks, "FXCHAIN");
+      validateProperty(sourceTrack, otherTracks, 'VOLPAN');
+      validateProperty(sourceTrack, otherTracks, 'MUTESOLO');
+      validateProperty(sourceTrack, otherTracks, 'IPHASE');
+      validateProperty(sourceTrack, otherTracks, 'FX');
+      validateProperty(sourceTrack, otherTracks, 'MAINSEND');
+      validateElement(sourceTrack, otherTracks, 'FXCHAIN');
     });
 };
 
@@ -101,7 +101,7 @@ const validateElement = (source: IRppElement, others: IRppElement[], elementName
 };
 
 const areTracksSame = (sourceTrack: IRppElement, otherTrack: IRppElement) => {
-  const sourceNameProp = sourceTrack.properties.find(prop => prop.name === "NAME");
-  const otherNameProp = otherTrack.properties.find(prop => prop.name === "NAME");
+  const sourceNameProp = sourceTrack.properties.find(prop => prop.name === 'NAME');
+  const otherNameProp = otherTrack.properties.find(prop => prop.name === 'NAME');
   return sourceNameProp && otherNameProp && sourceNameProp.attributes[0] === otherNameProp.attributes[0];
 };

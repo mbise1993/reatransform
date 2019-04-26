@@ -1,14 +1,14 @@
-import * as React from "react";
-import { CardGroup } from "react-bootstrap";
+import * as React from 'react';
+import { CardGroup } from 'react-bootstrap';
 
-import HeaderPanel from "./common/HeaderPanel";
-import FooterPanel from "./common/FooterPanel";
-import ProjectsPanel from "./project/ProjectsPanel";
-import ProjectJsonPanel from "./project/ProjectJsonPanel";
-import TransformScriptPanel from "./transform/TransformScriptPanel";
-import TransformDialog from "./transform/TransformDialog";
-import { ReaperProject, IRppData, importProjects } from "./project/reaperProject";
-import { allScripts, ITransformScript, runTransformScript } from "./transform/transformScript";
+import HeaderPanel from './HeaderPanel';
+import FooterPanel from './FooterPanel';
+import ProjectsPanel from '../../projects/components/ProjectsPanel';
+import ProjectJsonPanel from '../../projects/components/ProjectJsonPanel';
+import TransformScriptPanel from '../../transforms/components/TransformScriptPanel';
+import TransformDialog from '../../transforms/components/TransformDialog';
+import { ReaperProject, IRppData, importProjects } from '../../projects/models/reaperProject';
+import { allScripts, ITransformScript, runTransformScript } from '../../transforms/models/transformScript';
 
 export default () => {
   const [projects, setProjects] = React.useState<ReaperProject[]>([]);
@@ -16,7 +16,7 @@ export default () => {
   const [sourceProject, setSourceProject] = React.useState<ReaperProject | null>(null);
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
-  const [projectJson, setProjectJson] = React.useState("");
+  const [projectJson, setProjectJson] = React.useState('');
   const [isRunning, setRunning] = React.useState(false);
   const [transformedRpps, setTransformedRpps] = React.useState<IRppData[]>([]);
 
@@ -109,11 +109,11 @@ export default () => {
         .then(obj => setProjectJson(JSON.stringify(obj, null, 2)))
         .catch(error => console.log((error as Error).message));
     } else {
-      setProjectJson("");
+      setProjectJson('');
     }
   };
 
-  const title = selectedProject ? `JSON for ${selectedProject.name}` : "No Project Selected";
+  const title = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
 
   return (
     <div id="app-container">

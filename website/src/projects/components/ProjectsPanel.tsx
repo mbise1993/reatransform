@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Card, Button, ButtonGroup, ListGroup } from "react-bootstrap";
+import * as React from 'react';
+import { Card, Button, ButtonGroup, ListGroup } from 'react-bootstrap';
 
-import { ReaperProject } from "./reaperProject";
+import { ReaperProject } from '../models/reaperProject';
 
 type ProjectsPanelProps = {
   projects: ReaperProject[];
@@ -11,7 +11,7 @@ type ProjectsPanelProps = {
   onProjectClick: (project: ReaperProject) => void;
   onSetSourceClick: (project: ReaperProject) => void;
   onDeleteClick: (project: ReaperProject) => void;
-} & React.ComponentPropsWithoutRef<"div">;
+} & React.ComponentPropsWithoutRef<'div'>;
 
 export default ({
   projects,
@@ -31,7 +31,7 @@ export default ({
   let importFileInput: HTMLInputElement;
 
   const padLeft = {
-    paddingLeft: "4px",
+    paddingLeft: '4px',
   };
 
   return (
@@ -45,7 +45,7 @@ export default ({
             type="file"
             id="import-file-input"
             name="files[]"
-            style={{ display: "none" }}
+            style={{ display: 'none' }}
             onChange={e => onFileImport(e.target.files)}
           />
           <Button variant="outline-light" size="sm" onClick={() => importFileInput!.click()}>
@@ -62,12 +62,12 @@ export default ({
               active={!!selectedProject && project.id === selectedProject.id}
               onClick={() => onProjectClick(project)}
             >
-              <span style={{ textOverflow: "ellipsis" }}>{project.name}</span>
+              <span style={{ textOverflow: 'ellipsis' }}>{project.name}</span>
 
               <ButtonGroup>
                 <Button
                   variant={
-                    !sourceProject ? "outline-light" : project.id === sourceProject.id ? "light" : "outline-light"
+                    !sourceProject ? 'outline-light' : project.id === sourceProject.id ? 'light' : 'outline-light'
                   }
                   size="sm"
                   style={padLeft}

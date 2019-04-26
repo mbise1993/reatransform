@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Modal, Button, ListGroup } from "react-bootstrap";
+import * as React from 'react';
+import { Modal, Button, ListGroup } from 'react-bootstrap';
 
-import { IRppData, saveProjects } from "../project/reaperProject";
-import elementToRpp from "../project/elementToRpp";
+import { IRppData, saveProjects } from '../../projects/models/reaperProject';
+import elementToRpp from '../../projects/models/elementToRpp';
 
 type TransformDialogProps = {
   show: boolean;
@@ -16,7 +16,7 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
   }
 
   const [selectedRpp, setSelectedRpp] = React.useState(transformedRpps[0]);
-  const [rppText, setRppText] = React.useState("");
+  const [rppText, setRppText] = React.useState('');
 
   React.useEffect(() => {
     elementToRpp(transformedRpps[0].rootElement).then(text => setRppText(text));
@@ -63,22 +63,22 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
 
 const styles = {
   body: {
-    display: "flex",
-    height: "50vh",
-    padding: "0px",
+    display: 'flex',
+    height: '50vh',
+    padding: '0px',
   },
   list: {
     flexGrow: 1,
-    height: "100%",
-    borderRight: "1px solid white",
+    height: '100%',
+    borderRight: '1px solid white',
   },
   rppText: {
     flexGrow: 1,
-    padding: "8px",
-    height: "100%",
-    overflow: "auto",
-    whiteSpace: "pre",
+    padding: '8px',
+    height: '100%',
+    overflow: 'auto',
+    whiteSpace: 'pre',
     fontSize: 12,
-    fontFamily: "monospace",
+    fontFamily: 'monospace',
   } as React.CSSProperties,
 };

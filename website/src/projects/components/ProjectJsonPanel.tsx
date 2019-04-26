@@ -1,12 +1,12 @@
-import * as React from "react";
-import { Card } from "react-bootstrap";
+import * as React from 'react';
+import { Card } from 'react-bootstrap';
 
-import EditorView from "../common/EditorView";
+import EditorView from '../../shared/components/EditorView';
 
 type ProjectJsonPanelProps = {
   title: string;
   json: string;
-} & React.ComponentPropsWithoutRef<"div">;
+} & React.ComponentPropsWithoutRef<'div'>;
 
 export default ({ title, json, ...otherProps }: ProjectJsonPanelProps) => {
   return (

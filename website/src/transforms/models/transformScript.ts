@@ -1,9 +1,9 @@
-import safeEval from "safe-eval";
-import _ from "lodash";
+import safeEval from 'safe-eval';
+import _ from 'lodash';
 
-import { copySettingsBody } from "./copySettings";
-import { adjustTempoBody } from "./adjustTempo";
-import { IRppData } from "../project/reaperProject";
+import { copySettingsBody } from './copySettings';
+import { adjustTempoBody } from './adjustTempo';
+import { IRppData } from '../../projects/models/reaperProject';
 
 export interface ITransformScript {
   name: string;
@@ -32,15 +32,15 @@ export const runTransformScript = async (script: string, sourceProject: IRppData
 
 export const allScripts: ITransformScript[] = [
   {
-    name: "Copy Settings",
+    name: 'Copy Settings',
     script: copySettingsBody,
   },
   {
-    name: "Adjust Tempo",
+    name: 'Adjust Tempo',
     script: adjustTempoBody,
   },
   {
-    name: "New Script",
-    script: "// New script\n",
+    name: 'New Script',
+    script: '// New script\n',
   },
 ];
