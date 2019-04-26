@@ -1,74 +1,45 @@
-import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import React from 'react';
+import { Button } from 'react-bootstrap';
 
-export default ({ ...otherProps }: React.ComponentProps<"div">) => {
-  const [showDialog, setShowDialog] = React.useState(false);
+import { AuthDialog } from '../auth/components';
+import DocsDialog from './DocsDialog';
 
-  const handleReadClick = () => setShowDialog(true);
-
-  const handleDialogClose = () => setShowDialog(false);
+export default ({ ...otherProps }: React.ComponentProps<'div'>) => {
+  const [showAuthDialog, setShowAuthDialog] = React.useState(false);
+  const [showDocsDialog, setShowDocsDialog] = React.useState(false);
 
   return (
     <div style={styles.root} {...otherProps}>
       <span style={styles.inline}>ReaTransform 🎚</span>
       <span style={styles.inline}>
-        <Button variant="outline-light" size="sm" onClick={handleReadClick}>
+        <Button variant="outline-light" size="sm" onClick={() => setShowAuthDialog(true)}>
+          Login or Sign Up
+        </Button>
+
+        <Button style={styles.marginLeft} variant="outline-light" size="sm" onClick={() => setShowDocsDialog(true)}>
           Read the Docs!
         </Button>
       </span>
 
-      <Modal size="lg" show={showDialog} onHide={handleDialogClose}>
-        <Modal.Header>
-          <Modal.Title>
-            ReaTransform Usage&nbsp;
-            <span role="img" aria-label="Nerd emoji">
-              🤓
-            </span>
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body style={styles.body}>
-          <p>
-            Upload your .rpp files, set one of them as the <b>Source</b>, and select the transform script to run. You
-            can modify any of the available transform scripts or create your own from scratch. These global variables
-            are available to use in your script:
-          </p>
-          <ul style={styles.list}>
-            <li>
-              <span style={styles.code}>sourceProject</span> - the project selected as <b>Source</b>
-            </li>
-            <li>
-              <span style={styles.code}>otherProjects</span> - the rest of the projects not selected as <b>Source</b>
-            </li>
-            <li>
-              <span style={styles.code}>allProjects</span> - all of the projects
-            </li>
-          </ul>
-        </Modal.Body>
-      </Modal>
+      <AuthDialog show={showAuthDialog} onClose={() => setShowAuthDialog(false)} />
+      <DocsDialog show={showDocsDialog} onClose={() => setShowDocsDialog(false)} />
     </div>
   );
 };
 
 const styles = {
   root: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    fontSize: "26px",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    fontSize: '26px',
     fontWeight: 200,
-    letterSpacing: "2px",
+    letterSpacing: '2px',
   },
   inline: {
-    display: "flex",
+    display: 'flex',
   },
-  body: {
-    padding: "20px",
-  },
-  list: {
-    padding: "0px 0px 0px 20px",
-  },
-  code: {
-    fontFamily: "monospace",
+  marginLeft: {
+    marginLeft: '10px',
   },
 };

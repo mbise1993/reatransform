@@ -1,19 +1,18 @@
 import React from 'react';
 import { Form, Button, FormControlProps } from 'react-bootstrap';
 
-type AuthFormProps = {
-  title: string;
+type SignUpFormProps = {
   onSubmit: (username: string, password: string) => void;
 };
 
-export default ({ title, onSubmit }: AuthFormProps) => {
+export default ({ onSubmit }: SignUpFormProps) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   return (
     <Form onSubmit={() => onSubmit(username, password)}>
       <Form.Group controlId="formTitle" style={styles.title}>
-        {title}
+        Sign up to manage your scripts!
       </Form.Group>
 
       <Form.Group controlId="formUsername">

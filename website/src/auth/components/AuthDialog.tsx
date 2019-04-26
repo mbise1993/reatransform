@@ -1,7 +1,8 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 
-import AuthForm from './AuthForm';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 
 type AuthDialogProps = {
   show: boolean;
@@ -9,25 +10,50 @@ type AuthDialogProps = {
 } & React.ComponentProps<'div'>;
 
 export default ({ show, onClose }: AuthDialogProps) => {
-  const handleLoginSubmit = (username: string, password: string) => {};
+  const [isOnLoginScreen, setOnLoginScreen] = React.useState(true);
+  const [isRunning, setRunning] = React.useState(false);
+
+  const handleLogin = (username: string, password: string) => {
+    setRunning(true);
+  };
+
+  const handleSignUp = (username: string, password: string) => {
+    setRunning(true);
+  };
+
+  const renderBody = () => {
+    if (isRunning) {
+      return (
+        <div style={styles.runningPanel}>
+          <Spinner animation="border" />
+          <div style={styles.runningText}>{isOnLoginScreen ? 'Logging in...' : 'Signing up...'}</div>
+        </div>
+      );
+    }
+
+    if (isOnLoginScreen) {
+      return <LoginForm onSubmit={handleLogin} onSignUpClick={() => setOnLoginScreen(false)} />;
+    }
+
+    return <SignUpForm onSubmit={handleSignUp} />;
+  };
 
   return (
-    <Modal show={show} onHide={onClose}>
-      <Modal.Body>
-        <AuthForm title="Login to ReaTransform" onSubmit={handleLoginSubmit} />
-        <div className="text-muted" style={styles.signupText}>
-          No account?&nbsp;<a href="https://github.com/mbise1993/reatransform">Signup!</a>
-        </div>
-      </Modal.Body>
+    <Modal show={show} onExited={() => setOnLoginScreen(true)} onHide={onClose}>
+      <Modal.Body>{renderBody()}</Modal.Body>
     </Modal>
   );
 };
 
 const styles = {
-  signupText: {
+  runningPanel: {
     display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
-    fontSize: '13px',
-    padding: '10px 0px',
+    padding: '10px',
+  } as React.CSSProperties,
+  runningText: {
+    marginTop: '20px',
   },
 };
