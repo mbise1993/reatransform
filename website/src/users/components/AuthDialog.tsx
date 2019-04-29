@@ -32,7 +32,7 @@ export default ({ show, onClose }: AuthDialogProps) => {
     }
 
     if (isOnLoginScreen) {
-      return <LoginForm onSubmit={handleLogin} onSignUpClick={() => setOnLoginScreen(false)} />;
+      return <LoginForm onSignUpClick={() => setOnLoginScreen(false)} />;
     }
 
     return <SignUpForm onSubmit={handleSignUp} />;
