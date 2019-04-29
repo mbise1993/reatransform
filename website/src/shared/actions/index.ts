@@ -1,7 +1,6 @@
-export const createAction = <T>(type: string, payload?: T, error?: Error) => {
+export const createAction = <T>(type: string, payload?: T) => {
   return {
     type,
     payload,
-    errorMessage: error ? error.message : undefined,
   };
 };

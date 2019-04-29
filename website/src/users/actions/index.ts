@@ -3,71 +3,79 @@ import { Action, Dispatch } from 'redux';
 import { UserService, User } from '../domain';
 import { createAction } from '../../shared/actions';
 
-export const types = {
-  LOGIN: 'LOGIN',
-  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-  LOGIN_ERROR: 'LOGIN_ERROR',
-  REGISTER: 'REGISTER',
-  REGISTER_SUCCESS: 'REGISTER_SUCCESS',
-  REGISTER_ERROR: 'REGISTER_ERROR',
-};
-
-interface ILoginAction extends Action {
-  type: 'LOGIN';
+export enum UserActionTypes {
+  LOGIN_INPROGRESS = 'LOGIN_INPROGRESS',
+  LOGIN_SUCCESS = 'LOGIN_SUCCESS',
+  LOGIN_ERROR = 'LOGIN_ERROR',
+  SIGNUP_INPROGRESS = 'SIGNUP_INPROGRESS',
+  SIGNUP_SUCCESS = 'SIGNUP_SUCCESS',
+  SIGNUP_ERROR = 'SIGNUP_ERROR',
 }
 
-interface ILoginSuccessAction extends Action {
-  type: 'LOGIN_SUCCESS';
-  user: User;
+interface ILoginInProgressAction {
+  readonly type: UserActionTypes.LOGIN_INPROGRESS;
 }
 
-interface ILoginErrorAction extends Action {
-  type: 'LOGIN_ERROR';
-  errorMessage: string;
+interface ILoginSuccessAction {
+  readonly type: UserActionTypes.LOGIN_SUCCESS;
+  readonly payload: {
+    readonly user: User;
+  };
 }
 
-interface IRegisterAction extends Action {
-  type: 'REGISTER';
+interface ILoginErrorAction {
+  readonly type: UserActionTypes.LOGIN_ERROR;
+  readonly payload: {
+    readonly error: Error;
+  };
 }
 
-interface IRegisterSuccessAction extends Action {
-  type: 'REGISTER_SUCCESS';
-  user: User;
+interface ISignUpInProgressAction {
+  readonly type: UserActionTypes.SIGNUP_INPROGRESS;
 }
 
-interface IRegisterErrorAction extends Action {
-  type: 'REGISTER_ERROR';
-  errorMessage: string;
+interface ISignUpSuccessAction extends Action {
+  readonly type: UserActionTypes.SIGNUP_SUCCESS;
+  readonly payload: {
+    readonly user: User;
+  };
+}
+
+interface ISignUpErrorAction extends Action {
+  readonly type: UserActionTypes.SIGNUP_ERROR;
+  readonly payload: {
+    readonly error: Error;
+  };
 }
 
 export type UserActions =
-  | ILoginAction
+  | ILoginInProgressAction
   | ILoginSuccessAction
   | ILoginErrorAction
-  | IRegisterAction
-  | IRegisterSuccessAction
-  | IRegisterErrorAction;
+  | ISignUpInProgressAction
+  | ISignUpSuccessAction
+  | ISignUpErrorAction;
 
 export const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(types.LOGIN));
+    dispatch(createAction(UserActionTypes.LOGIN_INPROGRESS));
     try {
-      await UserService.login(username, password);
-      return dispatch(createAction(types.LOGIN_SUCCESS));
+      const user = await UserService.login(username, password);
+      return dispatch(createAction(UserActionTypes.LOGIN_SUCCESS, { user }));
     } catch (e) {
-      return dispatch(createAction(types.LOGIN_ERROR, null, e));
+      return dispatch(createAction(UserActionTypes.LOGIN_ERROR, { error: e }));
     }
   };
 };
 
 export const register = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(types.REGISTER));
+    dispatch(createAction(UserActionTypes.SIGNUP_INPROGRESS));
     try {
       const user = await UserService.register(username, password);
-      return dispatch(createAction(types.REGISTER_SUCCESS, user));
+      return dispatch(createAction(UserActionTypes.SIGNUP_SUCCESS, { user }));
     } catch (e) {
-      return dispatch(createAction(types.REGISTER_ERROR, null, e));
+      return dispatch(createAction(UserActionTypes.SIGNUP_ERROR, { error: e }));
     }
   };
 };

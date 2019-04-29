@@ -1,5 +1,9 @@
 export default class User {
-  constructor(private _username: string) {}
+  private _username: string;
+
+  constructor(username: string) {
+    this._username = username;
+  }
 
   get username() {
     return this._username;

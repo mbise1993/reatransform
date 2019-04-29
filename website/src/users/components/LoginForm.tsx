@@ -1,12 +1,16 @@
 import React from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Form, Button, FormControlProps } from 'react-bootstrap';
+
+import { login } from '../actions';
 
 type LoginFormProps = {
   onSubmit: (username: string, password: string) => void;
   onSignUpClick: () => void;
 };
 
-export default ({ onSubmit, onSignUpClick }: LoginFormProps) => {
+const LoginForm = ({ onSubmit, onSignUpClick }: LoginFormProps) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -64,3 +68,14 @@ const styles = {
     padding: '10px 0px',
   },
 };
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    onSubmit: bindActionCreators(login, dispatch),
+  };
+};
+
+export default connect(
+  () => {},
+  mapDispatchToProps
+)(LoginForm);

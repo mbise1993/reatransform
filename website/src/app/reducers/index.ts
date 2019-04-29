@@ -1,12 +1,13 @@
-import { Action } from 'redux';
+import { Action, applyMiddleware, createStore } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
-import { UserState, createDefaultUserState, userReducer } from '../../users/reducers';
+import { IUserState, createDefaultUserState, userReducer } from '../../users/reducers';
 
-export type AppState = {
-  entities: {
-    user: UserState;
+export interface IAppState {
+  readonly entities: {
+    readonly user: IUserState;
   };
-};
+}
 
 export const createDefaultState = () => {
   return {
@@ -16,10 +17,14 @@ export const createDefaultState = () => {
   };
 };
 
-export const rootReducer = (state: AppState = createDefaultState(), action: Action) => {
+export const rootReducer = (state: IAppState = createDefaultState(), action: Action): IAppState => {
   return {
     entities: {
       user: userReducer(state.entities.user, action),
     },
   };
+};
+
+export const configureStore = () => {
+  return createStore(rootReducer, applyMiddleware(thunkMiddleware));
 };

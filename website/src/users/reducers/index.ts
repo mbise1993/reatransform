@@ -1,9 +1,9 @@
-import { UserActions } from '../actions';
+import { UserActions, UserActionTypes } from '../actions';
 import { User } from '../domain';
 
-export type UserState = {
+export interface IUserState {
   loggedInUser: User | null;
-};
+}
 
 export const createDefaultUserState = () => {
   return {
@@ -11,10 +11,10 @@ export const createDefaultUserState = () => {
   };
 };
 
-export const userReducer = (state: UserState, action: UserActions): UserState => {
-  if (action.type === 'LOGIN_SUCCESS' || action.type === 'REGISTER_SUCCESS') {
+export const userReducer = (state: IUserState, action: UserActions): IUserState => {
+  if (action.type === UserActionTypes.LOGIN_SUCCESS || action.type === UserActionTypes.SIGNUP_SUCCESS) {
     return {
-      loggedInUser: action.user,
+      loggedInUser: action.payload.user,
     };
   }
 
