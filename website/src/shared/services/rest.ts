@@ -30,4 +30,20 @@ export default class Rest {
       headers: createHeaders(options),
     });
   }
+
+  static async put(url: string, options: IRequestOptions) {
+    return await fetch(url, {
+      method: 'PUT',
+      body: options.params || '',
+      headers: createHeaders(options),
+    });
+  }
+
+  static async delete(url: string, options: IRequestOptions) {
+    return await fetch(url, {
+      method: 'DELETE',
+      body: options.params || '',
+      headers: createHeaders(options),
+    });
+  }
 }

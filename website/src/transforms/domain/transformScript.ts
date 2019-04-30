@@ -6,6 +6,8 @@ import { adjustTempoBody } from './adjustTempo';
 import { IRppData } from '../../projects/models/reaperProject';
 
 export interface ITransformScript {
+  id?: string;
+  userId?: string;
   name: string;
   script: string;
 }

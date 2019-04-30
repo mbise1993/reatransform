@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import TestPanel from '../../test/TestPanel';
 import TransformScriptPanel from './TransformScriptPanel';
-import { allScripts } from '../models/transformScript';
+import { allScripts } from '../domain/transformScript';
 import AsyncLoader from '../../test/AsyncLoader';
 
 const width = '600px';

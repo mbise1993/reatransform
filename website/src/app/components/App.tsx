@@ -8,7 +8,7 @@ import ProjectJsonPanel from '../../projects/components/ProjectJsonPanel';
 import TransformScriptPanel from '../../transforms/components/TransformScriptPanel';
 import TransformDialog from '../../transforms/components/TransformDialog';
 import { ReaperProject, IRppData, importProjects } from '../../projects/models/reaperProject';
-import { allScripts, ITransformScript, runTransformScript } from '../../transforms/models/transformScript';
+import { allScripts, ITransformScript, runTransformScript } from '../../transforms/domain/transformScript';
 
 export default () => {
   const [projects, setProjects] = React.useState<ReaperProject[]>([]);
