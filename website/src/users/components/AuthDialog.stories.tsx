@@ -12,13 +12,13 @@ const height = '300px';
 
 storiesOf('AuthDialog', module).add('login form', () => (
   <TestPanel width={width} height={height}>
-    <LoginForm onSignUpClick={action('sign up clicked')} />
+    <LoginForm onSubmit={action('login submit clicked')} onSignUpClick={action('sign up clicked')} />
   </TestPanel>
 ));
 
 storiesOf('AuthDialog', module).add('sign up form', () => (
   <TestPanel width={width} height={height}>
-    <SignUpForm onSubmit={action('submit clicked')} />
+    <SignUpForm onBackClick={action('back clicked')} onSubmit={action('signup submit clicked')} />
   </TestPanel>
 ));
 

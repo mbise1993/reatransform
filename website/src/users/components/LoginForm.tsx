@@ -1,28 +1,17 @@
 import React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
 import { Form, Button, FormControlProps } from 'react-bootstrap';
-
-import { login } from '../actions';
 
 type LoginFormProps = {
   onSubmit: (username: string, password: string) => void;
   onSignUpClick: () => void;
 };
 
-const LoginForm = ({ onSubmit, onSignUpClick }: LoginFormProps) => {
+export default ({ onSubmit, onSignUpClick }: LoginFormProps) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   return (
     <Form onSubmit={() => onSubmit(username, password)}>
-      <Form.Group controlId="formTitle" style={styles.title}>
-        Login&nbsp;
-        <span role="img" aria-label="Heart emoji">
-          🚀
-        </span>
-      </Form.Group>
-
       <Form.Group controlId="formUsername">
         <Form.Control
           type="input"
@@ -57,10 +46,6 @@ const LoginForm = ({ onSubmit, onSignUpClick }: LoginFormProps) => {
 };
 
 const styles = {
-  title: {
-    fontSize: '30px',
-    fontWeight: 200,
-  },
   signUpText: {
     display: 'flex',
     alignItems: 'center',
@@ -68,14 +53,3 @@ const styles = {
     padding: '10px 0px',
   },
 };
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    onSubmit: bindActionCreators(login, dispatch),
-  };
-};
-
-export default connect(
-  () => {},
-  mapDispatchToProps
-)(LoginForm);

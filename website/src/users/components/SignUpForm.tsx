@@ -2,19 +2,16 @@ import React from 'react';
 import { Form, Button, FormControlProps } from 'react-bootstrap';
 
 type SignUpFormProps = {
+  onBackClick: () => void;
   onSubmit: (username: string, password: string) => void;
 };
 
-export default ({ onSubmit }: SignUpFormProps) => {
+export default ({ onBackClick, onSubmit }: SignUpFormProps) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   return (
     <Form onSubmit={() => onSubmit(username, password)}>
-      <Form.Group controlId="formTitle" style={styles.title}>
-        Sign up to manage your scripts!
-      </Form.Group>
-
       <Form.Group controlId="formUsername">
         <Form.Control
           type="input"
@@ -31,16 +28,12 @@ export default ({ onSubmit }: SignUpFormProps) => {
         />
       </Form.Group>
 
-      <Button variant="light" type="submit">
+      <Button variant="outline-light" onClick={onBackClick}>
+        Back
+      </Button>
+      <Button style={{ marginLeft: 10 }} variant="light" type="submit">
         Submit
       </Button>
     </Form>
   );
-};
-
-const styles = {
-  title: {
-    fontSize: '30px',
-    fontWeight: 200,
-  },
 };
