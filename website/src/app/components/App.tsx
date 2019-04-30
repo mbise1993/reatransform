@@ -7,7 +7,7 @@ import ProjectsPanel from '../../projects/components/ProjectsPanel';
 import ProjectJsonPanel from '../../projects/components/ProjectJsonPanel';
 import TransformScriptPanel from '../../transforms/components/TransformScriptPanel';
 import TransformDialog from '../../transforms/components/TransformDialog';
-import { ReaperProject, IRppData, importProjects } from '../../projects/models/reaperProject';
+import { ReaperProject, IRppData, importProjects } from '../../projects/domain/reaperProject';
 import { allScripts, ITransformScript, runTransformScript } from '../../transforms/domain/transformScript';
 
 export default () => {

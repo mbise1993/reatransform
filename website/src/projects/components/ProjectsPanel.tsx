@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, Button, ButtonGroup, ListGroup } from 'react-bootstrap';
 
-import { ReaperProject } from '../models/reaperProject';
+import { ReaperProject } from '../domain/reaperProject';
 
 type ProjectsPanelProps = {
   projects: ReaperProject[];

@@ -2,29 +2,38 @@ import { UserActions, UserActionTypes } from '../actions';
 import { User } from '../domain';
 
 export type UserState = {
-  readonly loggedInUser: User | null;
+  readonly loggedInUser: User | undefined;
   readonly isInProgress: boolean;
-  readonly error: Error | null;
+  readonly error: Error | undefined;
 };
 
 const initialState: UserState = {
-  loggedInUser: null,
+  loggedInUser: undefined,
   isInProgress: false,
-  error: null,
+  error: undefined,
 };
 
 export const userReducer = (state = initialState, action: UserActions): UserState => {
-  if (action.type === UserActionTypes.LOGIN || action.type === UserActionTypes.SIGN_UP) {
-    return {
-      loggedInUser: action.payload.user,
-      isInProgress: false,
-      error: null,
-    };
-  } else if (action.type === UserActionTypes.IN_PROGRESS) {
-    return { ...state, isInProgress: true };
-  } else if (action.type === UserActionTypes.ERROR) {
-    return { ...state, isInProgress: false, error: action.payload.error };
+  switch (action.type) {
+    case UserActionTypes.LOGIN:
+    case UserActionTypes.SIGN_UP:
+      return {
+        loggedInUser: action.payload.user,
+        isInProgress: false,
+        error: undefined,
+      };
+    case UserActionTypes.IN_PROGRESS:
+      return {
+        ...state,
+        isInProgress: true,
+      };
+    case UserActionTypes.ERROR:
+      return {
+        ...state,
+        isInProgress: false,
+        error: action.payload.error,
+      };
+    default:
+      return state;
   }
-
-  return state;
 };

@@ -28,7 +28,7 @@ const styles = {
 type AuthDialogProps = {
   show: boolean;
   isInProgress: boolean;
-  error: Error | null;
+  error: Error | undefined;
   onClose: () => void;
   onLogin: (username: string, password: string) => void;
   onSignUp: (username: string, password: string) => void;

@@ -1,7 +1,7 @@
 import { readTestResource } from '../../test/util';
 import { adjustTempo } from './adjustTempo';
-import rppToElement from '../../projects/models/rppToElement';
-import { IRppData } from '../../projects/models/reaperProject';
+import rppToElement from '../../projects/domain/rppToElement';
+import { IRppData } from '../../projects/domain/reaperProject';
 
 it('adjusts the tempo of a single project', async () => {
   await validateAdjustTempo([

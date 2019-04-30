@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import TransformDialog from './TransformDialog';
-import { IRppData } from '../../projects/models/reaperProject';
-import rppToElement from '../../projects/models/rppToElement';
+import { IRppData } from '../../projects/domain/reaperProject';
+import rppToElement from '../../projects/domain/rppToElement';
 import { readTestResource } from '../../test/utilBrowser';
 import AsyncLoader from '../../test/AsyncLoader';
 

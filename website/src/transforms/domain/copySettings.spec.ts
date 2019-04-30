@@ -1,7 +1,7 @@
 import { readTestResource } from '../../test/util';
 import { copySettings } from './copySettings';
-import rppToElement from '../../projects/models/rppToElement';
-import { IRppData, IRppElement } from '../../projects/models/reaperProject';
+import rppToElement from '../../projects/domain/rppToElement';
+import { IRppData, IRppElement } from '../../projects/domain/reaperProject';
 
 it('does not error when there are no other projects', async () => {
   await validateCopySettings({

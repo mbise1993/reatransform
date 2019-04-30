@@ -12,39 +12,39 @@ export enum TransformActionTypes {
   ERROR = 'transform/ERROR',
 }
 
-export type GetAllScriptsAction = {
+type GetAllScriptsAction = {
   readonly type: TransformActionTypes.GET_ALL_SCRIPTS;
   readonly payload: {
     readonly scripts: ITransformScript[];
   };
 };
 
-export type AddScriptAction = {
+type AddScriptAction = {
   readonly type: TransformActionTypes.ADD_SCRIPT;
   readonly payload: {
     readonly script: ITransformScript;
   };
 };
 
-export type UpdateScriptAction = {
+type UpdateScriptAction = {
   readonly type: TransformActionTypes.UPDATE_SCRIPT;
   readonly payload: {
     readonly script: ITransformScript;
   };
 };
 
-export type DeleteScriptAction = {
+type DeleteScriptAction = {
   readonly type: TransformActionTypes.DELETE_SCRIPT;
   readonly payload: {
     readonly scriptId: string;
   };
 };
 
-export type InProgressAction = {
+type InProgressAction = {
   readonly type: TransformActionTypes.IN_PROGRESS;
 };
 
-export type ErrorAction = {
+type ErrorAction = {
   readonly type: TransformActionTypes.ERROR;
   readonly payload: {
     readonly error: Error;

@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import TestPanel from '../../test/TestPanel';
 import ProjectsPanel from './ProjectsPanel';
-import { ReaperProject } from '../models/reaperProject';
+import { ReaperProject } from '../domain/reaperProject';
 
 const width = '300px';
 const height = '100%';

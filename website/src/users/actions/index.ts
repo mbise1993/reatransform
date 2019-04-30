@@ -1,4 +1,4 @@
-import { Action, Dispatch } from 'redux';
+import { Dispatch } from 'redux';
 
 import { UserService, User } from '../domain';
 import { createAction } from '../../shared/actions';

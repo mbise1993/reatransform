@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
 
-import { IRppData, saveProjects } from '../../projects/models/reaperProject';
-import elementToRpp from '../../projects/models/elementToRpp';
+import { IRppData, saveProjects } from '../../projects/domain/reaperProject';
+import elementToRpp from '../../projects/domain/elementToRpp';
 
 type TransformDialogProps = {
   show: boolean;
