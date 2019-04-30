@@ -1,21 +1,19 @@
 import { UserActions, UserActionTypes } from '../actions';
 import { User } from '../domain';
 
-export interface IUserState {
-  loggedInUser: User | null;
-  isInProgress: boolean;
-  error: Error | null;
-}
-
-export const createDefaultUserState = () => {
-  return {
-    loggedInUser: null,
-    isInProgress: false,
-    error: null,
-  };
+export type UserState = {
+  readonly loggedInUser: User | null;
+  readonly isInProgress: boolean;
+  readonly error: Error | null;
 };
 
-export const userReducer = (state: IUserState, action: UserActions): IUserState => {
+const initialState: UserState = {
+  loggedInUser: null,
+  isInProgress: false,
+  error: null,
+};
+
+export const userReducer = (state = initialState, action: UserActions): UserState => {
   if (action.type === UserActionTypes.LOGIN || action.type === UserActionTypes.SIGN_UP) {
     return {
       loggedInUser: action.payload.user,

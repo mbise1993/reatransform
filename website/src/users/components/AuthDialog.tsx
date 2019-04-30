@@ -6,7 +6,7 @@ import { Modal, Spinner } from 'react-bootstrap';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import { login, signUp } from '../actions';
-import { IUserState } from '../reducers';
+import { UserState } from '../reducers';
 
 const styles = {
   runningPanel: {
@@ -88,7 +88,7 @@ const AuthDialog = ({ show, isInProgress, error, onClose, onLogin, onSignUp }: A
   );
 };
 
-const mapStateToProps = (state: IUserState) => {
+const mapStateToProps = (state: UserState) => {
   return {
     isInProgress: state.isInProgress,
     error: state.error,

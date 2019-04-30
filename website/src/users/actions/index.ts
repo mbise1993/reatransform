@@ -4,38 +4,38 @@ import { UserService, User } from '../domain';
 import { createAction } from '../../shared/actions';
 
 export enum UserActionTypes {
-  LOGIN = 'LOGIN',
-  SIGN_UP = 'SIGN_UP',
-  IN_PROGRESS = 'IN_PROGRESS',
-  ERROR = 'ERROR',
+  LOGIN = 'user/LOGIN',
+  SIGN_UP = 'user/SIGN_UP',
+  IN_PROGRESS = 'user/IN_PROGRESS',
+  ERROR = 'user/ERROR',
 }
 
-interface ILoginAction {
+type LoginAction = {
   readonly type: UserActionTypes.LOGIN;
   readonly payload: {
     readonly user: User;
   };
-}
+};
 
-interface ISignUpAction extends Action {
+type SignUpAction = {
   readonly type: UserActionTypes.SIGN_UP;
   readonly payload: {
     readonly user: User;
   };
-}
+};
 
-interface IInProgressAction {
+type InProgressAction = {
   readonly type: UserActionTypes.IN_PROGRESS;
-}
+};
 
-interface IErrorAction {
+type ErrorAction = {
   readonly type: UserActionTypes.ERROR;
   readonly payload: {
     readonly error: Error;
   };
-}
+};
 
-export type UserActions = ILoginAction | ISignUpAction | IInProgressAction | IErrorAction;
+export type UserActions = LoginAction | SignUpAction | InProgressAction | ErrorAction;
 
 export const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {

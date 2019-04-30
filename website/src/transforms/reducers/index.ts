@@ -1,17 +1,15 @@
 import { TransformActions, TransformActionTypes } from '../actions';
 import { ITransformScript } from '../domain';
 
-export interface ITransformState {
-  scripts: ITransformScript[];
-}
-
-export const createDefaultTransformState = () => {
-  return {
-    scripts: [],
-  };
+export type TransformState = {
+  readonly scripts: ITransformScript[];
 };
 
-export const transformReducer = (state: ITransformState, action: TransformActions) => {
+const initialState: TransformState = {
+  scripts: [],
+};
+
+export const transformReducer = (state = initialState, action: TransformActions) => {
   if (action.type === TransformActionTypes.GET_ALL_SCRIPTS) {
     return {
       scripts: [...state.scripts, ...action.payload.scripts],
