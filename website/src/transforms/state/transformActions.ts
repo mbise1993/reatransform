@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { ITransformScript, TransformScriptService } from '../domain';
+import { ITransformScript, TransformScriptService, runTransformScript } from '../domain';
+import { IRppData } from '../../projects/domain';
 import { createAction } from '../../shared/state';
 
 export enum TransformActionTypes {
@@ -10,6 +11,9 @@ export enum TransformActionTypes {
   DELETE_SCRIPT = 'transform/DELETE_SCRIPT',
   IN_PROGRESS = 'transform/IN_PROGRESS',
   ERROR = 'transform/ERROR',
+  TRANSFORM_RUNNING = 'transform/TRANSFORM_RUNNING',
+  TRANSFORM_FINISHED = 'transform/TRANSFORM_FINISHED',
+  TRANSFORM_ERROR = 'transform/TRANSFORM_ERROR',
 }
 
 type GetAllScriptsAction = {
@@ -51,13 +55,31 @@ type ErrorAction = {
   };
 };
 
+type TransformFinishedAction = {
+  readonly type: TransformActionTypes.TRANSFORM_FINISHED;
+  readonly payload: {
+    readonly transformedProjects: IRppData[];
+  };
+};
+
+type TransformRunningAction = {
+  readonly type: TransformActionTypes.IN_PROGRESS;
+};
+
+type TransformErrorAction = {
+  readonly type: TransformActionTypes.ERROR;
+};
+
 export type TransformActions =
   | GetAllScriptsAction
   | AddScriptAction
   | UpdateScriptAction
   | DeleteScriptAction
   | InProgressAction
-  | ErrorAction;
+  | ErrorAction
+  | TransformFinishedAction
+  | TransformRunningAction
+  | TransformErrorAction;
 
 export const getAllScripts = () => {
   return async (dispatch: Dispatch) => {
@@ -103,6 +125,18 @@ export const deleteScript = (scriptId: string) => {
       return dispatch(createAction(TransformActionTypes.DELETE_SCRIPT, { scriptId }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.ERROR, { error: e }));
+    }
+  };
+};
+
+export const runTransform = (script: string, sourceProject: IRppData, otherProjects: IRppData[]) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(createAction(TransformActionTypes.TRANSFORM_RUNNING));
+    try {
+      const transformedProjects = await runTransformScript(script, sourceProject, otherProjects);
+      dispatch(createAction(TransformActionTypes.TRANSFORM_FINISHED, { transformedProjects }));
+    } catch (e) {
+      dispatch(createAction(TransformActionTypes.TRANSFORM_ERROR, { error: e }));
     }
   };
 };

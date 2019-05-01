@@ -5,9 +5,9 @@ import { createAction } from '../../shared/state';
 
 export enum ProjectActionTypes {
   IMPORT = 'project/IMPORT',
-  DELETE = 'transform/DELETE',
-  SELECT = 'transform/SELECT',
-  SET_SOURCE = 'transform/SET_SOURCE',
+  DELETE = 'project/DELETE',
+  SELECT = 'project/SELECT',
+  SET_SOURCE = 'project/SET_SOURCE',
 }
 
 type ImportAction = {

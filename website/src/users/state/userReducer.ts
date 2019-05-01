@@ -13,26 +13,38 @@ const initialState: UserState = {
   error: undefined,
 };
 
+const loginOrSignUp = (state: UserState, user: User) => {
+  return {
+    loggedInUser: user,
+    isInProgress: false,
+    error: undefined,
+  };
+};
+
+const inProgress = (state: UserState) => {
+  return {
+    ...state,
+    isInProgress: true,
+  };
+};
+
+const error = (state: UserState, error: Error) => {
+  return {
+    ...state,
+    isInProgress: false,
+    error: error,
+  };
+};
+
 export const userReducer = (state = initialState, action: UserActions): UserState => {
   switch (action.type) {
     case UserActionTypes.LOGIN:
     case UserActionTypes.SIGN_UP:
-      return {
-        loggedInUser: action.payload.user,
-        isInProgress: false,
-        error: undefined,
-      };
+      return loginOrSignUp(state, action.payload.user);
     case UserActionTypes.IN_PROGRESS:
-      return {
-        ...state,
-        isInProgress: true,
-      };
+      return inProgress(state);
     case UserActionTypes.ERROR:
-      return {
-        ...state,
-        isInProgress: false,
-        error: action.payload.error,
-      };
+      return error(state, action.payload.error);
     default:
       return state;
   }
