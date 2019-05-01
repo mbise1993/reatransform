@@ -3,8 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
 
-import { IRppData, saveProjects } from '../projects/domain/reaperProject';
-import elementToRpp from '../projects/domain/elementToRpp';
+import { IRppData, ProjectService } from '../projects/domain';
 import { clearTransformedProjects } from './state';
 import { AppState } from '../app/state';
 
@@ -46,16 +45,16 @@ const TransformDialog = ({ show, transformedRpps, onClose }: TransformDialogProp
       return;
     }
 
-    elementToRpp(transformedRpps[0].rootElement).then(text => setRppText(text));
+    ProjectService.elementToRpp(transformedRpps[0].rootElement).then(text => setRppText(text));
   }, [transformedRpps]);
 
   const handleRppClick = async (rpp: IRppData) => {
     setSelectedRpp(rpp);
-    setRppText(await elementToRpp(rpp.rootElement));
+    setRppText(await ProjectService.elementToRpp(rpp.rootElement));
   };
 
   const handleDownloadClick = async () => {
-    await saveProjects(transformedRpps);
+    await ProjectService.saveProjects(transformedRpps);
     onClose();
   };
 

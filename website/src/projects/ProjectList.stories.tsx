@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import TestPanel from '../test/TestPanel';
 import ProjectList from './ProjectList';
-import { ReaperProject } from './domain/reaperProject';
+import { Project } from './domain/project';
 
 const width = '300px';
 const height = '100%';
@@ -27,7 +27,7 @@ storiesOf('ProjectsPanel', module).add('with no projects', () => {
 });
 
 storiesOf('ProjectsPanel', module).add('with 1 project', () => {
-  const projects = [new ReaperProject('Project1.rpp', '')];
+  const projects = [new Project('Project1.rpp', '')];
 
   return (
     <TestPanel width={width} height={height}>
@@ -47,11 +47,11 @@ storiesOf('ProjectsPanel', module).add('with 1 project', () => {
 
 storiesOf('ProjectsPanel', module).add('with multiple project', () => {
   const projects = [
-    new ReaperProject('Project1.rpp', ''),
-    new ReaperProject('Project2.rpp', ''),
-    new ReaperProject('Project3.rpp', ''),
-    new ReaperProject('Project4.rpp', ''),
-    new ReaperProject('Project5.rpp', ''),
+    new Project('Project1.rpp', ''),
+    new Project('Project2.rpp', ''),
+    new Project('Project3.rpp', ''),
+    new Project('Project4.rpp', ''),
+    new Project('Project5.rpp', ''),
   ];
 
   return (

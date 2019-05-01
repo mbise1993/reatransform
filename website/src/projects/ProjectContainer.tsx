@@ -4,21 +4,21 @@ import { connect } from 'react-redux';
 
 import ProjectList from './ProjectList';
 import ProjectJsonPanel from './ProjectJsonPanel';
-import { ReaperProject } from './domain';
+import { Project } from './domain';
 import { importFiles, deleteProject, select, setSource } from './state';
 import { AppState } from '../app/state';
 
 type ObjectProps = {
-  projects: ReaperProject[];
-  selectedProject: ReaperProject | undefined;
-  sourceProject: ReaperProject | undefined;
+  projects: Project[];
+  selectedProject: Project | undefined;
+  sourceProject: Project | undefined;
 };
 
 type FuncProps = {
   onImportClick: (files: FileList | null) => void;
-  onDeleteClick: (project: ReaperProject) => void;
-  onProjectClick: (project: ReaperProject) => void;
-  onSetSourceClick: (project: ReaperProject) => void;
+  onDeleteClick: (project: Project) => void;
+  onProjectClick: (project: Project) => void;
+  onSetSourceClick: (project: Project) => void;
 };
 
 type ProjectContainerProps = ObjectProps & FuncProps;
@@ -40,7 +40,7 @@ const ProjectContainer = ({
       return;
     }
 
-    selectedProject.getData().then(data => setProjectJson(JSON.stringify(data, null, 2)));
+    selectedProject.getRppData().then(data => setProjectJson(JSON.stringify(data, null, 2)));
   }, [selectedProject]);
 
   return (

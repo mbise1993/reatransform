@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { copySettingsBody } from './copySettings';
 import { adjustTempoBody } from './adjustTempo';
-import { IRppData } from '../../projects/domain/reaperProject';
+import { IRppData } from '../../projects/domain/project';
 
 export interface ITransformScript {
   id?: string;

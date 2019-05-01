@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { Card, Button, ButtonGroup, ListGroup } from 'react-bootstrap';
 
-import { ReaperProject } from './domain/reaperProject';
+import { Project } from './domain/project';
 
 type ProjectListProps = {
-  projects: ReaperProject[];
-  selectedProject: ReaperProject | undefined;
-  sourceProject: ReaperProject | undefined;
+  projects: Project[];
+  selectedProject: Project | undefined;
+  sourceProject: Project | undefined;
   onFileImport: (file: FileList | null) => void;
-  onProjectClick: (project: ReaperProject) => void;
-  onSetSourceClick: (project: ReaperProject) => void;
-  onDeleteClick: (project: ReaperProject) => void;
+  onProjectClick: (project: Project) => void;
+  onSetSourceClick: (project: Project) => void;
+  onDeleteClick: (project: Project) => void;
 } & React.ComponentPropsWithoutRef<'div'>;
 
 export default ({
@@ -23,7 +23,7 @@ export default ({
   onDeleteClick,
   ...otherProps
 }: ProjectListProps) => {
-  const stopPropogation = (e: React.MouseEvent, handler: (project: ReaperProject) => void, project: ReaperProject) => {
+  const stopPropogation = (e: React.MouseEvent, handler: (project: Project) => void, project: Project) => {
     e.stopPropagation();
     handler(project);
   };

@@ -8,14 +8,14 @@ import FooterPanel from './FooterPanel';
 import ProjectContainer from '../projects/ProjectContainer';
 import TransformScriptPanel from '../transforms/TransformScriptPanel';
 import TransformDialog from '../transforms/TransformDialog';
-import { ReaperProject, IRppData } from '../projects/domain/reaperProject';
+import { Project, IRppData } from '../projects/domain/project';
 import { allScripts, ITransformScript } from '../transforms/domain/transformScript';
 import { selectScript, modifyScriptText, runTransform } from '../transforms/state';
 import { AppState } from './state';
 
 type StateProps = {
-  projects: ReaperProject[];
-  sourceProject: ReaperProject | undefined;
+  projects: Project[];
+  sourceProject: Project | undefined;
   selectedScript: ITransformScript | undefined;
   scriptText: string;
   isTransformInProgress: boolean;
@@ -44,8 +44,8 @@ const AppContainer = ({
       return;
     }
 
-    const source = await sourceProject.getData();
-    const othersPromise = projects.filter(proj => proj.id !== sourceProject.id).map(proj => proj.getData());
+    const source = await sourceProject.getRppData();
+    const othersPromise = projects.filter(proj => proj.id !== sourceProject.id).map(proj => proj.getRppData());
     const others = await Promise.all(othersPromise);
     onTransformClick(scriptText, source, others);
   };

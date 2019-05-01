@@ -1,7 +1,7 @@
 import { readTestResource } from '../../test/util';
 import { adjustTempo } from './adjustTempo';
-import rppToElement from '../../projects/domain/rppToElement';
-import { IRppData } from '../../projects/domain/reaperProject';
+import { ProjectService } from '../../projects/domain';
+import { IRppData } from '../../projects/domain/project';
 
 it('adjusts the tempo of a single project', async () => {
   await validateAdjustTempo([
@@ -37,7 +37,7 @@ type TempoTestData = {
 const validateAdjustTempo = async (testData: TempoTestData[]) => {
   const projectPromises = testData.map(async item => {
     const content = readTestResource(`${item.fileName}`);
-    const rootElement = await rppToElement(content);
+    const rootElement = await ProjectService.rppToElement(content);
     return {
       name: item.fileName,
       rootElement: rootElement,

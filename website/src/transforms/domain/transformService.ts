@@ -1,7 +1,7 @@
 import { ITransformScript } from './transformScript';
 import { Rest } from '../../shared/services';
 
-export class TransformScriptService {
+export class TransformService {
   static async getAllScripts() {
     const response = await Rest.get('/api/v1/scripts', {
       contentType: 'text/json',

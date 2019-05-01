@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 
-import { ITransformScript, TransformScriptService, runTransformScript } from '../domain';
+import { ITransformScript, TransformService, runTransformScript } from '../domain';
 import { IRppData } from '../../projects/domain';
 import { createAction } from '../../shared/state';
 
@@ -103,7 +103,7 @@ export const getAllScripts = () => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      const scripts = await TransformScriptService.getAllScripts();
+      const scripts = await TransformService.getAllScripts();
       return dispatch(createAction(TransformActionTypes.GET_SCRIPTS_SUCCESS, { scripts }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
@@ -115,7 +115,7 @@ export const saveScript = (script: ITransformScript) => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      await TransformScriptService.saveScript(script);
+      await TransformService.saveScript(script);
       return dispatch(createAction(TransformActionTypes.SAVE_SCRIPT_SUCCESS, { script }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
@@ -127,7 +127,7 @@ export const deleteScript = (script: ITransformScript) => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      await TransformScriptService.deleteScript(script.id!);
+      await TransformService.deleteScript(script.id!);
       return dispatch(createAction(TransformActionTypes.DELETE_SCRIPT_SUCCESS, { script }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));

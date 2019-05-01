@@ -1,7 +1,7 @@
 import { readTestResource } from '../../test/util';
 import { copySettings } from './copySettings';
-import rppToElement from '../../projects/domain/rppToElement';
-import { IRppData, IRppElement } from '../../projects/domain/reaperProject';
+import { ProjectService } from '../../projects/domain';
+import { IRppData, IRppElement } from '../../projects/domain/project';
 
 it('does not error when there are no other projects', async () => {
   await validateCopySettings({
@@ -40,14 +40,14 @@ const validateCopySettings = async (testData: CopySettingsTestData) => {
   const sourceContent = readTestResource(testData.sourceFileName);
   const sourceProject = {
     name: testData.sourceFileName,
-    rootElement: await rppToElement(sourceContent),
+    rootElement: await ProjectService.rppToElement(sourceContent),
   } as IRppData;
 
   const otherProjectPromises = testData.otherFileNames.map(async fileName => {
     const content = readTestResource(fileName);
     return {
       name: fileName,
-      rootElement: await rppToElement(content),
+      rootElement: await ProjectService.rppToElement(content),
     } as IRppData;
   });
 

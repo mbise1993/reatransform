@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 
-import { ReaperProject, importProjects } from '../domain';
+import { Project, ProjectService } from '../domain';
 import { createAction } from '../../shared/state';
 
 export enum ProjectActionTypes {
@@ -19,7 +19,7 @@ type ImportInProgressAction = {
 type ImportSuccessAction = {
   readonly type: ProjectActionTypes.IMPORT_SUCCESS;
   readonly payload: {
-    projects: ReaperProject[];
+    projects: Project[];
   };
 };
 
@@ -33,21 +33,21 @@ type ImportFailedAction = {
 type DeleteAction = {
   readonly type: ProjectActionTypes.DELETE;
   readonly payload: {
-    project: ReaperProject;
+    project: Project;
   };
 };
 
 type SelectAction = {
   readonly type: ProjectActionTypes.SELECT;
   readonly payload: {
-    project: ReaperProject;
+    project: Project;
   };
 };
 
 type SetSourceAction = {
   readonly type: ProjectActionTypes.SET_SOURCE;
   readonly payload: {
-    project: ReaperProject;
+    project: Project;
   };
 };
 
@@ -63,7 +63,7 @@ export const importFiles = (files: FileList | null) => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(ProjectActionTypes.IMPORT_INPROGRESS));
     try {
-      const projects = await importProjects(files);
+      const projects = await ProjectService.importProjects(files);
       dispatch(createAction(ProjectActionTypes.IMPORT_SUCCESS, { projects }));
     } catch (e) {
       dispatch(createAction(ProjectActionTypes.IMPORT_FAILED, { error: e }));
@@ -71,8 +71,8 @@ export const importFiles = (files: FileList | null) => {
   };
 };
 
-export const deleteProject = (project: ReaperProject) => createAction(ProjectActionTypes.DELETE, { project });
+export const deleteProject = (project: Project) => createAction(ProjectActionTypes.DELETE, { project });
 
-export const select = (project: ReaperProject) => createAction(ProjectActionTypes.SELECT, { project });
+export const select = (project: Project) => createAction(ProjectActionTypes.SELECT, { project });
 
-export const setSource = (project: ReaperProject) => createAction(ProjectActionTypes.SET_SOURCE, { project });
+export const setSource = (project: Project) => createAction(ProjectActionTypes.SET_SOURCE, { project });
