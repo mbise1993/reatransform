@@ -8,10 +8,12 @@ import PageFooter from './PageFooter';
 import ProjectContainer from '../projects/ProjectContainer';
 import TransformScriptEditor from '../transforms/TransformScriptEditor';
 import TransformDialog from '../transforms/TransformDialog';
-import { Project, IRppData } from '../projects/domain/project';
-import { allScripts, ITransformScript } from '../transforms/domain/transformScript';
+import { Project, IRppData } from '../projects/domain';
+import { ITransformScript, TransformService } from '../transforms/domain';
 import { selectScript, modifyScriptText, runTransform } from '../transforms/state';
 import { AppState } from './state';
+
+const builtInScripts = TransformService.getBuiltInScripts();
 
 type StateProps = {
   projects: Project[];
@@ -62,7 +64,7 @@ const AppContainer = ({
             id="transform-script-panel"
             script={selectedScript!}
             scriptText={scriptText}
-            allScripts={allScripts}
+            allScripts={builtInScripts}
             canRun={projects.length > 0}
             isRunning={isTransformInProgress}
             onScriptChange={s => onScriptChange(s)}

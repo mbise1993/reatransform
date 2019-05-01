@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 
-import { ITransformScript, TransformService, runTransformScript } from '../domain';
+import { ITransformScript, TransformService } from '../domain';
 import { IRppData } from '../../projects/domain';
 import { createAction } from '../../shared/state';
 
@@ -144,7 +144,7 @@ export const runTransform = (script: string, sourceProject: IRppData, otherProje
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.TRANSFORM_INPROGRESS));
     try {
-      const transformedProjects = await runTransformScript(script, sourceProject, otherProjects);
+      const transformedProjects = await TransformService.runScript(script, sourceProject, otherProjects);
       dispatch(createAction(TransformActionTypes.TRANSFORM_SUCCESS, { transformedProjects }));
     } catch (e) {
       dispatch(createAction(TransformActionTypes.TRANSFORM_FAILED, { error: e }));

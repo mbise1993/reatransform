@@ -1,5 +1,5 @@
 import { TransformActions, TransformActionTypes } from './transformActions';
-import { allScripts, ITransformScript } from '../domain';
+import { ITransformScript, TransformService } from '../domain';
 import { IRppData } from '../../projects/domain';
 
 export type TransformState = {
@@ -13,10 +13,12 @@ export type TransformState = {
   readonly transformError: Error | undefined;
 };
 
+const builtInScripts = TransformService.getBuiltInScripts();
+
 const initialState: TransformState = {
-  scripts: allScripts,
-  selectedScript: allScripts[0],
-  scriptText: allScripts[0].script,
+  scripts: builtInScripts,
+  selectedScript: builtInScripts[0],
+  scriptText: builtInScripts[0].script,
   transformedProjects: [],
   isInProgress: false,
   error: undefined,

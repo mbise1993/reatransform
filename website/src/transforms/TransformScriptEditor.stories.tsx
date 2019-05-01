@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import TestPanel from '../test/TestPanel';
 import TransformScriptEditor from './TransformScriptEditor';
-import { allScripts } from './domain/transformScript';
+import { TransformService } from './domain';
 
 const width = '600px';
 const height = '100%';
@@ -14,9 +14,9 @@ storiesOf('TransformScriptPanel', module).add('with no text', () => {
     <TestPanel width={width} height={height}>
       <TransformScriptEditor
         id="transform-script-panel"
-        script={allScripts[0]}
+        script={TransformService.getBuiltInScripts()[0]}
         scriptText={''}
-        allScripts={allScripts}
+        allScripts={TransformService.getBuiltInScripts()}
         canRun={true}
         isRunning={false}
         onScriptChange={action('script changed')}
@@ -32,9 +32,9 @@ storiesOf('TransformScriptPanel', module).add('with script text', () => {
     <TestPanel width={width} height={height}>
       <TransformScriptEditor
         id="transform-script-panel"
-        script={allScripts[0]}
-        scriptText={allScripts[0].script}
-        allScripts={allScripts}
+        script={TransformService.getBuiltInScripts()[0]}
+        scriptText={TransformService.getBuiltInScripts()[0].script}
+        allScripts={TransformService.getBuiltInScripts()}
         canRun={true}
         isRunning={false}
         onScriptChange={action('script changed')}
@@ -50,9 +50,9 @@ storiesOf('TransformScriptPanel', module).add('running', () => {
     <TestPanel width={width} height={height}>
       <TransformScriptEditor
         id="transform-script-panel"
-        script={allScripts[0]}
-        scriptText={allScripts[0].script}
-        allScripts={allScripts}
+        script={TransformService.getBuiltInScripts()[0]}
+        scriptText={TransformService.getBuiltInScripts()[0].script}
+        allScripts={TransformService.getBuiltInScripts()}
         canRun={true}
         isRunning={true}
         onScriptChange={action('script changed')}
