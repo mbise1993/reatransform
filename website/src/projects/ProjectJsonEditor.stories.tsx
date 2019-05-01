@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import TestPanel from '../test/TestPanel';
-import ProjectJsonPanel from './ProjectJsonPanel';
+import ProjectJsonEditor from './ProjectJsonEditor';
 import { IRppData } from './domain/project';
 import { ProjectService } from './domain';
 import { readTestResource } from '../test/utilBrowser';
@@ -24,7 +24,7 @@ const height = '100%';
 storiesOf('ProjectJsonPanel', module).add('with no text', () => {
   return (
     <TestPanel width={width} height={height}>
-      <ProjectJsonPanel id="project-json-panel" title="No JSON" json="" />
+      <ProjectJsonEditor id="project-json-panel" title="No JSON" json="" />
     </TestPanel>
   );
 });
@@ -33,7 +33,7 @@ storiesOf('ProjectJsonPanel', module).add('with JSON text', () => {
   return (
     <TestPanel width={width} height={height}>
       <AsyncLoader loadData={loadTestData}>
-        {data => <ProjectJsonPanel id="project-json-panel" title="With JSON" json={data} />}
+        {data => <ProjectJsonEditor id="project-json-panel" title="With JSON" json={data} />}
       </AsyncLoader>
     </TestPanel>
   );

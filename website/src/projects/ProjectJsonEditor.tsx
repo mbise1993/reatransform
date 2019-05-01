@@ -3,12 +3,12 @@ import { Card } from 'react-bootstrap';
 
 import EditorView from '../shared/components/EditorView';
 
-type ProjectJsonPanelProps = {
+type ProjectJsonEditorProps = {
   title: string;
   json: string;
 } & React.ComponentPropsWithoutRef<'div'>;
 
-export default ({ title, json, ...otherProps }: ProjectJsonPanelProps) => {
+export default ({ title, json, ...otherProps }: ProjectJsonEditorProps) => {
   return (
     <Card {...otherProps}>
       <Card.Header>{title}</Card.Header>

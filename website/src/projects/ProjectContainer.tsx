@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import ProjectList from './ProjectList';
-import ProjectJsonPanel from './ProjectJsonPanel';
+import ProjectJsonEditor from './ProjectJsonEditor';
 import { Project } from './domain';
 import { importFiles, deleteProject, select, setSource } from './state';
 import { AppState } from '../app/state';
@@ -56,7 +56,7 @@ const ProjectContainer = ({
         onDeleteClick={project => onDeleteClick(project)}
       />
 
-      <ProjectJsonPanel
+      <ProjectJsonEditor
         id="project-json-panel"
         title={selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected'}
         json={projectJson}

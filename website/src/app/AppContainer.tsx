@@ -3,10 +3,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { CardGroup } from 'react-bootstrap';
 
-import HeaderPanel from './HeaderPanel';
-import FooterPanel from './FooterPanel';
+import PageHeader from './PageHeader';
+import PageFooter from './PageFooter';
 import ProjectContainer from '../projects/ProjectContainer';
-import TransformScriptPanel from '../transforms/TransformScriptPanel';
+import TransformScriptEditor from '../transforms/TransformScriptEditor';
 import TransformDialog from '../transforms/TransformDialog';
 import { Project, IRppData } from '../projects/domain/project';
 import { allScripts, ITransformScript } from '../transforms/domain/transformScript';
@@ -52,13 +52,13 @@ const AppContainer = ({
 
   return (
     <div id="app-container">
-      <HeaderPanel id="app-header" />
+      <PageHeader id="app-header" />
 
       <div id="app-content">
         <CardGroup className="h-100">
           <ProjectContainer />
 
-          <TransformScriptPanel
+          <TransformScriptEditor
             id="transform-script-panel"
             script={selectedScript!}
             scriptText={scriptText}
@@ -72,7 +72,7 @@ const AppContainer = ({
         </CardGroup>
       </div>
 
-      <FooterPanel id="app-footer" />
+      <PageFooter id="app-footer" />
 
       <TransformDialog />
     </div>
