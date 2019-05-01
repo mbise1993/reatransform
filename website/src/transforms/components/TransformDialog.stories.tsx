@@ -22,20 +22,12 @@ const loadTestRpps = async (names: string[]) => {
 storiesOf('TransformDialog', module).add('with 1 transformed project', () => {
   const loadData = () => loadTestRpps(['OneEmptyTrack.rpp']);
 
-  return (
-    <AsyncLoader loadData={loadData}>
-      {data => <TransformDialog show={true} transformedRpps={data} onClose={action('on-close')} />}
-    </AsyncLoader>
-  );
+  return <AsyncLoader loadData={loadData}>{data => <TransformDialog />}</AsyncLoader>;
 });
 
 storiesOf('TransformDialog', module).add('with multiple transformed project', () => {
   const loadData = () =>
     loadTestRpps(['EmptyProject.rpp', 'OneEmptyTrack.rpp', 'OneTrackWithMidiData.rpp', 'OneTrackWithOneVst.rpp']);
 
-  return (
-    <AsyncLoader loadData={loadData}>
-      {data => <TransformDialog show={true} transformedRpps={data} onClose={action('on-close')} />}
-    </AsyncLoader>
-  );
+  return <AsyncLoader loadData={loadData}>{data => <TransformDialog />}</AsyncLoader>;
 });

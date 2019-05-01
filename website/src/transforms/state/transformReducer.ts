@@ -100,6 +100,13 @@ const transformFailed = (state: TransformState, error: Error) => {
   };
 };
 
+const clearTransformedProjects = (state: TransformState) => {
+  return {
+    ...state,
+    transformedProjects: [],
+  };
+};
+
 export const transformReducer = (state = initialState, action: TransformActions): TransformState => {
   switch (action.type) {
     case TransformActionTypes.GET_SCRIPTS_SUCCESS:
@@ -122,6 +129,8 @@ export const transformReducer = (state = initialState, action: TransformActions)
       return transformInProgress(state);
     case TransformActionTypes.TRANSFORM_FAILED:
       return transformFailed(state, action.payload.error);
+    case TransformActionTypes.CLEAR_TRANSFORMED_PROJECTS:
+      return clearTransformedProjects(state);
     default:
       return state;
   }

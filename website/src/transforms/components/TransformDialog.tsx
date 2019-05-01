@@ -1,8 +1,11 @@
 import * as React from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
 
 import { IRppData, saveProjects } from '../../projects/domain/reaperProject';
 import elementToRpp from '../../projects/domain/elementToRpp';
+import { TransformState, clearTransformedProjects } from '../state';
 
 const styles = {
   body: {
@@ -32,11 +35,7 @@ type TransformDialogProps = {
   onClose: () => void;
 };
 
-export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
-  if (transformedRpps.length === 0) {
-    return null;
-  }
-
+const TransformDialog = ({ show, transformedRpps, onClose }: TransformDialogProps) => {
   const [selectedRpp, setSelectedRpp] = React.useState(transformedRpps[0]);
   const [rppText, setRppText] = React.useState('');
 
@@ -82,3 +81,21 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
     </Modal>
   );
 };
+
+const mapStateToProps = (state: TransformState) => {
+  return {
+    show: state.transformedProjects.length > 0,
+    transformedRpps: state.transformedProjects,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    onClose: bindActionCreators(clearTransformedProjects, dispatch),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransformDialog);

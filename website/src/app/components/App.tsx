@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { CardGroup } from 'react-bootstrap';
 
 import HeaderPanel from './HeaderPanel';
@@ -9,6 +11,16 @@ import TransformScriptPanel from '../../transforms/components/TransformScriptPan
 import TransformDialog from '../../transforms/components/TransformDialog';
 import { ReaperProject, IRppData, importProjects } from '../../projects/domain/reaperProject';
 import { allScripts, ITransformScript, runTransformScript } from '../../transforms/domain/transformScript';
+
+type AppProps = {
+  projects: ReaperProject[];
+  selectedProject: ReaperProject | undefined;
+  sourceProject: ReaperProject | undefined;
+  selectedScript: ITransformScript;
+  scriptText: string;
+  isCallInProgress: boolean;
+  isTransformInProgress: boolean;
+};
 
 export default () => {
   const [projects, setProjects] = React.useState<ReaperProject[]>([]);
@@ -150,11 +162,7 @@ export default () => {
 
       <FooterPanel id="app-footer" />
 
-      <TransformDialog
-        show={transformedRpps.length > 0}
-        transformedRpps={transformedRpps}
-        onClose={() => handleTransformDialogClose()}
-      />
+      <TransformDialog />
     </div>
   );
 };

@@ -15,6 +15,7 @@ export enum TransformActionTypes {
   TRANSFORM_INPROGRESS = 'transform/TRANSFORM_INPROGRESS',
   TRANSFORM_SUCCESS = 'transform/TRANSFORM_SUCCESS',
   TRANSFORM_FAILED = 'transform/TRANSFORM_FAILED',
+  CLEAR_TRANSFORMED_PROJECTS = 'transform/CLEAR_TRANSFORMED_PROJECTS',
 }
 
 type GetScriptsSuccessAction = {
@@ -81,6 +82,10 @@ type TransformFailedAction = {
   };
 };
 
+type ClearTransformedProjectsAction = {
+  readonly type: TransformActionTypes.CLEAR_TRANSFORMED_PROJECTS;
+};
+
 export type TransformActions =
   | GetScriptsSuccessAction
   | SaveScriptSuccessAction
@@ -91,7 +96,8 @@ export type TransformActions =
   | ModifyScriptTextAction
   | TransformSuccessAction
   | TransformInProgressAction
-  | TransformFailedAction;
+  | TransformFailedAction
+  | ClearTransformedProjectsAction;
 
 export const getAllScripts = () => {
   return async (dispatch: Dispatch) => {
@@ -145,3 +151,5 @@ export const runTransform = (script: string, sourceProject: IRppData, otherProje
     }
   };
 };
+
+export const clearTransformedProjects = () => createAction(TransformActionTypes.CLEAR_TRANSFORMED_PROJECTS);
