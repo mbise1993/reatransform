@@ -3,28 +3,30 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { CardGroup } from 'react-bootstrap';
 
-import HeaderPanel from './HeaderPanel';
-import FooterPanel from './FooterPanel';
+import PageHeader from './PageHeader';
+import PageFooter from './PageFooter';
 import ProjectContainer from '../projects/ProjectContainer';
-import TransformScriptPanel from '../transforms/TransformScriptPanel';
-import TransformDialog from '../transforms/TransformDialog';
-import { ReaperProject, IRppData } from '../projects/domain/reaperProject';
-import { allScripts, ITransformScript } from '../transforms/domain/transformScript';
+import TransformScriptEditor from '../transforms/TransformScriptEditor';
+import TransformDialogContainer from '../transforms/TransformDialogContainer';
+import { Project, RppData } from '../projects/domain';
+import { TransformScript, TransformService } from '../transforms/domain';
 import { selectScript, modifyScriptText, runTransform } from '../transforms/state';
 import { AppState } from './state';
 
+const builtInScripts = TransformService.getBuiltInScripts();
+
 type StateProps = {
-  projects: ReaperProject[];
-  sourceProject: ReaperProject | undefined;
-  selectedScript: ITransformScript | undefined;
+  projects: Project[];
+  sourceProject: Project | undefined;
+  selectedScript: TransformScript | undefined;
   scriptText: string;
   isTransformInProgress: boolean;
 };
 
 type DispatchProps = {
-  onScriptChange: (script: ITransformScript) => void;
+  onScriptChange: (script: TransformScript) => void;
   onScriptTextChange: (scriptText: string) => void;
-  onTransformClick: (scriptText: string, sourceProject: IRppData, otherProjects: IRppData[]) => void;
+  onTransformClick: (scriptText: string, sourceProject: RppData, otherProjects: RppData[]) => void;
 };
 
 type AppProps = StateProps & DispatchProps;
@@ -44,25 +46,25 @@ const AppContainer = ({
       return;
     }
 
-    const source = await sourceProject.getData();
-    const othersPromise = projects.filter(proj => proj.id !== sourceProject.id).map(proj => proj.getData());
+    const source = await sourceProject.getRppData();
+    const othersPromise = projects.filter(proj => proj.id !== sourceProject.id).map(proj => proj.getRppData());
     const others = await Promise.all(othersPromise);
     onTransformClick(scriptText, source, others);
   };
 
   return (
     <div id="app-container">
-      <HeaderPanel id="app-header" />
+      <PageHeader id="app-header" />
 
       <div id="app-content">
         <CardGroup className="h-100">
           <ProjectContainer />
 
-          <TransformScriptPanel
+          <TransformScriptEditor
             id="transform-script-panel"
             script={selectedScript!}
             scriptText={scriptText}
-            allScripts={allScripts}
+            allScripts={builtInScripts}
             canRun={projects.length > 0}
             isRunning={isTransformInProgress}
             onScriptChange={s => onScriptChange(s)}
@@ -72,9 +74,9 @@ const AppContainer = ({
         </CardGroup>
       </div>
 
-      <FooterPanel id="app-footer" />
+      <PageFooter id="app-footer" />
 
-      <TransformDialog />
+      <TransformDialogContainer />
     </div>
   );
 };

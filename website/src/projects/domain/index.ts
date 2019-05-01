@@ -1,3 +1,2 @@
-export * from './elementToRpp';
-export * from './reaperProject';
-export * from './rppToElement';
+export * from './projectModel';
+export { default as ProjectService } from './projectService';

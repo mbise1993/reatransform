@@ -3,9 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import TestPanel from '../test/TestPanel';
-import TransformScriptPanel from './TransformScriptPanel';
-import { allScripts } from './domain/transformScript';
-import AsyncLoader from '../test/AsyncLoader';
+import TransformScriptEditor from './TransformScriptEditor';
+import { TransformService } from './domain';
 
 const width = '600px';
 const height = '100%';
@@ -13,11 +12,11 @@ const height = '100%';
 storiesOf('TransformScriptPanel', module).add('with no text', () => {
   return (
     <TestPanel width={width} height={height}>
-      <TransformScriptPanel
+      <TransformScriptEditor
         id="transform-script-panel"
-        script={allScripts[0]}
+        script={TransformService.getBuiltInScripts()[0]}
         scriptText={''}
-        allScripts={allScripts}
+        allScripts={TransformService.getBuiltInScripts()}
         canRun={true}
         isRunning={false}
         onScriptChange={action('script changed')}
@@ -31,11 +30,11 @@ storiesOf('TransformScriptPanel', module).add('with no text', () => {
 storiesOf('TransformScriptPanel', module).add('with script text', () => {
   return (
     <TestPanel width={width} height={height}>
-      <TransformScriptPanel
+      <TransformScriptEditor
         id="transform-script-panel"
-        script={allScripts[0]}
-        scriptText={allScripts[0].script}
-        allScripts={allScripts}
+        script={TransformService.getBuiltInScripts()[0]}
+        scriptText={TransformService.getBuiltInScripts()[0].script}
+        allScripts={TransformService.getBuiltInScripts()}
         canRun={true}
         isRunning={false}
         onScriptChange={action('script changed')}
@@ -49,11 +48,11 @@ storiesOf('TransformScriptPanel', module).add('with script text', () => {
 storiesOf('TransformScriptPanel', module).add('running', () => {
   return (
     <TestPanel width={width} height={height}>
-      <TransformScriptPanel
+      <TransformScriptEditor
         id="transform-script-panel"
-        script={allScripts[0]}
-        scriptText={allScripts[0].script}
-        allScripts={allScripts}
+        script={TransformService.getBuiltInScripts()[0]}
+        scriptText={TransformService.getBuiltInScripts()[0].script}
+        allScripts={TransformService.getBuiltInScripts()}
         canRun={true}
         isRunning={true}
         onScriptChange={action('script changed')}

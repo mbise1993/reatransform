@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { ITransformScript, TransformScriptService, runTransformScript } from '../domain';
-import { IRppData } from '../../projects/domain';
+import { TransformScript, TransformService } from '../domain';
+import { RppData } from '../../projects/domain';
 import { createAction } from '../../shared/state';
 
 export enum TransformActionTypes {
@@ -21,21 +21,21 @@ export enum TransformActionTypes {
 type GetScriptsSuccessAction = {
   readonly type: TransformActionTypes.GET_SCRIPTS_SUCCESS;
   readonly payload: {
-    readonly scripts: ITransformScript[];
+    readonly scripts: TransformScript[];
   };
 };
 
 type SaveScriptSuccessAction = {
   readonly type: TransformActionTypes.SAVE_SCRIPT_SUCCESS;
   readonly payload: {
-    readonly script: ITransformScript;
+    readonly script: TransformScript;
   };
 };
 
 type DeleteScriptSuccessAction = {
   readonly type: TransformActionTypes.DELETE_SCRIPT_SUCCESS;
   readonly payload: {
-    readonly script: ITransformScript;
+    readonly script: TransformScript;
   };
 };
 
@@ -53,7 +53,7 @@ type CallFailedAction = {
 type SelectScriptAction = {
   readonly type: TransformActionTypes.SELECT_SCRIPT;
   readonly payload: {
-    readonly script: ITransformScript;
+    readonly script: TransformScript;
   };
 };
 
@@ -71,7 +71,7 @@ type TransformInProgressAction = {
 type TransformSuccessAction = {
   readonly type: TransformActionTypes.TRANSFORM_SUCCESS;
   readonly payload: {
-    readonly transformedProjects: IRppData[];
+    readonly transformedProjects: RppData[];
   };
 };
 
@@ -103,7 +103,7 @@ export const getAllScripts = () => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      const scripts = await TransformScriptService.getAllScripts();
+      const scripts = await TransformService.getAllScripts();
       return dispatch(createAction(TransformActionTypes.GET_SCRIPTS_SUCCESS, { scripts }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
@@ -111,11 +111,11 @@ export const getAllScripts = () => {
   };
 };
 
-export const saveScript = (script: ITransformScript) => {
+export const saveScript = (script: TransformScript) => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      await TransformScriptService.saveScript(script);
+      await TransformService.saveScript(script);
       return dispatch(createAction(TransformActionTypes.SAVE_SCRIPT_SUCCESS, { script }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
@@ -123,11 +123,11 @@ export const saveScript = (script: ITransformScript) => {
   };
 };
 
-export const deleteScript = (script: ITransformScript) => {
+export const deleteScript = (script: TransformScript) => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      await TransformScriptService.deleteScript(script.id!);
+      await TransformService.deleteScript(script.id!);
       return dispatch(createAction(TransformActionTypes.DELETE_SCRIPT_SUCCESS, { script }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
@@ -135,16 +135,16 @@ export const deleteScript = (script: ITransformScript) => {
   };
 };
 
-export const selectScript = (script: ITransformScript) => createAction(TransformActionTypes.SELECT_SCRIPT, { script });
+export const selectScript = (script: TransformScript) => createAction(TransformActionTypes.SELECT_SCRIPT, { script });
 
 export const modifyScriptText = (scriptText: string) =>
   createAction(TransformActionTypes.MODIFY_SCRIPT_TEXT, { scriptText });
 
-export const runTransform = (script: string, sourceProject: IRppData, otherProjects: IRppData[]) => {
+export const runTransform = (script: string, sourceProject: RppData, otherProjects: RppData[]) => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.TRANSFORM_INPROGRESS));
     try {
-      const transformedProjects = await runTransformScript(script, sourceProject, otherProjects);
+      const transformedProjects = await TransformService.runScript(script, sourceProject, otherProjects);
       dispatch(createAction(TransformActionTypes.TRANSFORM_SUCCESS, { transformedProjects }));
     } catch (e) {
       dispatch(createAction(TransformActionTypes.TRANSFORM_FAILED, { error: e }));

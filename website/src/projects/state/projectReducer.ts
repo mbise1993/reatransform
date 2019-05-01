@@ -1,11 +1,11 @@
-import { ProjectActionTypes, ProjectActions, select } from './projectActions';
-import { ReaperProject } from '../domain';
+import { ProjectActionTypes, ProjectActions } from './projectActions';
+import { Project } from '../domain';
 
 export type ProjectState = {
-  readonly projects: ReaperProject[];
-  readonly selectedProject: ReaperProject | undefined;
+  readonly projects: Project[];
+  readonly selectedProject: Project | undefined;
   readonly selectedProjectJson: string;
-  readonly sourceProject: ReaperProject | undefined;
+  readonly sourceProject: Project | undefined;
   readonly isImportInProgress: boolean;
   readonly importError: Error | undefined;
 };
@@ -26,7 +26,7 @@ const importInProgress = (state: ProjectState) => {
   };
 };
 
-const importSuccess = (state: ProjectState, projects: ReaperProject[]) => {
+const importSuccess = (state: ProjectState, projects: Project[]) => {
   const newState = {
     ...state,
     isImportInProgress: false,
@@ -53,7 +53,7 @@ const importFailed = (state: ProjectState, error: Error) => {
   };
 };
 
-const deleteProject = (state: ProjectState, project: ReaperProject) => {
+const deleteProject = (state: ProjectState, project: Project) => {
   const index = state.projects.findIndex(proj => proj.id === project.id);
   const newProjects = state.projects.filter(proj => proj.id !== project.id);
 
@@ -83,14 +83,14 @@ const deleteProject = (state: ProjectState, project: ReaperProject) => {
   };
 };
 
-const selectProject = (state: ProjectState, project: ReaperProject) => {
+const selectProject = (state: ProjectState, project: Project) => {
   return {
     ...state,
     selectedProject: project,
   };
 };
 
-const setSourceProject = (state: ProjectState, project: ReaperProject) => {
+const setSourceProject = (state: ProjectState, project: Project) => {
   return {
     ...state,
     sourceProject: project,

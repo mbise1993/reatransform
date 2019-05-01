@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Card, ButtonGroup, DropdownButton, Dropdown, Button, Spinner } from 'react-bootstrap';
 
 import EditorView from '../shared/components/EditorView';
-import { ITransformScript } from './domain/transformScript';
+import { TransformScript } from './domain/transformModel';
 
 type TransformScriptPanelProps = {
-  script: ITransformScript;
+  script: TransformScript;
   scriptText: string;
-  allScripts: ITransformScript[];
+  allScripts: TransformScript[];
   canRun: boolean;
   isRunning: boolean;
-  onScriptChange: (script: ITransformScript) => void;
+  onScriptChange: (script: TransformScript) => void;
   onScriptTextChange: (text: string) => void;
   onTransformClick: () => void;
 } & React.ComponentPropsWithoutRef<'div'>;
