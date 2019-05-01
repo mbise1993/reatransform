@@ -11,15 +11,14 @@ import { AppState } from '../app/state';
 type ObjectProps = {
   projects: ReaperProject[];
   selectedProject: ReaperProject | undefined;
-  selectedProjectJson: string;
   sourceProject: ReaperProject | undefined;
 };
 
 type FuncProps = {
   onImportClick: (files: FileList | null) => void;
-  onDeleteClick: (projectId: string) => void;
+  onDeleteClick: (project: ReaperProject) => void;
   onProjectClick: (project: ReaperProject) => void;
-  onSetSourceClick: (projectId: string) => void;
+  onSetSourceClick: (project: ReaperProject) => void;
 };
 
 type ProjectContainerProps = ObjectProps & FuncProps;
@@ -27,13 +26,23 @@ type ProjectContainerProps = ObjectProps & FuncProps;
 const ProjectContainer = ({
   projects,
   selectedProject,
-  selectedProjectJson,
   sourceProject,
   onImportClick,
   onDeleteClick,
   onProjectClick,
   onSetSourceClick,
 }: ProjectContainerProps) => {
+  const [projectJson, setProjectJson] = React.useState('');
+
+  React.useEffect(() => {
+    if (!selectedProject) {
+      setProjectJson('');
+      return;
+    }
+
+    selectedProject.getData().then(data => setProjectJson(JSON.stringify(data, null, 2)));
+  }, [selectedProject]);
+
   return (
     <>
       <ProjectList
@@ -43,14 +52,14 @@ const ProjectContainer = ({
         sourceProject={sourceProject}
         onFileImport={files => onImportClick(files)}
         onProjectClick={project => onProjectClick(project)}
-        onSetSourceClick={project => onSetSourceClick(project.id.toString())}
-        onDeleteClick={project => onDeleteClick(project.id.toString())}
+        onSetSourceClick={project => onSetSourceClick(project)}
+        onDeleteClick={project => onDeleteClick(project)}
       />
 
       <ProjectJsonPanel
         id="project-json-panel"
         title={selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected'}
-        json={selectedProjectJson}
+        json={projectJson}
       />
     </>
   );
@@ -60,7 +69,6 @@ const mapStateToProps = (state: AppState): ObjectProps => {
   return {
     projects: state.project.projects,
     selectedProject: state.project.selectedProject,
-    selectedProjectJson: state.project.selectedProjectJson,
     sourceProject: state.project.sourceProject,
   };
 };

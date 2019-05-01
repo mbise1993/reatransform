@@ -9,7 +9,6 @@ export enum ProjectActionTypes {
   IMPORT_FAILED = 'project/IMPORT_FAILED',
   DELETE = 'project/DELETE',
   SELECT = 'project/SELECT',
-  SET_JSON = 'project/SET_JSON',
   SET_SOURCE = 'project/SET_SOURCE',
 }
 
@@ -34,28 +33,21 @@ type ImportFailedAction = {
 type DeleteAction = {
   readonly type: ProjectActionTypes.DELETE;
   readonly payload: {
-    projectId: string;
+    project: ReaperProject;
   };
 };
 
 type SelectAction = {
   readonly type: ProjectActionTypes.SELECT;
   readonly payload: {
-    projectId: string;
-  };
-};
-
-type SetJsonAction = {
-  readonly type: ProjectActionTypes.SET_JSON;
-  readonly payload: {
-    json: string;
+    project: ReaperProject;
   };
 };
 
 type SetSourceAction = {
   readonly type: ProjectActionTypes.SET_SOURCE;
   readonly payload: {
-    projectId: string;
+    project: ReaperProject;
   };
 };
 
@@ -65,7 +57,6 @@ export type ProjectActions =
   | ImportFailedAction
   | DeleteAction
   | SelectAction
-  | SetJsonAction
   | SetSourceAction;
 
 export const importFiles = (files: FileList | null) => {
@@ -80,14 +71,8 @@ export const importFiles = (files: FileList | null) => {
   };
 };
 
-export const deleteProject = (projectId: string) => createAction(ProjectActionTypes.DELETE, { projectId });
+export const deleteProject = (project: ReaperProject) => createAction(ProjectActionTypes.DELETE, { project });
 
-export const select = (project: ReaperProject) => {
-  return async (dispatch: Dispatch) => {
-    dispatch(createAction(ProjectActionTypes.SELECT, { projectId: project.id.toString() }));
-    const data = await project.getData();
-    dispatch(createAction(ProjectActionTypes.SET_JSON, { json: JSON.stringify(data, null, 2) }));
-  };
-};
+export const select = (project: ReaperProject) => createAction(ProjectActionTypes.SELECT, { project });
 
-export const setSource = (projectId: string) => createAction(ProjectActionTypes.SET_SOURCE, { projectId });
+export const setSource = (project: ReaperProject) => createAction(ProjectActionTypes.SET_SOURCE, { project });

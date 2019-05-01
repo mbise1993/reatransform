@@ -35,7 +35,7 @@ type SaveScriptSuccessAction = {
 type DeleteScriptSuccessAction = {
   readonly type: TransformActionTypes.DELETE_SCRIPT_SUCCESS;
   readonly payload: {
-    readonly scriptId: string;
+    readonly script: ITransformScript;
   };
 };
 
@@ -53,7 +53,7 @@ type CallFailedAction = {
 type SelectScriptAction = {
   readonly type: TransformActionTypes.SELECT_SCRIPT;
   readonly payload: {
-    readonly scriptId: string;
+    readonly script: ITransformScript;
   };
 };
 
@@ -123,19 +123,19 @@ export const saveScript = (script: ITransformScript) => {
   };
 };
 
-export const deleteScript = (scriptId: string) => {
+export const deleteScript = (script: ITransformScript) => {
   return async (dispatch: Dispatch) => {
     dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      await TransformScriptService.deleteScript(scriptId);
-      return dispatch(createAction(TransformActionTypes.DELETE_SCRIPT_SUCCESS, { scriptId }));
+      await TransformScriptService.deleteScript(script.id!);
+      return dispatch(createAction(TransformActionTypes.DELETE_SCRIPT_SUCCESS, { script }));
     } catch (e) {
       return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
     }
   };
 };
 
-export const selectScript = (scriptId: string) => createAction(TransformActionTypes.SELECT_SCRIPT, { scriptId });
+export const selectScript = (script: ITransformScript) => createAction(TransformActionTypes.SELECT_SCRIPT, { script });
 
 export const modifyScriptText = (scriptText: string) =>
   createAction(TransformActionTypes.MODIFY_SCRIPT_TEXT, { scriptText });

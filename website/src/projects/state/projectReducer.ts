@@ -1,4 +1,4 @@
-import { ProjectActionTypes, ProjectActions } from './projectActions';
+import { ProjectActionTypes, ProjectActions, select } from './projectActions';
 import { ReaperProject } from '../domain';
 
 export type ProjectState = {
@@ -27,12 +27,22 @@ const importInProgress = (state: ProjectState) => {
 };
 
 const importSuccess = (state: ProjectState, projects: ReaperProject[]) => {
-  return {
+  const newState = {
     ...state,
     isImportInProgress: false,
     importError: undefined,
     projects: [...state.projects, ...projects],
   };
+
+  if (!newState.selectedProject && newState.projects.length > 0) {
+    newState.selectedProject = newState.projects[0];
+  }
+
+  if (!newState.sourceProject && newState.selectedProject) {
+    newState.sourceProject = newState.selectedProject;
+  }
+
+  return newState;
 };
 
 const importFailed = (state: ProjectState, error: Error) => {
@@ -43,31 +53,47 @@ const importFailed = (state: ProjectState, error: Error) => {
   };
 };
 
-const deleteProject = (state: ProjectState, projectId: string) => {
+const deleteProject = (state: ProjectState, project: ReaperProject) => {
+  const index = state.projects.findIndex(proj => proj.id === project.id);
+  const newProjects = state.projects.filter(proj => proj.id !== project.id);
+
+  let newSelection = state.selectedProject;
+  if (state.selectedProject === project) {
+    if (newProjects.length === 0) {
+      newSelection = undefined;
+    } else {
+      newSelection = index < newProjects.length ? newProjects[index] : newProjects[newProjects.length - 1];
+    }
+  }
+
+  let newSource = state.sourceProject;
+  if (state.sourceProject === project) {
+    if (newProjects.length === 0) {
+      newSource = undefined;
+    } else {
+      newSource = index < newProjects.length ? newProjects[index] : newProjects[newProjects.length - 1];
+    }
+  }
+
   return {
     ...state,
-    projects: state.projects.filter(proj => proj.id.toString() !== projectId),
+    selectedProject: newSelection,
+    sourceProject: newSource,
+    projects: newProjects,
   };
 };
 
-const selectProject = (state: ProjectState, projectId: string) => {
+const selectProject = (state: ProjectState, project: ReaperProject) => {
   return {
     ...state,
-    selectedProject: state.projects.find(proj => proj.id.toString() === projectId),
+    selectedProject: project,
   };
 };
 
-const setProjectJson = (state: ProjectState, json: string) => {
+const setSourceProject = (state: ProjectState, project: ReaperProject) => {
   return {
     ...state,
-    selectedProjectJson: json,
-  };
-};
-
-const setSourceProject = (state: ProjectState, projectId: string) => {
-  return {
-    ...state,
-    sourceProject: state.projects.find(proj => proj.id.toString() === projectId),
+    sourceProject: project,
   };
 };
 
@@ -76,13 +102,11 @@ export const projectReducer = (state = initialState, action: ProjectActions): Pr
     case ProjectActionTypes.IMPORT_SUCCESS:
       return importSuccess(state, action.payload.projects);
     case ProjectActionTypes.DELETE:
-      return deleteProject(state, action.payload.projectId);
+      return deleteProject(state, action.payload.project);
     case ProjectActionTypes.SELECT:
-      return selectProject(state, action.payload.projectId);
-    case ProjectActionTypes.SET_JSON:
-      return setProjectJson(state, action.payload.json);
+      return selectProject(state, action.payload.project);
     case ProjectActionTypes.SET_SOURCE:
-      return setSourceProject(state, action.payload.projectId);
+      return setSourceProject(state, action.payload.project);
     case ProjectActionTypes.IMPORT_INPROGRESS:
       return importInProgress(state);
     case ProjectActionTypes.IMPORT_FAILED:

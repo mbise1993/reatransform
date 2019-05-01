@@ -40,11 +40,18 @@ const saveScriptSuccess = (state: TransformState, script: ITransformScript) => {
   };
 };
 
-const deleteScriptSuccess = (state: TransformState, scriptId: string) => {
+const deleteScriptSuccess = (state: TransformState, script: ITransformScript) => {
+  const index = state.scripts.findIndex(s => s.id === script.id);
+  let newSelection = state.selectedScript;
+  if (script === state.selectedScript) {
+    newSelection = index < state.scripts.length ? state.scripts[index] : state.scripts[index - 1];
+  }
+
   return {
     ...state,
     isInProgress: false,
-    scripts: state.scripts.filter(script => script.id !== scriptId),
+    selectScript: newSelection,
+    scripts: state.scripts.filter(s => s.id !== script.id),
   };
 };
 
@@ -63,10 +70,11 @@ const callFailed = (state: TransformState, error: Error) => {
   };
 };
 
-const selectScript = (state: TransformState, scriptId: string) => {
+const selectScript = (state: TransformState, script: ITransformScript) => {
   return {
     ...state,
-    selectScript: state.scripts.find(s => s.id === scriptId),
+    scriptText: script.script,
+    selectScript: script,
   };
 };
 
@@ -114,9 +122,9 @@ export const transformReducer = (state = initialState, action: TransformActions)
     case TransformActionTypes.SAVE_SCRIPT_SUCCESS:
       return saveScriptSuccess(state, action.payload.script);
     case TransformActionTypes.DELETE_SCRIPT_SUCCESS:
-      return deleteScriptSuccess(state, action.payload.scriptId);
+      return deleteScriptSuccess(state, action.payload.script);
     case TransformActionTypes.SELECT_SCRIPT:
-      return selectScript(state, action.payload.scriptId);
+      return selectScript(state, action.payload.script);
     case TransformActionTypes.MODIFY_SCRIPT_TEXT:
       return modifyScriptText(state, action.payload.scriptText);
     case TransformActionTypes.TRANSFORM_SUCCESS:

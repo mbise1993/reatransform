@@ -22,7 +22,7 @@ type StateProps = {
 };
 
 type DispatchProps = {
-  onScriptChange: (scriptId: string) => void;
+  onScriptChange: (script: ITransformScript) => void;
   onScriptTextChange: (scriptText: string) => void;
   onTransformClick: (scriptText: string, sourceProject: IRppData, otherProjects: IRppData[]) => void;
 };
@@ -65,7 +65,7 @@ const AppContainer = ({
             allScripts={allScripts}
             canRun={projects.length > 0}
             isRunning={isTransformInProgress}
-            onScriptChange={s => onScriptChange(s.id!)}
+            onScriptChange={s => onScriptChange(s)}
             onScriptTextChange={t => onScriptTextChange(t)}
             onTransformClick={() => handleTransformClick()}
           />
