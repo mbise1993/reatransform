@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { ITransformScript, TransformScriptService } from '../domain';
-import { createAction } from '../../shared/actions';
+import { createAction } from '../../shared/state';
 
 export enum TransformActionTypes {
   GET_ALL_SCRIPTS = 'transform/GET_ALL_SCRIPTS',

@@ -1,4 +1,4 @@
-import { ProjectActionTypes, ProjectActions } from '../actions';
+import { ProjectActionTypes, ProjectActions } from './projectActions';
 import { ReaperProject } from '../domain';
 
 export type ProjectState = {

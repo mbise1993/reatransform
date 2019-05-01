@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { UserService, User } from '../domain';
-import { createAction } from '../../shared/actions';
+import { createAction } from '../../shared/state';
 
 export enum UserActionTypes {
   LOGIN = 'user/LOGIN',

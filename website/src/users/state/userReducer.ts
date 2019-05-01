@@ -1,4 +1,4 @@
-import { UserActions, UserActionTypes } from '../actions';
+import { UserActions, UserActionTypes } from './userActions';
 import { User } from '../domain';
 
 export type UserState = {

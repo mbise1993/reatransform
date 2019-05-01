@@ -1,9 +1,9 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import { ProjectState, projectReducer } from '../../projects/reducers';
-import { TransformState, transformReducer } from '../../transforms/reducers';
-import { UserState, userReducer } from '../../users/reducers';
+import { ProjectState, projectReducer } from '../../projects/state';
+import { TransformState, transformReducer } from '../../transforms/state';
+import { UserState, userReducer } from '../../users/state';
 
 export type AppState = {
   readonly project: ProjectState;

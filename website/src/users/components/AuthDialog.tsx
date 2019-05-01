@@ -5,8 +5,8 @@ import { Modal, Spinner } from 'react-bootstrap';
 
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
-import { login, signUp } from '../actions';
-import { UserState } from '../reducers';
+import { login, signUp } from '../state/userActions';
+import { UserState } from '../state/userReducer';
 
 const styles = {
   runningPanel: {

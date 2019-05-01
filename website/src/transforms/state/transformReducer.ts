@@ -1,4 +1,4 @@
-import { TransformActions, TransformActionTypes } from '../actions';
+import { TransformActions, TransformActionTypes } from './transformActions';
 import { ITransformScript } from '../domain';
 
 export type TransformState = {

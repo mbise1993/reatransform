@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { ReaperProject, importProjects } from '../domain';
-import { createAction } from '../../shared/actions';
+import { createAction } from '../../shared/state';
 
 export enum ProjectActionTypes {
   IMPORT = 'project/IMPORT',
