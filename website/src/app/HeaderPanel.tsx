@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-import { AuthDialog } from '../../users/components';
+import AuthDialogContainer from '../users/AuthDialogContainer';
 import DocsDialog from './DocsDialog';
 
 export default ({ ...otherProps }: React.ComponentProps<'div'>) => {
@@ -21,7 +21,7 @@ export default ({ ...otherProps }: React.ComponentProps<'div'>) => {
         </Button>
       </span>
 
-      <AuthDialog show={showAuthDialog} onClose={() => setShowAuthDialog(false)} />
+      <AuthDialogContainer show={showAuthDialog} onClose={() => setShowAuthDialog(false)} />
       <DocsDialog show={showDocsDialog} onClose={() => setShowDocsDialog(false)} />
     </div>
   );

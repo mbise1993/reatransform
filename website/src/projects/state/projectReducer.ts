@@ -4,6 +4,7 @@ import { ReaperProject } from '../domain';
 export type ProjectState = {
   readonly projects: ReaperProject[];
   readonly selectedProject: ReaperProject | undefined;
+  readonly selectedProjectJson: string;
   readonly sourceProject: ReaperProject | undefined;
   readonly isImportInProgress: boolean;
   readonly importError: Error | undefined;
@@ -12,6 +13,7 @@ export type ProjectState = {
 const initialState: ProjectState = {
   projects: [],
   selectedProject: undefined,
+  selectedProjectJson: '',
   sourceProject: undefined,
   isImportInProgress: false,
   importError: undefined,
@@ -55,6 +57,13 @@ const selectProject = (state: ProjectState, projectId: string) => {
   };
 };
 
+const setProjectJson = (state: ProjectState, json: string) => {
+  return {
+    ...state,
+    selectedProjectJson: json,
+  };
+};
+
 const setSourceProject = (state: ProjectState, projectId: string) => {
   return {
     ...state,
@@ -70,6 +79,8 @@ export const projectReducer = (state = initialState, action: ProjectActions): Pr
       return deleteProject(state, action.payload.projectId);
     case ProjectActionTypes.SELECT:
       return selectProject(state, action.payload.projectId);
+    case ProjectActionTypes.SET_JSON:
+      return setProjectJson(state, action.payload.json);
     case ProjectActionTypes.SET_SOURCE:
       return setSourceProject(state, action.payload.projectId);
     case ProjectActionTypes.IMPORT_INPROGRESS:

@@ -2,10 +2,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import TestPanel from '../../test/TestPanel';
+import TestPanel from '../test/TestPanel';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
-import AuthDialog from './AuthDialog';
+import AuthDialogContainer from './AuthDialogContainer';
 
 const width = '400px';
 const height = '300px';
@@ -22,4 +22,4 @@ storiesOf('AuthDialog', module).add('sign up form', () => (
   </TestPanel>
 ));
 
-storiesOf('AuthDialog', module).add('full dialog', () => <AuthDialog show={true} onClose={() => {}} />);
+storiesOf('AuthDialog', module).add('full dialog', () => <AuthDialogContainer show={true} onClose={() => {}} />);

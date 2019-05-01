@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { configureStore } from './app/state';
-import App from './app/components/App';
+import AppContainer from './app/AppContainer';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,7 +13,7 @@ const store = configureStore();
 
 const app = (
   <Provider store={store}>
-    <App />
+    <AppContainer />
   </Provider>
 );
 

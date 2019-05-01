@@ -1,12 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import TestPanel from '../../test/TestPanel';
+import TestPanel from '../test/TestPanel';
 import ProjectJsonPanel from './ProjectJsonPanel';
-import { IRppData } from '../domain/reaperProject';
-import rppToElement from '../domain/rppToElement';
-import { readTestResource } from '../../test/utilBrowser';
-import AsyncLoader from '../../test/AsyncLoader';
+import { IRppData } from './domain/reaperProject';
+import rppToElement from './domain/rppToElement';
+import { readTestResource } from '../test/utilBrowser';
+import AsyncLoader from '../test/AsyncLoader';
 
 const loadTestData = async () => {
   const name = 'EmptyProject.rpp';

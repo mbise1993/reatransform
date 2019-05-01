@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import TestPanel from '../../test/TestPanel';
-import ProjectsPanel from './ProjectsPanel';
-import { ReaperProject } from '../domain/reaperProject';
+import TestPanel from '../test/TestPanel';
+import ProjectList from './ProjectList';
+import { ReaperProject } from './domain/reaperProject';
 
 const width = '300px';
 const height = '100%';
@@ -12,11 +12,11 @@ const height = '100%';
 storiesOf('ProjectsPanel', module).add('with no projects', () => {
   return (
     <TestPanel width={width} height={height}>
-      <ProjectsPanel
+      <ProjectList
         id="projects-panel"
         projects={[]}
-        selectedProject={null}
-        sourceProject={null}
+        selectedProject={undefined}
+        sourceProject={undefined}
         onFileImport={action('file import clicked')}
         onProjectClick={action('project selected')}
         onSetSourceClick={action('set source clicked')}
@@ -31,7 +31,7 @@ storiesOf('ProjectsPanel', module).add('with 1 project', () => {
 
   return (
     <TestPanel width={width} height={height}>
-      <ProjectsPanel
+      <ProjectList
         id="projects-panel"
         projects={projects}
         selectedProject={projects[0]}
@@ -56,7 +56,7 @@ storiesOf('ProjectsPanel', module).add('with multiple project', () => {
 
   return (
     <TestPanel width="300px" height="600px">
-      <ProjectsPanel
+      <ProjectList
         id="projects-panel"
         projects={projects}
         selectedProject={projects[0]}

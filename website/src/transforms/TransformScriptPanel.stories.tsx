@@ -2,10 +2,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import TestPanel from '../../test/TestPanel';
+import TestPanel from '../test/TestPanel';
 import TransformScriptPanel from './TransformScriptPanel';
-import { allScripts } from '../domain/transformScript';
-import AsyncLoader from '../../test/AsyncLoader';
+import { allScripts } from './domain/transformScript';
+import AsyncLoader from '../test/AsyncLoader';
 
 const width = '600px';
 const height = '100%';

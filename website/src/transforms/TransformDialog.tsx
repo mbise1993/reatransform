@@ -3,9 +3,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
 
-import { IRppData, saveProjects } from '../../projects/domain/reaperProject';
-import elementToRpp from '../../projects/domain/elementToRpp';
-import { TransformState, clearTransformedProjects } from '../state';
+import { IRppData, saveProjects } from '../projects/domain/reaperProject';
+import elementToRpp from '../projects/domain/elementToRpp';
+import { clearTransformedProjects } from './state';
+import { AppState } from '../app/state';
 
 const styles = {
   body: {
@@ -40,8 +41,13 @@ const TransformDialog = ({ show, transformedRpps, onClose }: TransformDialogProp
   const [rppText, setRppText] = React.useState('');
 
   React.useEffect(() => {
+    if (transformedRpps.length === 0) {
+      setRppText('');
+      return;
+    }
+
     elementToRpp(transformedRpps[0].rootElement).then(text => setRppText(text));
-  });
+  }, [transformedRpps]);
 
   const handleRppClick = async (rpp: IRppData) => {
     setSelectedRpp(rpp);
@@ -82,10 +88,10 @@ const TransformDialog = ({ show, transformedRpps, onClose }: TransformDialogProp
   );
 };
 
-const mapStateToProps = (state: TransformState) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    show: state.transformedProjects.length > 0,
-    transformedRpps: state.transformedProjects,
+    show: state.transform.transformedProjects.length > 0,
+    transformedRpps: state.transform.transformedProjects,
   };
 };
 

@@ -9,6 +9,7 @@ export enum ProjectActionTypes {
   IMPORT_FAILED = 'project/IMPORT_FAILED',
   DELETE = 'project/DELETE',
   SELECT = 'project/SELECT',
+  SET_JSON = 'project/SET_JSON',
   SET_SOURCE = 'project/SET_SOURCE',
 }
 
@@ -44,6 +45,13 @@ type SelectAction = {
   };
 };
 
+type SetJsonAction = {
+  readonly type: ProjectActionTypes.SET_JSON;
+  readonly payload: {
+    json: string;
+  };
+};
+
 type SetSourceAction = {
   readonly type: ProjectActionTypes.SET_SOURCE;
   readonly payload: {
@@ -57,6 +65,7 @@ export type ProjectActions =
   | ImportFailedAction
   | DeleteAction
   | SelectAction
+  | SetJsonAction
   | SetSourceAction;
 
 export const importFiles = (files: FileList | null) => {
@@ -73,6 +82,12 @@ export const importFiles = (files: FileList | null) => {
 
 export const deleteProject = (projectId: string) => createAction(ProjectActionTypes.DELETE, { projectId });
 
-export const select = (projectId: string) => createAction(ProjectActionTypes.SELECT, { projectId });
+export const select = (project: ReaperProject) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(createAction(ProjectActionTypes.SELECT, { projectId: project.id.toString() }));
+    const data = await project.getData();
+    dispatch(createAction(ProjectActionTypes.SET_JSON, { json: JSON.stringify(data, null, 2) }));
+  };
+};
 
 export const setSource = (projectId: string) => createAction(ProjectActionTypes.SET_SOURCE, { projectId });

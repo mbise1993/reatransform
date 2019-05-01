@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Card, ButtonGroup, DropdownButton, Dropdown, Button, Spinner } from 'react-bootstrap';
 
-import EditorView from '../../shared/components/EditorView';
-import { ITransformScript } from '../domain/transformScript';
+import EditorView from '../shared/components/EditorView';
+import { ITransformScript } from './domain/transformScript';
 
 type TransformScriptPanelProps = {
   script: ITransformScript;

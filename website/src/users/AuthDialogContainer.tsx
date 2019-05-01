@@ -5,8 +5,8 @@ import { Modal, Spinner } from 'react-bootstrap';
 
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
-import { login, signUp } from '../state/userActions';
-import { UserState } from '../state/userReducer';
+import { login, signUp } from './state/userActions';
+import { UserState } from './state/userReducer';
 
 const styles = {
   runningPanel: {
@@ -25,16 +25,24 @@ const styles = {
   },
 };
 
-type AuthDialogProps = {
-  show: boolean;
+type StateProps = {
   isInProgress: boolean;
   error: Error | undefined;
-  onClose: () => void;
+};
+
+type DispatchProps = {
   onLogin: (username: string, password: string) => void;
   onSignUp: (username: string, password: string) => void;
-} & React.ComponentProps<'div'>;
+};
 
-const AuthDialog = ({ show, isInProgress, error, onClose, onLogin, onSignUp }: AuthDialogProps) => {
+type AuthDialogContainerProps = {
+  show: boolean;
+  onClose: () => void;
+} & StateProps &
+  DispatchProps &
+  React.ComponentProps<'div'>;
+
+const AuthDialog = ({ show, isInProgress, error, onClose, onLogin, onSignUp }: AuthDialogContainerProps) => {
   const [isOnLoginScreen, setOnLoginScreen] = React.useState(true);
 
   const renderLoginForm = () => {
@@ -88,14 +96,14 @@ const AuthDialog = ({ show, isInProgress, error, onClose, onLogin, onSignUp }: A
   );
 };
 
-const mapStateToProps = (state: UserState) => {
+const mapStateToProps = (state: UserState): StateProps => {
   return {
     isInProgress: state.isInProgress,
     error: state.error,
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     onLogin: bindActionCreators(login, dispatch),
     onSignUp: bindActionCreators(signUp, dispatch),

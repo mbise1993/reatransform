@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import TestPanel from '../../test/TestPanel';
+import TestPanel from '../test/TestPanel';
 import FooterPanel from './FooterPanel';
 
 storiesOf('FooterPanel', module).add('show footer', () => {

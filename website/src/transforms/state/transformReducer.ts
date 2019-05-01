@@ -1,10 +1,10 @@
 import { TransformActions, TransformActionTypes } from './transformActions';
-import { ITransformScript } from '../domain';
+import { allScripts, ITransformScript } from '../domain';
 import { IRppData } from '../../projects/domain';
 
 export type TransformState = {
   readonly scripts: ITransformScript[];
-  readonly selectedScript: ITransformScript | undefined;
+  readonly selectedScript: ITransformScript;
   readonly scriptText: string;
   readonly transformedProjects: IRppData[];
   readonly isInProgress: boolean;
@@ -14,9 +14,9 @@ export type TransformState = {
 };
 
 const initialState: TransformState = {
-  scripts: [],
-  selectedScript: undefined,
-  scriptText: '',
+  scripts: allScripts,
+  selectedScript: allScripts[0],
+  scriptText: allScripts[0].script,
   transformedProjects: [],
   isInProgress: false,
   error: undefined,

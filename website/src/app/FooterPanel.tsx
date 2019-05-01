@@ -1,6 +1,6 @@
 import React from 'react';
 
-import githubLogo from '../../assets/GitHub-Mark-Light-32px.png';
+import githubLogo from '../assets/GitHub-Mark-Light-32px.png';
 
 export default ({ ...otherProps }: React.ComponentProps<'div'>) => {
   return (
