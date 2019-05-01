@@ -1,4 +1,4 @@
-import { ProjectActionTypes, ProjectActions, select } from './projectActions';
+import { ProjectActionTypes, ProjectActions } from './projectActions';
 import { Project } from '../domain';
 
 export type ProjectState = {
