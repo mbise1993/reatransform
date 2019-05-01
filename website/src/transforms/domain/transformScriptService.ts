@@ -16,19 +16,8 @@ export class TransformScriptService {
     return (await response.json()) as ITransformScript[];
   }
 
-  static async addScript(script: ITransformScript) {
+  static async saveScript(script: ITransformScript) {
     const response = await Rest.post('/api/v1/scripts', {
-      contentType: 'text/json',
-      params: JSON.stringify(script),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-  }
-
-  static async updateScript(script: ITransformScript) {
-    const response = await Rest.put(`/api/v1/script/${script.id}`, {
       contentType: 'text/json',
       params: JSON.stringify(script),
     });

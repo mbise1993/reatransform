@@ -4,6 +4,28 @@ import { Modal, Button, ListGroup } from 'react-bootstrap';
 import { IRppData, saveProjects } from '../../projects/domain/reaperProject';
 import elementToRpp from '../../projects/domain/elementToRpp';
 
+const styles = {
+  body: {
+    display: 'flex',
+    height: '50vh',
+    padding: '0px',
+  },
+  list: {
+    flexGrow: 1,
+    height: '100%',
+    borderRight: '1px solid white',
+  },
+  rppText: {
+    flexGrow: 1,
+    padding: '8px',
+    height: '100%',
+    overflow: 'auto',
+    whiteSpace: 'pre',
+    fontSize: 12,
+    fontFamily: 'monospace',
+  } as React.CSSProperties,
+};
+
 type TransformDialogProps = {
   show: boolean;
   transformedRpps: IRppData[];
@@ -59,26 +81,4 @@ export default ({ show, transformedRpps, onClose }: TransformDialogProps) => {
       </Modal.Footer>
     </Modal>
   );
-};
-
-const styles = {
-  body: {
-    display: 'flex',
-    height: '50vh',
-    padding: '0px',
-  },
-  list: {
-    flexGrow: 1,
-    height: '100%',
-    borderRight: '1px solid white',
-  },
-  rppText: {
-    flexGrow: 1,
-    padding: '8px',
-    height: '100%',
-    overflow: 'auto',
-    whiteSpace: 'pre',
-    fontSize: 12,
-    fontFamily: 'monospace',
-  } as React.CSSProperties,
 };

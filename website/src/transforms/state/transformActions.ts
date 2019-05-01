@@ -5,138 +5,143 @@ import { IRppData } from '../../projects/domain';
 import { createAction } from '../../shared/state';
 
 export enum TransformActionTypes {
-  GET_ALL_SCRIPTS = 'transform/GET_ALL_SCRIPTS',
-  ADD_SCRIPT = 'transform/ADD_SCRIPT',
-  UPDATE_SCRIPT = 'transform/UPDATE_SCRIPT',
-  DELETE_SCRIPT = 'transform/DELETE_SCRIPT',
-  IN_PROGRESS = 'transform/IN_PROGRESS',
-  ERROR = 'transform/ERROR',
-  TRANSFORM_RUNNING = 'transform/TRANSFORM_RUNNING',
-  TRANSFORM_FINISHED = 'transform/TRANSFORM_FINISHED',
-  TRANSFORM_ERROR = 'transform/TRANSFORM_ERROR',
+  GET_SCRIPTS_SUCCESS = 'transform/GET_SCRIPTS_SUCCESS',
+  SAVE_SCRIPT_SUCCESS = 'transform/SAVE_SCRIPT_SUCCESS',
+  DELETE_SCRIPT_SUCCESS = 'transform/DELETE_SCRIPT_SUCCESS',
+  CALL_INPROGRESS = 'transform/CALL_INPROGRESS',
+  CALL_FAILED = 'transform/CALL_FAILED',
+  SELECT_SCRIPT = 'transform/SELECT_SCRIPT',
+  MODIFY_SCRIPT_TEXT = 'transform/MODIFY_SCRIPT_TEXT',
+  TRANSFORM_INPROGRESS = 'transform/TRANSFORM_INPROGRESS',
+  TRANSFORM_SUCCESS = 'transform/TRANSFORM_SUCCESS',
+  TRANSFORM_FAILED = 'transform/TRANSFORM_FAILED',
 }
 
-type GetAllScriptsAction = {
-  readonly type: TransformActionTypes.GET_ALL_SCRIPTS;
+type GetScriptsSuccessAction = {
+  readonly type: TransformActionTypes.GET_SCRIPTS_SUCCESS;
   readonly payload: {
     readonly scripts: ITransformScript[];
   };
 };
 
-type AddScriptAction = {
-  readonly type: TransformActionTypes.ADD_SCRIPT;
+type SaveScriptSuccessAction = {
+  readonly type: TransformActionTypes.SAVE_SCRIPT_SUCCESS;
   readonly payload: {
     readonly script: ITransformScript;
   };
 };
 
-type UpdateScriptAction = {
-  readonly type: TransformActionTypes.UPDATE_SCRIPT;
-  readonly payload: {
-    readonly script: ITransformScript;
-  };
-};
-
-type DeleteScriptAction = {
-  readonly type: TransformActionTypes.DELETE_SCRIPT;
+type DeleteScriptSuccessAction = {
+  readonly type: TransformActionTypes.DELETE_SCRIPT_SUCCESS;
   readonly payload: {
     readonly scriptId: string;
   };
 };
 
-type InProgressAction = {
-  readonly type: TransformActionTypes.IN_PROGRESS;
+type CallInProgressAction = {
+  readonly type: TransformActionTypes.CALL_INPROGRESS;
 };
 
-type ErrorAction = {
-  readonly type: TransformActionTypes.ERROR;
+type CallFailedAction = {
+  readonly type: TransformActionTypes.CALL_FAILED;
   readonly payload: {
     readonly error: Error;
   };
 };
 
-type TransformFinishedAction = {
-  readonly type: TransformActionTypes.TRANSFORM_FINISHED;
+type SelectScriptAction = {
+  readonly type: TransformActionTypes.SELECT_SCRIPT;
+  readonly payload: {
+    readonly scriptId: string;
+  };
+};
+
+type ModifyScriptTextAction = {
+  readonly type: TransformActionTypes.MODIFY_SCRIPT_TEXT;
+  readonly payload: {
+    readonly scriptText: string;
+  };
+};
+
+type TransformInProgressAction = {
+  readonly type: TransformActionTypes.TRANSFORM_INPROGRESS;
+};
+
+type TransformSuccessAction = {
+  readonly type: TransformActionTypes.TRANSFORM_SUCCESS;
   readonly payload: {
     readonly transformedProjects: IRppData[];
   };
 };
 
-type TransformRunningAction = {
-  readonly type: TransformActionTypes.IN_PROGRESS;
-};
-
-type TransformErrorAction = {
-  readonly type: TransformActionTypes.ERROR;
+type TransformFailedAction = {
+  readonly type: TransformActionTypes.TRANSFORM_FAILED;
+  readonly payload: {
+    readonly error: Error;
+  };
 };
 
 export type TransformActions =
-  | GetAllScriptsAction
-  | AddScriptAction
-  | UpdateScriptAction
-  | DeleteScriptAction
-  | InProgressAction
-  | ErrorAction
-  | TransformFinishedAction
-  | TransformRunningAction
-  | TransformErrorAction;
+  | GetScriptsSuccessAction
+  | SaveScriptSuccessAction
+  | DeleteScriptSuccessAction
+  | CallInProgressAction
+  | CallFailedAction
+  | SelectScriptAction
+  | ModifyScriptTextAction
+  | TransformSuccessAction
+  | TransformInProgressAction
+  | TransformFailedAction;
 
 export const getAllScripts = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(TransformActionTypes.IN_PROGRESS));
+    dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
       const scripts = await TransformScriptService.getAllScripts();
-      return dispatch(createAction(TransformActionTypes.GET_ALL_SCRIPTS, { scripts }));
+      return dispatch(createAction(TransformActionTypes.GET_SCRIPTS_SUCCESS, { scripts }));
     } catch (e) {
-      return dispatch(createAction(TransformActionTypes.ERROR, { error: e }));
+      return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
     }
   };
 };
 
-export const addScript = (script: ITransformScript) => {
+export const saveScript = (script: ITransformScript) => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(TransformActionTypes.IN_PROGRESS));
+    dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
-      await TransformScriptService.addScript(script);
-      return dispatch(createAction(TransformActionTypes.ADD_SCRIPT, { script }));
+      await TransformScriptService.saveScript(script);
+      return dispatch(createAction(TransformActionTypes.SAVE_SCRIPT_SUCCESS, { script }));
     } catch (e) {
-      return dispatch(createAction(TransformActionTypes.ERROR, { error: e }));
-    }
-  };
-};
-
-export const updateScript = (script: ITransformScript) => {
-  return async (dispatch: Dispatch) => {
-    dispatch(createAction(TransformActionTypes.IN_PROGRESS));
-    try {
-      await TransformScriptService.updateScript(script);
-      return dispatch(createAction(TransformActionTypes.UPDATE_SCRIPT, { script }));
-    } catch (e) {
-      return dispatch(createAction(TransformActionTypes.ERROR, { error: e }));
+      return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
     }
   };
 };
 
 export const deleteScript = (scriptId: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(TransformActionTypes.IN_PROGRESS));
+    dispatch(createAction(TransformActionTypes.CALL_INPROGRESS));
     try {
       await TransformScriptService.deleteScript(scriptId);
-      return dispatch(createAction(TransformActionTypes.DELETE_SCRIPT, { scriptId }));
+      return dispatch(createAction(TransformActionTypes.DELETE_SCRIPT_SUCCESS, { scriptId }));
     } catch (e) {
-      return dispatch(createAction(TransformActionTypes.ERROR, { error: e }));
+      return dispatch(createAction(TransformActionTypes.CALL_FAILED, { error: e }));
     }
   };
 };
 
+export const selectScript = (scriptId: string) => createAction(TransformActionTypes.SELECT_SCRIPT, { scriptId });
+
+export const modifyScriptText = (scriptText: string) =>
+  createAction(TransformActionTypes.MODIFY_SCRIPT_TEXT, { scriptText });
+
 export const runTransform = (script: string, sourceProject: IRppData, otherProjects: IRppData[]) => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(TransformActionTypes.TRANSFORM_RUNNING));
+    dispatch(createAction(TransformActionTypes.TRANSFORM_INPROGRESS));
     try {
       const transformedProjects = await runTransformScript(script, sourceProject, otherProjects);
-      dispatch(createAction(TransformActionTypes.TRANSFORM_FINISHED, { transformedProjects }));
+      dispatch(createAction(TransformActionTypes.TRANSFORM_SUCCESS, { transformedProjects }));
     } catch (e) {
-      dispatch(createAction(TransformActionTypes.TRANSFORM_ERROR, { error: e }));
+      dispatch(createAction(TransformActionTypes.TRANSFORM_FAILED, { error: e }));
     }
   };
 };

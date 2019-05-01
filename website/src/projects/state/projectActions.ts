@@ -4,16 +4,29 @@ import { ReaperProject, importProjects } from '../domain';
 import { createAction } from '../../shared/state';
 
 export enum ProjectActionTypes {
-  IMPORT = 'project/IMPORT',
+  IMPORT_INPROGRESS = 'project/IMPORT_INPROGRESS',
+  IMPORT_SUCCESS = 'project/IMPORT',
+  IMPORT_FAILED = 'project/IMPORT_FAILED',
   DELETE = 'project/DELETE',
   SELECT = 'project/SELECT',
   SET_SOURCE = 'project/SET_SOURCE',
 }
 
-type ImportAction = {
-  readonly type: ProjectActionTypes.IMPORT;
+type ImportInProgressAction = {
+  readonly type: ProjectActionTypes.IMPORT_INPROGRESS;
+};
+
+type ImportSuccessAction = {
+  readonly type: ProjectActionTypes.IMPORT_SUCCESS;
   readonly payload: {
     projects: ReaperProject[];
+  };
+};
+
+type ImportFailedAction = {
+  readonly type: ProjectActionTypes.IMPORT_FAILED;
+  readonly payload: {
+    readonly error: Error;
   };
 };
 
@@ -38,12 +51,23 @@ type SetSourceAction = {
   };
 };
 
-export type ProjectActions = ImportAction | DeleteAction | SelectAction | SetSourceAction;
+export type ProjectActions =
+  | ImportInProgressAction
+  | ImportSuccessAction
+  | ImportFailedAction
+  | DeleteAction
+  | SelectAction
+  | SetSourceAction;
 
 export const importFiles = (files: FileList | null) => {
   return async (dispatch: Dispatch) => {
-    const projects = await importProjects(files);
-    dispatch(createAction(ProjectActionTypes.IMPORT, { projects }));
+    dispatch(createAction(ProjectActionTypes.IMPORT_INPROGRESS));
+    try {
+      const projects = await importProjects(files);
+      dispatch(createAction(ProjectActionTypes.IMPORT_SUCCESS, { projects }));
+    } catch (e) {
+      dispatch(createAction(ProjectActionTypes.IMPORT_FAILED, { error: e }));
+    }
   };
 };
 

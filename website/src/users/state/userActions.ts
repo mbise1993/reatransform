@@ -4,59 +4,59 @@ import { UserService, User } from '../domain';
 import { createAction } from '../../shared/state';
 
 export enum UserActionTypes {
-  LOGIN = 'user/LOGIN',
-  SIGN_UP = 'user/SIGN_UP',
-  IN_PROGRESS = 'user/IN_PROGRESS',
-  ERROR = 'user/ERROR',
+  LOGIN_SUCCESS = 'user/LOGIN_SUCCESS',
+  SIGN_UP_SUCCESS = 'user/SIGN_UP_SUCCESS',
+  CALL_INPROGRESS = 'user/CALL_INPROGRESS',
+  CALL_FAILED = 'user/CALL_FAILED',
 }
 
-type LoginAction = {
-  readonly type: UserActionTypes.LOGIN;
+type LoginSuccessAction = {
+  readonly type: UserActionTypes.LOGIN_SUCCESS;
   readonly payload: {
     readonly user: User;
   };
 };
 
-type SignUpAction = {
-  readonly type: UserActionTypes.SIGN_UP;
+type SignUpSuccessAction = {
+  readonly type: UserActionTypes.SIGN_UP_SUCCESS;
   readonly payload: {
     readonly user: User;
   };
 };
 
-type InProgressAction = {
-  readonly type: UserActionTypes.IN_PROGRESS;
+type CallInProgressAction = {
+  readonly type: UserActionTypes.CALL_INPROGRESS;
 };
 
-type ErrorAction = {
-  readonly type: UserActionTypes.ERROR;
+type CallFailedAction = {
+  readonly type: UserActionTypes.CALL_FAILED;
   readonly payload: {
     readonly error: Error;
   };
 };
 
-export type UserActions = LoginAction | SignUpAction | InProgressAction | ErrorAction;
+export type UserActions = LoginSuccessAction | SignUpSuccessAction | CallInProgressAction | CallFailedAction;
 
 export const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(UserActionTypes.IN_PROGRESS));
+    dispatch(createAction(UserActionTypes.CALL_INPROGRESS));
     try {
       const user = await UserService.login(username, password);
-      return dispatch(createAction(UserActionTypes.LOGIN, { user }));
+      return dispatch(createAction(UserActionTypes.LOGIN_SUCCESS, { user }));
     } catch (e) {
-      return dispatch(createAction(UserActionTypes.ERROR, { error: e }));
+      return dispatch(createAction(UserActionTypes.CALL_FAILED, { error: e }));
     }
   };
 };
 
 export const signUp = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch(createAction(UserActionTypes.IN_PROGRESS));
+    dispatch(createAction(UserActionTypes.CALL_INPROGRESS));
     try {
       const user = await UserService.register(username, password);
-      return dispatch(createAction(UserActionTypes.SIGN_UP, { user }));
+      return dispatch(createAction(UserActionTypes.SIGN_UP_SUCCESS, { user }));
     } catch (e) {
-      return dispatch(createAction(UserActionTypes.ERROR, { error: e }));
+      return dispatch(createAction(UserActionTypes.CALL_FAILED, { error: e }));
     }
   };
 };
