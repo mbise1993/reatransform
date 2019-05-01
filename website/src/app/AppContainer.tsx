@@ -8,8 +8,8 @@ import PageFooter from './PageFooter';
 import ProjectContainer from '../projects/ProjectContainer';
 import TransformScriptEditor from '../transforms/TransformScriptEditor';
 import TransformDialogContainer from '../transforms/TransformDialogContainer';
-import { Project, IRppData } from '../projects/domain';
-import { ITransformScript, TransformService } from '../transforms/domain';
+import { Project, RppData } from '../projects/domain';
+import { TransformScript, TransformService } from '../transforms/domain';
 import { selectScript, modifyScriptText, runTransform } from '../transforms/state';
 import { AppState } from './state';
 
@@ -18,15 +18,15 @@ const builtInScripts = TransformService.getBuiltInScripts();
 type StateProps = {
   projects: Project[];
   sourceProject: Project | undefined;
-  selectedScript: ITransformScript | undefined;
+  selectedScript: TransformScript | undefined;
   scriptText: string;
   isTransformInProgress: boolean;
 };
 
 type DispatchProps = {
-  onScriptChange: (script: ITransformScript) => void;
+  onScriptChange: (script: TransformScript) => void;
   onScriptTextChange: (scriptText: string) => void;
-  onTransformClick: (scriptText: string, sourceProject: IRppData, otherProjects: IRppData[]) => void;
+  onTransformClick: (scriptText: string, sourceProject: RppData, otherProjects: RppData[]) => void;
 };
 
 type AppProps = StateProps & DispatchProps;

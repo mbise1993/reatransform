@@ -1,7 +1,7 @@
 import { readTestResource } from '../../test/util';
 import { adjustTempo } from './adjustTempo';
 import { ProjectService } from '../../projects/domain';
-import { IRppData } from '../../projects/domain/project';
+import { RppData } from '../../projects/domain/projectModel';
 
 it('adjusts the tempo of a single project', async () => {
   await validateAdjustTempo([
@@ -41,7 +41,7 @@ const validateAdjustTempo = async (testData: TempoTestData[]) => {
     return {
       name: item.fileName,
       rootElement: rootElement,
-    } as IRppData;
+    } as RppData;
   });
 
   const projects = await Promise.all(projectPromises);

@@ -1,7 +1,7 @@
 import { readTestResource } from '../../test/util';
 import { copySettings } from './copySettings';
 import { ProjectService } from '../../projects/domain';
-import { IRppData, IRppElement } from '../../projects/domain/project';
+import { RppData, RppElement } from '../../projects/domain/projectModel';
 
 it('does not error when there are no other projects', async () => {
   await validateCopySettings({
@@ -41,14 +41,14 @@ const validateCopySettings = async (testData: CopySettingsTestData) => {
   const sourceProject = {
     name: testData.sourceFileName,
     rootElement: await ProjectService.rppToElement(sourceContent),
-  } as IRppData;
+  } as RppData;
 
   const otherProjectPromises = testData.otherFileNames.map(async fileName => {
     const content = readTestResource(fileName);
     return {
       name: fileName,
       rootElement: await ProjectService.rppToElement(content),
-    } as IRppData;
+    } as RppData;
   });
 
   const otherProjects = await Promise.all(otherProjectPromises);
@@ -58,7 +58,7 @@ const validateCopySettings = async (testData: CopySettingsTestData) => {
   validateTrackSettings(sourceProject, otherProjects);
 };
 
-const validateMasterSettings = (source: IRppData, others: IRppData[]) => {
+const validateMasterSettings = (source: RppData, others: RppData[]) => {
   const sourceRoot = source.rootElement;
   const otherRoots = others.map(proj => proj.rootElement);
   validateProperty(sourceRoot, otherRoots, 'MASTERMUTESOLO');
@@ -66,7 +66,7 @@ const validateMasterSettings = (source: IRppData, others: IRppData[]) => {
   validateProperty(sourceRoot, otherRoots, 'MASTER_FX');
 };
 
-const validateTrackSettings = (source: IRppData, others: IRppData[]) => {
+const validateTrackSettings = (source: RppData, others: RppData[]) => {
   source.rootElement.elements
     .filter(el => el.name === 'TRACK')
     .forEach(sourceTrack => {
@@ -84,7 +84,7 @@ const validateTrackSettings = (source: IRppData, others: IRppData[]) => {
     });
 };
 
-const validateProperty = (source: IRppElement, others: IRppElement[], propName: string) => {
+const validateProperty = (source: RppElement, others: RppElement[], propName: string) => {
   const sourceProp = source.properties.find(prop => prop.name === propName);
   for (const other of others) {
     const otherProp = other.properties.find(prop => prop.name === propName);
@@ -92,7 +92,7 @@ const validateProperty = (source: IRppElement, others: IRppElement[], propName: 
   }
 };
 
-const validateElement = (source: IRppElement, others: IRppElement[], elementName: string) => {
+const validateElement = (source: RppElement, others: RppElement[], elementName: string) => {
   const sourceEl = source.elements.find(el => el.name === elementName);
   for (const other of others) {
     const otherEl = other.elements.find(el => el.name === elementName);
@@ -100,7 +100,7 @@ const validateElement = (source: IRppElement, others: IRppElement[], elementName
   }
 };
 
-const areTracksSame = (sourceTrack: IRppElement, otherTrack: IRppElement) => {
+const areTracksSame = (sourceTrack: RppElement, otherTrack: RppElement) => {
   const sourceNameProp = sourceTrack.properties.find(prop => prop.name === 'NAME');
   const otherNameProp = otherTrack.properties.find(prop => prop.name === 'NAME');
   return sourceNameProp && otherNameProp && sourceNameProp.attributes[0] === otherNameProp.attributes[0];

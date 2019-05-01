@@ -1,9 +1,9 @@
 import safeEval from 'safe-eval';
 import _ from 'lodash';
 
-import { ITransformScript } from './transformScript';
+import { TransformScript } from './transformModel';
 import { Rest } from '../../shared/services';
-import { IRppData } from '../../projects/domain';
+import { RppData } from '../../projects/domain';
 
 import { copySettingsBody } from './copySettings';
 import { adjustTempoBody } from './adjustTempo';
@@ -20,10 +20,10 @@ export class TransformService {
       throw new Error(response.statusText);
     }
 
-    return (await response.json()) as ITransformScript[];
+    return (await response.json()) as TransformScript[];
   }
 
-  static async saveScript(script: ITransformScript) {
+  static async saveScript(script: TransformScript) {
     const response = await Rest.post('/api/v1/scripts', {
       contentType: 'text/json',
       params: JSON.stringify(script),
@@ -44,11 +44,11 @@ export class TransformService {
     }
   }
 
-  static async runScript(script: string, sourceProject: IRppData, otherProjects: IRppData[]) {
-    return new Promise<IRppData[]>((resolve, reject) => {
+  static async runScript(script: string, sourceProject: RppData, otherProjects: RppData[]) {
+    return new Promise<RppData[]>((resolve, reject) => {
       try {
-        const sourceProjectClone: IRppData = _.cloneDeep(sourceProject);
-        const otherProjectsClone: IRppData[] = _.cloneDeep(otherProjects);
+        const sourceProjectClone: RppData = _.cloneDeep(sourceProject);
+        const otherProjectsClone: RppData[] = _.cloneDeep(otherProjects);
         const context = {
           sourceProject: sourceProjectClone,
           otherProjects: otherProjectsClone,
@@ -64,7 +64,7 @@ export class TransformService {
     });
   }
 
-  static getBuiltInScripts(): ITransformScript[] {
+  static getBuiltInScripts(): TransformScript[] {
     return [
       {
         name: 'Copy Settings',

@@ -1,2 +1,2 @@
-export * from './transformScript';
+export * from './transformModel';
 export * from './transformService';

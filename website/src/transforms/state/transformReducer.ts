@@ -1,12 +1,12 @@
 import { TransformActions, TransformActionTypes } from './transformActions';
-import { ITransformScript, TransformService } from '../domain';
-import { IRppData } from '../../projects/domain';
+import { TransformScript, TransformService } from '../domain';
+import { RppData } from '../../projects/domain';
 
 export type TransformState = {
-  readonly scripts: ITransformScript[];
-  readonly selectedScript: ITransformScript;
+  readonly scripts: TransformScript[];
+  readonly selectedScript: TransformScript;
   readonly scriptText: string;
-  readonly transformedProjects: IRppData[];
+  readonly transformedProjects: RppData[];
   readonly isInProgress: boolean;
   readonly error: Error | undefined;
   readonly isTransformRunning: boolean;
@@ -26,7 +26,7 @@ const initialState: TransformState = {
   transformError: undefined,
 };
 
-const getScriptsSuccess = (state: TransformState, scripts: ITransformScript[]) => {
+const getScriptsSuccess = (state: TransformState, scripts: TransformScript[]) => {
   return {
     ...state,
     isInProgress: false,
@@ -34,7 +34,7 @@ const getScriptsSuccess = (state: TransformState, scripts: ITransformScript[]) =
   };
 };
 
-const saveScriptSuccess = (state: TransformState, script: ITransformScript) => {
+const saveScriptSuccess = (state: TransformState, script: TransformScript) => {
   return {
     ...state,
     isInProgress: false,
@@ -42,7 +42,7 @@ const saveScriptSuccess = (state: TransformState, script: ITransformScript) => {
   };
 };
 
-const deleteScriptSuccess = (state: TransformState, script: ITransformScript) => {
+const deleteScriptSuccess = (state: TransformState, script: TransformScript) => {
   const index = state.scripts.findIndex(s => s.id === script.id);
   let newSelection = state.selectedScript;
   if (script === state.selectedScript) {
@@ -72,7 +72,7 @@ const callFailed = (state: TransformState, error: Error) => {
   };
 };
 
-const selectScript = (state: TransformState, script: ITransformScript) => {
+const selectScript = (state: TransformState, script: TransformScript) => {
   return {
     ...state,
     scriptText: script.script,
@@ -94,7 +94,7 @@ const transformInProgress = (state: TransformState) => {
   };
 };
 
-const transformSuccess = (state: TransformState, transformedProjects: IRppData[]) => {
+const transformSuccess = (state: TransformState, transformedProjects: RppData[]) => {
   return {
     ...state,
     isTransformRunning: false,

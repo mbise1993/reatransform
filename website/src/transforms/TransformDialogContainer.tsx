@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
 
-import { IRppData, ProjectService } from '../projects/domain';
+import { RppData, ProjectService } from '../projects/domain';
 import { clearTransformedProjects } from './state';
 import { AppState } from '../app/state';
 
@@ -31,7 +31,7 @@ const styles = {
 
 type TransformDialogProps = {
   show: boolean;
-  transformedRpps: IRppData[];
+  transformedRpps: RppData[];
   onClose: () => void;
 };
 
@@ -48,7 +48,7 @@ const TransformDialog = ({ show, transformedRpps, onClose }: TransformDialogProp
     ProjectService.elementToRpp(transformedRpps[0].rootElement).then(text => setRppText(text));
   }, [transformedRpps]);
 
-  const handleRppClick = async (rpp: IRppData) => {
+  const handleRppClick = async (rpp: RppData) => {
     setSelectedRpp(rpp);
     setRppText(await ProjectService.elementToRpp(rpp.rootElement));
   };

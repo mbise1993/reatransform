@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import TestPanel from '../test/TestPanel';
 import ProjectJsonEditor from './ProjectJsonEditor';
-import { IRppData } from './domain/project';
+import { RppData } from './domain';
 import { ProjectService } from './domain';
 import { readTestResource } from '../test/utilBrowser';
 import AsyncLoader from '../test/AsyncLoader';
@@ -13,7 +13,7 @@ const loadTestData = async () => {
   const rppData = {
     name: name,
     rootElement: await ProjectService.rppToElement(readTestResource(name)),
-  } as IRppData;
+  } as RppData;
 
   return JSON.stringify(rppData);
 };

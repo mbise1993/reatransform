@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 
 import TestPanel from '../test/TestPanel';
 import ProjectList from './ProjectList';
-import { Project } from './domain/project';
+import { Project } from './domain';
 
 const width = '300px';
 const height = '100%';

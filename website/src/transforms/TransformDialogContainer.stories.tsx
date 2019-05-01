@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import TransformDialogContainer from './TransformDialogContainer';
-import { IRppData } from '../projects/domain/project';
+import { RppData } from '../projects/domain/projectModel';
 import { ProjectService } from '../projects/domain';
 import { readTestResource } from '../test/utilBrowser';
 import AsyncLoader from '../test/AsyncLoader';
@@ -12,7 +12,7 @@ const loadTestRpps = async (names: string[]) => {
     return {
       name: name,
       rootElement: await ProjectService.rppToElement(readTestResource(name)),
-    } as IRppData;
+    } as RppData;
   });
 
   return await Promise.all(rppPromises);

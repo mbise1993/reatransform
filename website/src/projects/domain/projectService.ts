@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 
-import { Project, IRppData, IRppElement, IRppProperty } from './project';
+import { Project, RppData, RppElement, RppProperty } from './projectModel';
 
 const assert = (expression: boolean, message: string) => {
   if (!expression) {
@@ -44,7 +44,7 @@ export default class ProjectService {
     });
   }
 
-  static async saveProjects(projects: IRppData[]) {
+  static async saveProjects(projects: RppData[]) {
     let zip = new JSZip();
     for (const proj of projects) {
       const content = await ProjectService.elementToRpp(proj.rootElement);
@@ -55,13 +55,13 @@ export default class ProjectService {
     saveAs(blob, 'transforms.zip');
   }
 
-  private static getName(project: IRppData) {
+  private static getName(project: RppData) {
     const index = project.name.lastIndexOf('.');
     const nameWithoutExt = index > -1 ? project.name.substring(0, index) : project.name;
     return `${nameWithoutExt}_Transformed.rpp`;
   }
 
-  static async elementToRpp(element: IRppElement) {
+  static async elementToRpp(element: RppElement) {
     return new Promise<string>((resolve, reject) => {
       try {
         resolve(ProjectService.elementToRppSync(element));
@@ -71,7 +71,7 @@ export default class ProjectService {
     });
   }
 
-  private static elementToRppSync(element: IRppElement): string {
+  private static elementToRppSync(element: RppElement): string {
     let lines: string[] = [];
     let indent = 0;
 
@@ -123,7 +123,7 @@ export default class ProjectService {
       return {
         name: tokens[0],
         attributes: tokens.slice(1).map(tok => getValue(tok)),
-      } as IRppProperty;
+      } as RppProperty;
     };
 
     const readElement = () => {
@@ -131,7 +131,7 @@ export default class ProjectService {
       assert(line.charAt(0) === '<', `Error at line ${lineNum}: expected element`);
 
       const tokens = line.substring(1).split(' ');
-      const element: IRppElement = {
+      const element: RppElement = {
         name: tokens[0],
         attributes: tokens.slice(1).map(tok => getValue(tok)),
         properties: [],

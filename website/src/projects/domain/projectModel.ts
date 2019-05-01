@@ -1,28 +1,28 @@
 import ProjectService from './projectService';
 
-export interface IRppProperty {
+export type RppProperty = {
   name: string;
   attributes: Array<string | number>;
-}
+};
 
-export interface IRppElement {
+export type RppElement = {
   name: string;
   attributes: Array<string | number>;
-  properties: Array<IRppProperty>;
-  elements: Array<IRppElement>;
+  properties: Array<RppProperty>;
+  elements: Array<RppElement>;
   data?: string;
-}
+};
 
-export interface IRppData {
+export type RppData = {
   name: string;
-  rootElement: IRppElement;
-}
+  rootElement: RppElement;
+};
 
 let currentId = 1;
 
 export class Project {
   private _id: number;
-  private _data: IRppData | null = null;
+  private _data: RppData | null = null;
 
   constructor(private _name: string, private _content: string) {
     this._id = currentId;

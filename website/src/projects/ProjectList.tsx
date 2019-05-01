@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, Button, ButtonGroup, ListGroup } from 'react-bootstrap';
 
-import { Project } from './domain/project';
+import { Project } from './domain';
 
 type ProjectListProps = {
   projects: Project[];
