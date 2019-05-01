@@ -5,6 +5,10 @@ export default class User {
     this._username = username;
   }
 
+  get id() {
+    return '';
+  }
+
   get username() {
     return this._username;
   }
