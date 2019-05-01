@@ -1,8 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 
-import TransformDialog from './TransformDialog';
+import TransformDialogContainer from './TransformDialogContainer';
 import { IRppData } from '../projects/domain/project';
 import { ProjectService } from '../projects/domain';
 import { readTestResource } from '../test/utilBrowser';
@@ -22,12 +21,12 @@ const loadTestRpps = async (names: string[]) => {
 storiesOf('TransformDialog', module).add('with 1 transformed project', () => {
   const loadData = () => loadTestRpps(['OneEmptyTrack.rpp']);
 
-  return <AsyncLoader loadData={loadData}>{data => <TransformDialog />}</AsyncLoader>;
+  return <AsyncLoader loadData={loadData}>{data => <TransformDialogContainer />}</AsyncLoader>;
 });
 
 storiesOf('TransformDialog', module).add('with multiple transformed project', () => {
   const loadData = () =>
     loadTestRpps(['EmptyProject.rpp', 'OneEmptyTrack.rpp', 'OneTrackWithMidiData.rpp', 'OneTrackWithOneVst.rpp']);
 
-  return <AsyncLoader loadData={loadData}>{data => <TransformDialog />}</AsyncLoader>;
+  return <AsyncLoader loadData={loadData}>{data => <TransformDialogContainer />}</AsyncLoader>;
 });

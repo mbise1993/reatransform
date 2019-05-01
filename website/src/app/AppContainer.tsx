@@ -7,7 +7,7 @@ import PageHeader from './PageHeader';
 import PageFooter from './PageFooter';
 import ProjectContainer from '../projects/ProjectContainer';
 import TransformScriptEditor from '../transforms/TransformScriptEditor';
-import TransformDialog from '../transforms/TransformDialog';
+import TransformDialogContainer from '../transforms/TransformDialogContainer';
 import { Project, IRppData } from '../projects/domain';
 import { ITransformScript, TransformService } from '../transforms/domain';
 import { selectScript, modifyScriptText, runTransform } from '../transforms/state';
@@ -76,7 +76,7 @@ const AppContainer = ({
 
       <PageFooter id="app-footer" />
 
-      <TransformDialog />
+      <TransformDialogContainer />
     </div>
   );
 };
