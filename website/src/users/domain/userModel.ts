@@ -1,4 +1,5 @@
 export default class User {
+  private _id = '';
   private _username: string;
 
   constructor(username: string) {
@@ -6,7 +7,11 @@ export default class User {
   }
 
   get id() {
-    return '';
+    return this._id;
+  }
+
+  set id(value: string) {
+    this._id = value;
   }
 
   get username() {
