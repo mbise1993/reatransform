@@ -6,6 +6,7 @@ import { CardGroup } from 'react-bootstrap';
 import PageHeader from './PageHeader';
 import PageFooter from './PageFooter';
 import ProjectContainer from '../projects/ProjectContainer';
+import TransformListContainer from '../transforms/TransformListContainer';
 import TransformScriptEditor from '../transforms/TransformScriptEditor';
 import TransformDialogContainer from '../transforms/TransformDialogContainer';
 import { Project, RppData } from '../projects/domain';
@@ -14,6 +15,22 @@ import { selectScript, modifyScriptText, runTransform } from '../transforms/stat
 import { AppState } from './state';
 
 const builtInScripts = TransformService.getBuiltInScripts();
+
+const styles: any = {
+  showTransformList: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    height: '100%',
+    width: '20%',
+    zIndex: 99,
+  },
+};
+
+styles.hideTransformList = {
+  ...styles.showTransformList,
+  display: 'none',
+};
 
 type StateProps = {
   projects: Project[];
@@ -41,6 +58,8 @@ const AppContainer = ({
   onScriptTextChange,
   onTransformClick,
 }: AppProps) => {
+  const [showTransformList, setShowTransformList] = React.useState(false);
+
   const handleTransformClick = async () => {
     if (!sourceProject) {
       return;
@@ -54,7 +73,13 @@ const AppContainer = ({
 
   return (
     <div id="app-container">
-      <PageHeader id="app-header" />
+      <PageHeader
+        id="app-header"
+        canRunTransform={projects.length > 0}
+        isTransformRunning={isTransformInProgress}
+        onRunTransformClick={handleTransformClick}
+        onShowTransformsClick={() => setShowTransformList(!showTransformList)}
+      />
 
       <div id="app-content">
         <CardGroup className="h-100">
@@ -65,13 +90,14 @@ const AppContainer = ({
             script={selectedScript!}
             scriptText={scriptText}
             allScripts={builtInScripts}
-            canRun={projects.length > 0}
-            isRunning={isTransformInProgress}
-            onScriptChange={s => onScriptChange(s)}
-            onScriptTextChange={t => onScriptTextChange(t)}
-            onTransformClick={() => handleTransformClick()}
+            onScriptChange={onScriptChange}
+            onScriptTextChange={onScriptTextChange}
           />
         </CardGroup>
+
+        <div id="transform-list-panel" style={showTransformList ? styles.showTransformList : styles.hideTransformList}>
+          <TransformListContainer />
+        </div>
       </div>
 
       <PageFooter id="app-footer" />

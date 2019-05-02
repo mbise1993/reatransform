@@ -67,14 +67,17 @@ export class TransformService {
   static getBuiltInScripts(): TransformScript[] {
     return [
       {
+        id: 'built-in-1',
         name: 'Copy Settings',
         script: copySettingsBody,
       },
       {
+        id: 'built-in-2',
         name: 'Adjust Tempo',
         script: adjustTempoBody,
       },
       {
+        id: 'built-in-3',
         name: 'New Script',
         script: '// New script\n',
       },
