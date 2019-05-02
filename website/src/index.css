@@ -1,5 +1,5 @@
 :root {
-  --primary: #078cf2;
+  --primary: #317cf6;
   --text: white;
   --dark-gray: #1f1f1f;
   --med-gray: #272722;
@@ -90,4 +90,27 @@ body,
 
 .modal-content {
   background-color: var(--med-gray);
+}
+
+.nav-tabs {
+  border: none !important;
+}
+
+.nav-item {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  color: gray !important;
+  background-color: var(--dark-gray) !important;
+  padding: 8px 16px !important;
+  border: none !important;
+}
+
+.nav-item.active {
+  color: white !important;
+  background-color: var(--light-gray) !important;
+}
+
+.btn-primar {
+  background-color: var(--primary) !important;
 }

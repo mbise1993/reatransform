@@ -9,7 +9,7 @@ import { TransformService } from './domain';
 const width = '600px';
 const height = '100%';
 
-storiesOf('TransformScriptPanel', module).add('with no text', () => {
+storiesOf('TransformScriptPanel', module).add('With no text', () => {
   return (
     <TestPanel width={width} height={height}>
       <TransformScriptEditor
@@ -17,17 +17,14 @@ storiesOf('TransformScriptPanel', module).add('with no text', () => {
         script={TransformService.getBuiltInScripts()[0]}
         scriptText={''}
         allScripts={TransformService.getBuiltInScripts()}
-        canRun={true}
-        isRunning={false}
         onScriptChange={action('script changed')}
         onScriptTextChange={action('script text changed')}
-        onTransformClick={action('transform clicked')}
       />
     </TestPanel>
   );
 });
 
-storiesOf('TransformScriptPanel', module).add('with script text', () => {
+storiesOf('TransformScriptPanel', module).add('With script text', () => {
   return (
     <TestPanel width={width} height={height}>
       <TransformScriptEditor
@@ -35,29 +32,8 @@ storiesOf('TransformScriptPanel', module).add('with script text', () => {
         script={TransformService.getBuiltInScripts()[0]}
         scriptText={TransformService.getBuiltInScripts()[0].script}
         allScripts={TransformService.getBuiltInScripts()}
-        canRun={true}
-        isRunning={false}
         onScriptChange={action('script changed')}
         onScriptTextChange={action('script text changed')}
-        onTransformClick={action('transform clicked')}
-      />
-    </TestPanel>
-  );
-});
-
-storiesOf('TransformScriptPanel', module).add('running', () => {
-  return (
-    <TestPanel width={width} height={height}>
-      <TransformScriptEditor
-        id="transform-script-panel"
-        script={TransformService.getBuiltInScripts()[0]}
-        scriptText={TransformService.getBuiltInScripts()[0].script}
-        allScripts={TransformService.getBuiltInScripts()}
-        canRun={true}
-        isRunning={true}
-        onScriptChange={action('script changed')}
-        onScriptTextChange={action('script text changed')}
-        onTransformClick={action('transform clicked')}
       />
     </TestPanel>
   );

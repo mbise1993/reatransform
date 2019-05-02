@@ -52,7 +52,7 @@ const deleteScriptSuccess = (state: TransformState, script: TransformScript) => 
   return {
     ...state,
     isInProgress: false,
-    selectScript: newSelection,
+    selectedScript: newSelection,
     scripts: state.scripts.filter(s => s.id !== script.id),
   };
 };
@@ -76,7 +76,7 @@ const selectScript = (state: TransformState, script: TransformScript) => {
   return {
     ...state,
     scriptText: script.script,
-    selectScript: script,
+    selectedScript: script,
   };
 };
 

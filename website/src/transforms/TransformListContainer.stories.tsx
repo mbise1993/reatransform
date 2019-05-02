@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import _ from 'lodash';
 
 import TransformListContainer from './TransformListContainer';
 import TestPanel from '../test/TestPanel';
@@ -9,6 +10,17 @@ import { User } from '../users/domain';
 
 const width = '300px';
 const height = '100%';
+
+const createTestScripts = (start: number, end: number, userId?: string): TransformScript[] => {
+  return _.range(start, end).map(n => {
+    return {
+      id: n.toString(),
+      userId: userId || `user${n}`,
+      name: `Test script ${n}`,
+      script: `// Test script ${n}`,
+    };
+  });
+};
 
 storiesOf('TransformListContainer', module).add('No scripts', () => {
   return (
@@ -21,30 +33,14 @@ storiesOf('TransformListContainer', module).add('No scripts', () => {
 });
 
 storiesOf('TransformListContainer', module).add('Only user scripts', () => {
-  const scripts: TransformScript[] = [
-    {
-      userId: 'user',
-      name: 'Test script 1',
-      script: '// Test script 1',
-    },
-    {
-      userId: 'user',
-      name: 'Test script 2',
-      script: '// Test script 2',
-    },
-    {
-      userId: 'user',
-      name: 'Test script 3',
-      script: '// Test script 3',
-    },
-  ];
-
+  const scripts = createTestScripts(1, 4, 'user');
   const user = new User('username');
   user.id = 'user';
 
   const state = {
     transform: {
       scripts: scripts,
+      selectedScript: scripts[0],
     },
     user: {
       loggedInUser: user,
@@ -61,30 +57,14 @@ storiesOf('TransformListContainer', module).add('Only user scripts', () => {
 });
 
 storiesOf('TransformListContainer', module).add('Only public scripts', () => {
-  const scripts: TransformScript[] = [
-    {
-      userId: 'user2',
-      name: 'Test script 1',
-      script: '// Test script 1',
-    },
-    {
-      userId: 'user3',
-      name: 'Test script 2',
-      script: '// Test script 2',
-    },
-    {
-      userId: 'user4',
-      name: 'Test script 3',
-      script: '// Test script 3',
-    },
-  ];
-
+  const scripts = createTestScripts(1, 4);
   const user = new User('username');
   user.id = 'user';
 
   const state = {
     transform: {
       scripts: scripts,
+      selectedScript: scripts[0],
     },
     user: {
       loggedInUser: user,
@@ -101,45 +81,14 @@ storiesOf('TransformListContainer', module).add('Only public scripts', () => {
 });
 
 storiesOf('TransformListContainer', module).add('User scripts and public scripts', () => {
-  const scripts: TransformScript[] = [
-    {
-      userId: 'user',
-      name: 'Test script 1',
-      script: '// Test script 1',
-    },
-    {
-      userId: 'user',
-      name: 'Test script 2',
-      script: '// Test script 2',
-    },
-    {
-      userId: 'user',
-      name: 'Test script 3',
-      script: '// Test script 3',
-    },
-    {
-      userId: 'user2',
-      name: 'Test script 4',
-      script: '// Test script 4',
-    },
-    {
-      userId: 'user3',
-      name: 'Test script 5',
-      script: '// Test script 5',
-    },
-    {
-      userId: 'user4',
-      name: 'Test script 6',
-      script: '// Test script 6',
-    },
-  ];
-
+  const scripts = [...createTestScripts(1, 4, 'user'), ...createTestScripts(4, 8)];
   const user = new User('username');
   user.id = 'user';
 
   const state = {
     transform: {
       scripts: scripts,
+      selectedScript: scripts[0],
     },
     user: {
       loggedInUser: user,

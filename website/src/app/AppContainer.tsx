@@ -73,7 +73,13 @@ const AppContainer = ({
 
   return (
     <div id="app-container">
-      <PageHeader id="app-header" onShowTransformListClick={() => setShowTransformList(!showTransformList)} />
+      <PageHeader
+        id="app-header"
+        canRunTransform={projects.length > 0}
+        isTransformRunning={isTransformInProgress}
+        onRunTransformClick={handleTransformClick}
+        onShowTransformsClick={() => setShowTransformList(!showTransformList)}
+      />
 
       <div id="app-content">
         <CardGroup className="h-100">
@@ -84,11 +90,8 @@ const AppContainer = ({
             script={selectedScript!}
             scriptText={scriptText}
             allScripts={builtInScripts}
-            canRun={projects.length > 0}
-            isRunning={isTransformInProgress}
-            onScriptChange={s => onScriptChange(s)}
-            onScriptTextChange={t => onScriptTextChange(t)}
-            onTransformClick={() => handleTransformClick()}
+            onScriptChange={onScriptChange}
+            onScriptTextChange={onScriptTextChange}
           />
         </CardGroup>
 
