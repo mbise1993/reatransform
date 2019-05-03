@@ -13,6 +13,7 @@ import { Project, RppData } from '../projects/domain';
 import { TransformScript, TransformService } from '../transforms/domain';
 import { User } from '../users/domain';
 import { selectScript, modifyScriptText, runTransform } from '../transforms/state';
+import { logout } from '../users/state';
 import { AppState } from './state';
 
 const builtInScripts = TransformService.getBuiltInScripts();
@@ -43,6 +44,7 @@ type StateProps = {
 };
 
 type DispatchProps = {
+  onLogoutClick: () => void;
   onScriptChange: (script: TransformScript) => void;
   onScriptTextChange: (scriptText: string) => void;
   onTransformClick: (scriptText: string, sourceProject: RppData, otherProjects: RppData[]) => void;
@@ -57,6 +59,7 @@ const AppContainer = ({
   selectedScript,
   scriptText,
   isTransformInProgress,
+  onLogoutClick,
   onScriptChange,
   onScriptTextChange,
   onTransformClick,
@@ -81,6 +84,7 @@ const AppContainer = ({
         user={user}
         canRunTransform={projects.length > 0}
         isTransformRunning={isTransformInProgress}
+        onLogoutClick={onLogoutClick}
         onRunTransformClick={handleTransformClick}
         onShowTransformsClick={() => setShowTransformList(!showTransformList)}
       />
@@ -124,6 +128,7 @@ const mapStateToProps = (state: AppState): StateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
+    onLogoutClick: bindActionCreators(logout, dispatch),
     onScriptChange: bindActionCreators(selectScript, dispatch),
     onScriptTextChange: bindActionCreators(modifyScriptText, dispatch),
     onTransformClick: bindActionCreators(runTransform, dispatch),

@@ -36,6 +36,13 @@ const callFailed = (state: UserState, error: Error) => {
   };
 };
 
+const logout = (state: UserState) => {
+  return {
+    ...state,
+    loggedInUser: undefined,
+  };
+};
+
 export const userReducer = (state = initialState, action: UserActions): UserState => {
   switch (action.type) {
     case UserActionTypes.LOGIN_SUCCESS:
@@ -45,6 +52,8 @@ export const userReducer = (state = initialState, action: UserActions): UserStat
       return callInProgress(state);
     case UserActionTypes.CALL_FAILED:
       return callFailed(state, action.payload.error);
+    case UserActionTypes.LOGOUT:
+      return logout(state);
     default:
       return state;
   }

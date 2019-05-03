@@ -1,7 +1,7 @@
 import { Rest } from '../../shared/services';
 import Cookies from 'js-cookie';
 
-const USER_TOKEN_ID = 'user-token';
+const USER_COOKIE_NAME = 'user-token';
 
 type UserResponse = {
   token: string;
@@ -32,8 +32,14 @@ export default class UserService {
     return await UserService.handleResponse(response);
   }
 
+  static async logout() {
+    if (UserService.isLoggedIn()) {
+      Cookies.remove(USER_COOKIE_NAME);
+    }
+  }
+
   static isLoggedIn() {
-    return Cookies.get(USER_TOKEN_ID) !== undefined;
+    return Cookies.get(USER_COOKIE_NAME) !== undefined;
   }
 
   private static async handleResponse(response: Response) {
@@ -43,7 +49,8 @@ export default class UserService {
     }
 
     const userResponse = (await response.json()) as UserResponse;
-    Cookies.set(USER_TOKEN_ID, userResponse.token);
+    console.log(JSON.stringify(userResponse));
+    Cookies.set(USER_COOKIE_NAME, userResponse.token);
 
     return {
       id: userResponse.id,

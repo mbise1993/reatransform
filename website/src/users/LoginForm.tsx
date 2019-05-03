@@ -11,7 +11,7 @@ export default ({ onSubmit, onSignUpClick }: LoginFormProps) => {
   const [password, setPassword] = React.useState('');
 
   return (
-    <Form onSubmit={() => onSubmit(username, password)}>
+    <Form>
       <Form.Group controlId="formUsername">
         <Form.Control
           type="input"
@@ -31,7 +31,7 @@ export default ({ onSubmit, onSignUpClick }: LoginFormProps) => {
         </Form.Text>
       </Form.Group>
 
-      <Button variant="light" type="submit">
+      <Button variant="light" onClick={() => onSubmit(username, password)}>
         Submit
       </Button>
 

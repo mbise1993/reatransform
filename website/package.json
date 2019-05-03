@@ -11,6 +11,7 @@
   "bugs": {
     "url": "https://github.com/mbise1993/reatransform/issues"
   },
+  "proxy": "http://localhost:3001/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

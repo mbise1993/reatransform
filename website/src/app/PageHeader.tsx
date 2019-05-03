@@ -9,6 +9,8 @@ const styles: any = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  brand: {
     fontSize: '26px',
     fontWeight: 200,
     letterSpacing: '2px',
@@ -25,6 +27,7 @@ type PageHeaderProps = {
   user: User | undefined;
   canRunTransform: boolean;
   isTransformRunning: boolean;
+  onLogoutClick: () => void;
   onRunTransformClick: () => void;
   onShowTransformsClick: () => void;
 } & React.ComponentProps<'div'>;
@@ -33,15 +36,23 @@ export default ({
   user,
   canRunTransform,
   isTransformRunning,
+  onLogoutClick,
   onRunTransformClick,
   onShowTransformsClick,
   ...otherProps
 }: PageHeaderProps) => {
   const [showAuthDialog, setShowAuthDialog] = React.useState(false);
 
-  const renderUserOrLogin = () => {
+  const renderUserInfo = () => {
     if (user) {
-      return <span>{`Hello, ${user.username}!`}</span>;
+      return (
+        <span>
+          {`Hello, ${user.username}!`}
+          <Button variant="outline-light" size="sm" style={styles.marginLeft} onClick={onLogoutClick}>
+            Logout
+          </Button>
+        </span>
+      );
     } else {
       return (
         <Button variant="outline-light" size="sm" onClick={() => setShowAuthDialog(true)}>
@@ -53,9 +64,9 @@ export default ({
 
   return (
     <div style={styles.root} {...otherProps}>
-      <span style={styles.inline}>ReaTransform 🎚</span>
+      <span style={{ ...styles.brand, ...styles.inline }}>ReaTransform 🎚</span>
       <span style={styles.inline}>
-        {renderUserOrLogin()}
+        {renderUserInfo()}
 
         <ButtonGroup style={styles.marginLeft}>
           <Button variant="outline-light" size="sm" onClick={onShowTransformsClick}>

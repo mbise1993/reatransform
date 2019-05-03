@@ -8,6 +8,7 @@ export enum UserActionTypes {
   SIGN_UP_SUCCESS = 'user/SIGN_UP_SUCCESS',
   CALL_INPROGRESS = 'user/CALL_INPROGRESS',
   CALL_FAILED = 'user/CALL_FAILED',
+  LOGOUT = 'user/LOGOUT',
 }
 
 type LoginSuccessAction = {
@@ -35,7 +36,16 @@ type CallFailedAction = {
   };
 };
 
-export type UserActions = LoginSuccessAction | SignUpSuccessAction | CallInProgressAction | CallFailedAction;
+type LogoutAction = {
+  readonly type: UserActionTypes.LOGOUT;
+};
+
+export type UserActions =
+  | LoginSuccessAction
+  | SignUpSuccessAction
+  | CallInProgressAction
+  | CallFailedAction
+  | LogoutAction;
 
 export const login = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
@@ -60,3 +70,5 @@ export const signUp = (username: string, password: string) => {
     }
   };
 };
+
+export const logout = () => createAction(UserActionTypes.LOGOUT);

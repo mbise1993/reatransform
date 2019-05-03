@@ -13,8 +13,9 @@ storiesOf('HeaderPanel', module).add('No user logged in', () => {
         user={undefined}
         canRunTransform={true}
         isTransformRunning={false}
-        onRunTransformClick={action('run transform clicked')}
-        onShowTransformsClick={action('show transforms clicked')}
+        onLogoutClick={action('Logout clicked')}
+        onRunTransformClick={action('Run transform clicked')}
+        onShowTransformsClick={action('Show transforms clicked')}
       />
     </TestPanel>
   );
@@ -33,8 +34,9 @@ storiesOf('HeaderPanel', module).add('User logged in', () => {
         user={user}
         canRunTransform={false}
         isTransformRunning={false}
-        onRunTransformClick={action('run transform clicked')}
-        onShowTransformsClick={action('show transforms clicked')}
+        onLogoutClick={action('Logout clicked')}
+        onRunTransformClick={action('Run transform clicked')}
+        onShowTransformsClick={action('Show transforms clicked')}
       />
     </TestPanel>
   );
@@ -48,8 +50,9 @@ storiesOf('HeaderPanel', module).add('Transform running', () => {
         user={undefined}
         canRunTransform={true}
         isTransformRunning={true}
-        onRunTransformClick={action('run transform clicked')}
-        onShowTransformsClick={action('show transforms clicked')}
+        onLogoutClick={action('Logout clicked')}
+        onRunTransformClick={action('Run transform clicked')}
+        onShowTransformsClick={action('Show transforms clicked')}
       />
     </TestPanel>
   );

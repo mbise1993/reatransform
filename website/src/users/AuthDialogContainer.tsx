@@ -45,6 +45,16 @@ type AuthDialogContainerProps = {
 const AuthDialog = ({ show, isInProgress, error, onClose, onLogin, onSignUp }: AuthDialogContainerProps) => {
   const [isOnLoginScreen, setOnLoginScreen] = React.useState(true);
 
+  const handleLoginSubmit = (username: string, password: string) => {
+    onLogin(username, password);
+    onClose();
+  };
+
+  const handleSignUpSubmit = (username: string, password: string) => {
+    onSignUp(username, password);
+    onClose();
+  };
+
   const renderLoginForm = () => {
     return (
       <>
@@ -57,7 +67,7 @@ const AuthDialog = ({ show, isInProgress, error, onClose, onLogin, onSignUp }: A
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <LoginForm onSubmit={onLogin} onSignUpClick={() => setOnLoginScreen(false)} />
+          <LoginForm onSubmit={handleLoginSubmit} onSignUpClick={() => setOnLoginScreen(false)} />
         </Modal.Body>
       </>
     );
@@ -70,7 +80,7 @@ const AuthDialog = ({ show, isInProgress, error, onClose, onLogin, onSignUp }: A
           <Modal.Title style={styles.title}>Sign up to manage your scripts!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SignUpForm onBackClick={() => setOnLoginScreen(true)} onSubmit={onSignUp} />
+          <SignUpForm onBackClick={() => setOnLoginScreen(true)} onSubmit={handleSignUpSubmit} />
         </Modal.Body>
       </>
     );
