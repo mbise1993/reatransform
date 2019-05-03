@@ -11,6 +11,7 @@ import TransformScriptEditor from '../transforms/TransformScriptEditor';
 import TransformDialogContainer from '../transforms/TransformDialogContainer';
 import { Project, RppData } from '../projects/domain';
 import { TransformScript, TransformService } from '../transforms/domain';
+import { User } from '../users/domain';
 import { selectScript, modifyScriptText, runTransform } from '../transforms/state';
 import { AppState } from './state';
 
@@ -33,6 +34,7 @@ styles.hideTransformList = {
 };
 
 type StateProps = {
+  user: User | undefined;
   projects: Project[];
   sourceProject: Project | undefined;
   selectedScript: TransformScript | undefined;
@@ -49,6 +51,7 @@ type DispatchProps = {
 type AppProps = StateProps & DispatchProps;
 
 const AppContainer = ({
+  user,
   projects,
   sourceProject,
   selectedScript,
@@ -75,6 +78,7 @@ const AppContainer = ({
     <div id="app-container">
       <PageHeader
         id="app-header"
+        user={user}
         canRunTransform={projects.length > 0}
         isTransformRunning={isTransformInProgress}
         onRunTransformClick={handleTransformClick}
@@ -109,6 +113,7 @@ const AppContainer = ({
 
 const mapStateToProps = (state: AppState): StateProps => {
   return {
+    user: state.user.loggedInUser,
     projects: state.project.projects,
     sourceProject: state.project.sourceProject,
     selectedScript: state.transform.selectedScript,

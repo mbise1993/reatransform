@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Spinner } from 'react-bootstrap';
 
 import AuthDialogContainer from '../users/AuthDialogContainer';
+import { User } from '../users/domain';
 
 const styles: any = {
   root: {
@@ -21,6 +22,7 @@ const styles: any = {
 };
 
 type PageHeaderProps = {
+  user: User | undefined;
   canRunTransform: boolean;
   isTransformRunning: boolean;
   onRunTransformClick: () => void;
@@ -28,6 +30,7 @@ type PageHeaderProps = {
 } & React.ComponentProps<'div'>;
 
 export default ({
+  user,
   canRunTransform,
   isTransformRunning,
   onRunTransformClick,
@@ -36,13 +39,23 @@ export default ({
 }: PageHeaderProps) => {
   const [showAuthDialog, setShowAuthDialog] = React.useState(false);
 
+  const renderUserOrLogin = () => {
+    if (user) {
+      return <span>{`Hello, ${user.username}!`}</span>;
+    } else {
+      return (
+        <Button variant="outline-light" size="sm" onClick={() => setShowAuthDialog(true)}>
+          Login or Sign Up
+        </Button>
+      );
+    }
+  };
+
   return (
     <div style={styles.root} {...otherProps}>
       <span style={styles.inline}>ReaTransform 🎚</span>
       <span style={styles.inline}>
-        <Button variant="outline-light" size="sm" onClick={() => setShowAuthDialog(true)}>
-          Login or Sign Up
-        </Button>
+        {renderUserOrLogin()}
 
         <ButtonGroup style={styles.marginLeft}>
           <Button variant="outline-light" size="sm" onClick={onShowTransformsClick}>
