@@ -1,7 +1,7 @@
 import { Rest } from '../../shared/services';
 import Cookies from 'js-cookie';
 
-import { User } from '.';
+import { User } from './userModel';
 
 const loginUrl = '/auth/login';
 const registerUrl = '/auth/register';
@@ -19,7 +19,7 @@ export default class UserService {
       throw new Error(response.statusText);
     }
 
-    return new User(username);
+    return (await response.json()) as User;
   }
 
   static async register(username: string, password: string) {
@@ -34,7 +34,7 @@ export default class UserService {
       throw new Error(response.statusText);
     }
 
-    return new User(username);
+    return (await response.json()) as User;
   }
 
   static isLoggedIn() {

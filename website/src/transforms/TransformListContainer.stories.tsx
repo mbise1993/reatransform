@@ -34,8 +34,6 @@ storiesOf('TransformListContainer', module).add('No scripts', () => {
 
 storiesOf('TransformListContainer', module).add('Only user scripts', () => {
   const scripts = createTestScripts(1, 4, 'user');
-  const user = new User('username');
-  user.id = 'user';
 
   const state = {
     transform: {
@@ -43,7 +41,10 @@ storiesOf('TransformListContainer', module).add('Only user scripts', () => {
       selectedScript: scripts[0],
     },
     user: {
-      loggedInUser: user,
+      loggedInUser: {
+        id: 'user',
+        username: 'username',
+      },
     },
   };
 
@@ -58,8 +59,6 @@ storiesOf('TransformListContainer', module).add('Only user scripts', () => {
 
 storiesOf('TransformListContainer', module).add('Only public scripts', () => {
   const scripts = createTestScripts(1, 4);
-  const user = new User('username');
-  user.id = 'user';
 
   const state = {
     transform: {
@@ -67,7 +66,10 @@ storiesOf('TransformListContainer', module).add('Only public scripts', () => {
       selectedScript: scripts[0],
     },
     user: {
-      loggedInUser: user,
+      loggedInUser: {
+        id: 'user',
+        username: 'username',
+      },
     },
   };
 
@@ -82,8 +84,6 @@ storiesOf('TransformListContainer', module).add('Only public scripts', () => {
 
 storiesOf('TransformListContainer', module).add('User scripts and public scripts', () => {
   const scripts = [...createTestScripts(1, 4, 'user'), ...createTestScripts(4, 8)];
-  const user = new User('username');
-  user.id = 'user';
 
   const state = {
     transform: {
@@ -91,7 +91,10 @@ storiesOf('TransformListContainer', module).add('User scripts and public scripts
       selectedScript: scripts[0],
     },
     user: {
-      loggedInUser: user,
+      loggedInUser: {
+        id: 'user',
+        username: 'username',
+      },
     },
   };
 

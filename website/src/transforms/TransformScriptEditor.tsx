@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, DropdownButton, Dropdown, Button, Spinner } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 import EditorView from '../shared/components/EditorView';
 import { TransformScript } from './domain/transformModel';
