@@ -1,15 +1,15 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 
-import TestPanel from "../test/TestPanel";
-import ProjectJsonPanel from "./ProjectJsonPanel";
-import { IRppData } from "../project/reaperProject";
-import rppToElement from "../project/rppToElement";
-import { readTestResource } from "../test/utilBrowser";
-import AsyncLoader from "../test/AsyncLoader";
+import TestPanel from '../test/TestPanel';
+import ProjectJsonPanel from './ProjectJsonPanel';
+import { IRppData } from './reaperProject';
+import rppToElement from './rppToElement';
+import { readTestResource } from '../test/utilBrowser';
+import AsyncLoader from '../test/AsyncLoader';
 
 const loadTestData = async () => {
-  const name = "EmptyProject.rpp";
+  const name = 'EmptyProject.rpp';
   const rppData = {
     name: name,
     rootElement: await rppToElement(readTestResource(name)),
@@ -18,10 +18,10 @@ const loadTestData = async () => {
   return JSON.stringify(rppData);
 };
 
-const width = "400px";
-const height = "100%";
+const width = '400px';
+const height = '100%';
 
-storiesOf("ProjectJsonPanel", module).add("with no text", () => {
+storiesOf('ProjectJsonPanel', module).add('with no text', () => {
   return (
     <TestPanel width={width} height={height}>
       <ProjectJsonPanel id="project-json-panel" title="No JSON" json="" />
@@ -29,7 +29,7 @@ storiesOf("ProjectJsonPanel", module).add("with no text", () => {
   );
 });
 
-storiesOf("ProjectJsonPanel", module).add("with JSON text", () => {
+storiesOf('ProjectJsonPanel', module).add('with JSON text', () => {
   return (
     <TestPanel width={width} height={height}>
       <AsyncLoader loadData={loadTestData}>

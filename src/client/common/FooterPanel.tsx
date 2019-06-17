@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import githubLogo from "../images/GitHub-Mark-Light-32px.png";
+import githubLogo from '../images/GitHub-Mark-Light-32px.png';
 
-export default ({ ...otherProps }: React.ComponentProps<"div">) => {
+export default ({ ...otherProps }: React.ComponentProps<'div'>) => {
   return (
     <div style={styles.root} {...otherProps}>
       Built with ❤️ by Matt Bise&nbsp;&nbsp;
@@ -15,8 +15,8 @@ export default ({ ...otherProps }: React.ComponentProps<"div">) => {
 
 const styles = {
   root: {
-    display: "flex",
-    alignItems: "center",
-    fontSize: "12px",
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '12px',
   },
 };

@@ -4,20 +4,26 @@
   "description": "REAPER project batch transformations via scripting",
   "author": "Matt Bise <mbise1993@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mbise1993/reatransform"
+  },
+  "bugs": {
+    "url": "https://github.com/mbise1993/reatransform/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "npm run watch",
+    "test": "jest --watchAll",
+    "storybook": "start-storybook",
+    "format": "prettier --write src/**/*.{ts,tsx}"
+  },
   "dependencies": {
     "@types/react-helmet": "^5.0.8",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
     "file-saver": "2.0.1",
-    "gatsby": "^2.3.25",
-    "gatsby-image": "^2.0.39",
-    "gatsby-plugin-manifest": "^2.0.29",
-    "gatsby-plugin-offline": "^2.0.25",
-    "gatsby-plugin-react-helmet": "^3.0.12",
-    "gatsby-plugin-sharp": "^2.0.35",
-    "gatsby-plugin-typescript": "^2.0.12",
-    "gatsby-source-filesystem": "^2.0.29",
-    "gatsby-transformer-sharp": "^2.1.18",
     "jquery": "^3.4.0",
     "jszip": "3.2.1",
     "lodash": "4.17.11",
@@ -55,21 +61,5 @@
     "ts-jest": "^24.0.2",
     "typescript": "3.3.3",
     "webpack": "^4.30.0"
-  },
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "jest --watchAll",
-    "storybook": "start-storybook"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mbise1993/reatransform"
-  },
-  "bugs": {
-    "url": "https://github.com/mbise1993/reatransform/issues"
   }
 }

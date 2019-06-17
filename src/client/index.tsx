@@ -1,21 +1,21 @@
-import * as React from "react";
-import { CardGroup } from "react-bootstrap";
-import { Helmet } from "react-helmet";
+import * as React from 'react';
+import { CardGroup } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 
-import HeaderPanel from "../common/HeaderPanel";
-import FooterPanel from "../common/FooterPanel";
-import ProjectsPanel from "../project/ProjectsPanel";
-import ProjectJsonPanel from "../project/ProjectJsonPanel";
-import TransformScriptPanel from "../transform/TransformScriptPanel";
-import TransformDialog from "../transform/TransformDialog";
-import { ReaperProject, IRppData, importProjects } from "../project/reaperProject";
-import { allScripts, ITransformScript, runTransformScript } from "../transform/transformScript";
+import HeaderPanel from './common/HeaderPanel';
+import FooterPanel from './common/FooterPanel';
+import ProjectsPanel from './project/ProjectsPanel';
+import ProjectJsonPanel from './project/ProjectJsonPanel';
+import TransformScriptPanel from './transform/TransformScriptPanel';
+import TransformDialog from './transform/TransformDialog';
+import { ReaperProject, IRppData, importProjects } from './project/reaperProject';
+import { allScripts, ITransformScript, runTransformScript } from './transform/transformScript';
 
-import appleTouchIcon from "../images/apple-touch-icon.png";
-import favicon16 from "../images/favicon-16x16.png";
-import favicon32 from "../images/favicon-32x32.png";
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "../styles.css";
+import appleTouchIcon from './images/apple-touch-icon.png';
+import favicon16 from './images/favicon-16x16.png';
+import favicon32 from './images/favicon-32x32.png';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './styles.css';
 
 export default () => {
   const [projects, setProjects] = React.useState<ReaperProject[]>([]);
@@ -23,7 +23,7 @@ export default () => {
   const [sourceProject, setSourceProject] = React.useState<ReaperProject | null>(null);
   const [script, setScript] = React.useState(allScripts[0]);
   const [scriptText, setScriptText] = React.useState(allScripts[0].script);
-  const [projectJson, setProjectJson] = React.useState("");
+  const [projectJson, setProjectJson] = React.useState('');
   const [isRunning, setRunning] = React.useState(false);
   const [transformedRpps, setTransformedRpps] = React.useState<IRppData[]>([]);
 
@@ -116,11 +116,11 @@ export default () => {
         .then(obj => setProjectJson(JSON.stringify(obj, null, 2)))
         .catch(error => console.log((error as Error).message));
     } else {
-      setProjectJson("");
+      setProjectJson('');
     }
   };
 
-  const title = selectedProject ? `JSON for ${selectedProject.name}` : "No Project Selected";
+  const title = selectedProject ? `JSON for ${selectedProject.name}` : 'No Project Selected';
 
   return (
     <div id="app-container">
