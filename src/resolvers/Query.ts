@@ -15,7 +15,7 @@ interface UserScriptsArgs {
 
 export async function userScripts(_parent: any, args: UserScriptsArgs, context: Context) {
   const userId = authorizeUser(context);
-  return await context.prisma.scriptsConnection({
+  return await context.prisma.scripts({
     where: {
       visibility: args.visibility,
       author: {
@@ -27,7 +27,7 @@ export async function userScripts(_parent: any, args: UserScriptsArgs, context: 
 
 export async function favoriteScripts(_parent: any, _args: {}, context: Context) {
   const userId = authorizeUser(context);
-  return await context.prisma.scriptsConnection({
+  return await context.prisma.scripts({
     where: {
       favoritedBy_some: { id: userId },
     },

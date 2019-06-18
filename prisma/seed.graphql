@@ -1,0 +1,42 @@
+mutation {
+  first: createUser(
+    data: {
+      email: "bob@example.com"
+      username: "bob-1"
+      password: "$2a$10$4Klnw3hCkdGcSJxDXh5CP.I9UjkP0uW8AgLqJNlNsYcXjN8WjmCAy"
+      userScripts: {
+        create: [
+          {
+            name: "Bob's Private Script"
+            description: "TESTING!"
+            content: "// Test script"
+            visibility: PRIVATE
+            tags: { set: ["tag1", "tag2"] }
+          }
+        ]
+      }
+    }
+  ) {
+    id
+  }
+  second: createUser(
+    data: {
+      email: "alice@example.com"
+      username: "alice-1"
+      password: "$2a$10$4Klnw3hCkdGcSJxDXh5CP.I9UjkP0uW8AgLqJNlNsYcXjN8WjmCAy"
+      userScripts: {
+        create: [
+          {
+            name: "Alice's Public Script"
+            description: "TESTING!"
+            content: "// Test script"
+            visibility: PUBLIC
+            tags: { set: ["tag1", "tag3"] }
+          }
+        ]
+      }
+    }
+  ) {
+    id
+  }
+}

@@ -19,7 +19,8 @@
     "start": "tsc && node dist/server.js",
     "test": "jest --watchAll",
     "storybook": "start-storybook",
-    "format": "prettier --write src/**/*.{ts,tsx}"
+    "format": "prettier --write src/**/*.{ts,tsx}",
+    "seed": "prisma reset -f && prisma seed"
   },
   "dependencies": {
     "@types/react-helmet": "^5.0.8",

@@ -1,7 +1,7 @@
 type Query {
   publicScripts: [Script!]!
   userScripts(visibility: Visibility!): [Script!]!
-  favoriteScripts(userId: String!): [Script!]!
+  favoriteScripts: [Script!]!
 }
 
 type Mutation {

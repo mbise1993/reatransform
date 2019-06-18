@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import { Prisma } from '../generated/prisma-client';
+import { Request } from 'express';
 
 export const APP_SECRET = 'SECRET';
 
@@ -10,7 +11,7 @@ export interface Context {
 }
 
 export const authorizeUser = (context: Context) => {
-  const auth = context.request.headers.get('Authorization');
+  const auth = context.request.get('Authorization');
   if (!auth) {
     throw new Error('Not authenticated');
   }
