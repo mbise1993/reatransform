@@ -1,0 +1,25 @@
+type User {
+  id: ID! @id
+  email: String! @unique
+  username: String! @unique
+  password: String!
+  scripts: [Script!]!
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+type Script {
+  id: ID! @id
+  name: String!
+  description: String
+  content: String!
+  visibility: Visibility! @default(value: PUBLIC)
+  tags: [String!]! @scalarList(strategy: RELATION)
+  rating: Int!
+  author: User!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}

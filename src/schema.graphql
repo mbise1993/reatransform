@@ -1,0 +1,53 @@
+type Query {
+  publicScripts(userId: String): [Script!]!
+  userScripts(userId: String!): [Script!]!
+}
+
+type Mutation {
+  signup(email: String!, username: String!, password: String!): AuthPayload
+  login(username: String!, password: String!): AuthPayload
+  createScript(name: String!, description: String, content: String!, tags: [String!]!, visibility: Visibility!): Script!
+  updateScript(
+    id: ID!
+    name: String
+    description: String
+    content: String
+    tags: [String!]
+    visibility: Visibility
+  ): Script!
+  deleteScript(id: ID!): Script!
+  rateScript(id: ID!, rating: Int!): Script!
+}
+
+type Subscription {
+  newRating: Int!
+}
+
+type User {
+  id: ID!
+  email: String!
+  username: String!
+  password: String!
+  scripts: [Script!]!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+type Script {
+  id: ID!
+  name: String!
+  description: String
+  content: String!
+  tags: [String!]!
+  visibility: Visibility!
+  rating: Int!
+  author: User!
+}
