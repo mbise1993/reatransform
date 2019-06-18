@@ -69,3 +69,5 @@ yarn-error.log
 .yarn-integrity
 
 react-app-env.d.ts
+
+dist

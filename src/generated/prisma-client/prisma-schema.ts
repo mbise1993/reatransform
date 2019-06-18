@@ -2,7 +2,11 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateScript {
+export const typeDefs = /* GraphQL */ `type AggregateRating {
+  count: Int!
+}
+
+type AggregateScript {
   count: Int!
 }
 
@@ -19,6 +23,12 @@ scalar DateTime
 scalar Long
 
 type Mutation {
+  createRating(data: RatingCreateInput!): Rating!
+  updateRating(data: RatingUpdateInput!, where: RatingWhereUniqueInput!): Rating
+  updateManyRatings(data: RatingUpdateManyMutationInput!, where: RatingWhereInput): BatchPayload!
+  upsertRating(where: RatingWhereUniqueInput!, create: RatingCreateInput!, update: RatingUpdateInput!): Rating!
+  deleteRating(where: RatingWhereUniqueInput!): Rating
+  deleteManyRatings(where: RatingWhereInput): BatchPayload!
   createScript(data: ScriptCreateInput!): Script!
   updateScript(data: ScriptUpdateInput!, where: ScriptWhereUniqueInput!): Script
   updateManyScripts(data: ScriptUpdateManyMutationInput!, where: ScriptWhereInput): BatchPayload!
@@ -51,6 +61,9 @@ type PageInfo {
 }
 
 type Query {
+  rating(where: RatingWhereUniqueInput!): Rating
+  ratings(where: RatingWhereInput, orderBy: RatingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rating]!
+  ratingsConnection(where: RatingWhereInput, orderBy: RatingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RatingConnection!
   script(where: ScriptWhereUniqueInput!): Script
   scripts(where: ScriptWhereInput, orderBy: ScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Script]!
   scriptsConnection(where: ScriptWhereInput, orderBy: ScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScriptConnection!
@@ -60,6 +73,181 @@ type Query {
   node(id: ID!): Node
 }
 
+type Rating {
+  id: ID!
+  value: Int!
+  script: Script!
+  user: User!
+}
+
+type RatingConnection {
+  pageInfo: PageInfo!
+  edges: [RatingEdge]!
+  aggregate: AggregateRating!
+}
+
+input RatingCreateInput {
+  id: ID
+  value: Int!
+  script: ScriptCreateOneWithoutRatingsInput!
+  user: UserCreateOneInput!
+}
+
+input RatingCreateManyWithoutScriptInput {
+  create: [RatingCreateWithoutScriptInput!]
+  connect: [RatingWhereUniqueInput!]
+}
+
+input RatingCreateWithoutScriptInput {
+  id: ID
+  value: Int!
+  user: UserCreateOneInput!
+}
+
+type RatingEdge {
+  node: Rating!
+  cursor: String!
+}
+
+enum RatingOrderByInput {
+  id_ASC
+  id_DESC
+  value_ASC
+  value_DESC
+}
+
+type RatingPreviousValues {
+  id: ID!
+  value: Int!
+}
+
+input RatingScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  value: Int
+  value_not: Int
+  value_in: [Int!]
+  value_not_in: [Int!]
+  value_lt: Int
+  value_lte: Int
+  value_gt: Int
+  value_gte: Int
+  AND: [RatingScalarWhereInput!]
+  OR: [RatingScalarWhereInput!]
+  NOT: [RatingScalarWhereInput!]
+}
+
+type RatingSubscriptionPayload {
+  mutation: MutationType!
+  node: Rating
+  updatedFields: [String!]
+  previousValues: RatingPreviousValues
+}
+
+input RatingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RatingWhereInput
+  AND: [RatingSubscriptionWhereInput!]
+  OR: [RatingSubscriptionWhereInput!]
+  NOT: [RatingSubscriptionWhereInput!]
+}
+
+input RatingUpdateInput {
+  value: Int
+  script: ScriptUpdateOneRequiredWithoutRatingsInput
+  user: UserUpdateOneRequiredInput
+}
+
+input RatingUpdateManyDataInput {
+  value: Int
+}
+
+input RatingUpdateManyMutationInput {
+  value: Int
+}
+
+input RatingUpdateManyWithoutScriptInput {
+  create: [RatingCreateWithoutScriptInput!]
+  delete: [RatingWhereUniqueInput!]
+  connect: [RatingWhereUniqueInput!]
+  set: [RatingWhereUniqueInput!]
+  disconnect: [RatingWhereUniqueInput!]
+  update: [RatingUpdateWithWhereUniqueWithoutScriptInput!]
+  upsert: [RatingUpsertWithWhereUniqueWithoutScriptInput!]
+  deleteMany: [RatingScalarWhereInput!]
+  updateMany: [RatingUpdateManyWithWhereNestedInput!]
+}
+
+input RatingUpdateManyWithWhereNestedInput {
+  where: RatingScalarWhereInput!
+  data: RatingUpdateManyDataInput!
+}
+
+input RatingUpdateWithoutScriptDataInput {
+  value: Int
+  user: UserUpdateOneRequiredInput
+}
+
+input RatingUpdateWithWhereUniqueWithoutScriptInput {
+  where: RatingWhereUniqueInput!
+  data: RatingUpdateWithoutScriptDataInput!
+}
+
+input RatingUpsertWithWhereUniqueWithoutScriptInput {
+  where: RatingWhereUniqueInput!
+  update: RatingUpdateWithoutScriptDataInput!
+  create: RatingCreateWithoutScriptInput!
+}
+
+input RatingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  value: Int
+  value_not: Int
+  value_in: [Int!]
+  value_not_in: [Int!]
+  value_lt: Int
+  value_lte: Int
+  value_gt: Int
+  value_gte: Int
+  script: ScriptWhereInput
+  user: UserWhereInput
+  AND: [RatingWhereInput!]
+  OR: [RatingWhereInput!]
+  NOT: [RatingWhereInput!]
+}
+
+input RatingWhereUniqueInput {
+  id: ID
+}
+
 type Script {
   id: ID!
   name: String!
@@ -67,8 +255,9 @@ type Script {
   content: String!
   visibility: Visibility!
   tags: [String!]!
-  rating: Int!
+  ratings(where: RatingWhereInput, orderBy: RatingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rating!]
   author: User!
+  favoritedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -86,13 +275,24 @@ input ScriptCreateInput {
   content: String!
   visibility: Visibility
   tags: ScriptCreatetagsInput
-  rating: Int!
-  author: UserCreateOneWithoutScriptsInput!
+  ratings: RatingCreateManyWithoutScriptInput
+  author: UserCreateOneWithoutUserScriptsInput!
+  favoritedBy: UserCreateManyWithoutFavoriteScriptsInput
 }
 
 input ScriptCreateManyWithoutAuthorInput {
   create: [ScriptCreateWithoutAuthorInput!]
   connect: [ScriptWhereUniqueInput!]
+}
+
+input ScriptCreateManyWithoutFavoritedByInput {
+  create: [ScriptCreateWithoutFavoritedByInput!]
+  connect: [ScriptWhereUniqueInput!]
+}
+
+input ScriptCreateOneWithoutRatingsInput {
+  create: ScriptCreateWithoutRatingsInput
+  connect: ScriptWhereUniqueInput
 }
 
 input ScriptCreatetagsInput {
@@ -106,7 +306,30 @@ input ScriptCreateWithoutAuthorInput {
   content: String!
   visibility: Visibility
   tags: ScriptCreatetagsInput
-  rating: Int!
+  ratings: RatingCreateManyWithoutScriptInput
+  favoritedBy: UserCreateManyWithoutFavoriteScriptsInput
+}
+
+input ScriptCreateWithoutFavoritedByInput {
+  id: ID
+  name: String!
+  description: String
+  content: String!
+  visibility: Visibility
+  tags: ScriptCreatetagsInput
+  ratings: RatingCreateManyWithoutScriptInput
+  author: UserCreateOneWithoutUserScriptsInput!
+}
+
+input ScriptCreateWithoutRatingsInput {
+  id: ID
+  name: String!
+  description: String
+  content: String!
+  visibility: Visibility
+  tags: ScriptCreatetagsInput
+  author: UserCreateOneWithoutUserScriptsInput!
+  favoritedBy: UserCreateManyWithoutFavoriteScriptsInput
 }
 
 type ScriptEdge {
@@ -125,8 +348,6 @@ enum ScriptOrderByInput {
   content_DESC
   visibility_ASC
   visibility_DESC
-  rating_ASC
-  rating_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -140,7 +361,6 @@ type ScriptPreviousValues {
   content: String!
   visibility: Visibility!
   tags: [String!]!
-  rating: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -206,14 +426,6 @@ input ScriptScalarWhereInput {
   visibility_not: Visibility
   visibility_in: [Visibility!]
   visibility_not_in: [Visibility!]
-  rating: Int
-  rating_not: Int
-  rating_in: [Int!]
-  rating_not_in: [Int!]
-  rating_lt: Int
-  rating_lte: Int
-  rating_gt: Int
-  rating_gte: Int
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -259,8 +471,9 @@ input ScriptUpdateInput {
   content: String
   visibility: Visibility
   tags: ScriptUpdatetagsInput
-  rating: Int
-  author: UserUpdateOneRequiredWithoutScriptsInput
+  ratings: RatingUpdateManyWithoutScriptInput
+  author: UserUpdateOneRequiredWithoutUserScriptsInput
+  favoritedBy: UserUpdateManyWithoutFavoriteScriptsInput
 }
 
 input ScriptUpdateManyDataInput {
@@ -269,7 +482,6 @@ input ScriptUpdateManyDataInput {
   content: String
   visibility: Visibility
   tags: ScriptUpdatetagsInput
-  rating: Int
 }
 
 input ScriptUpdateManyMutationInput {
@@ -278,7 +490,6 @@ input ScriptUpdateManyMutationInput {
   content: String
   visibility: Visibility
   tags: ScriptUpdatetagsInput
-  rating: Int
 }
 
 input ScriptUpdateManyWithoutAuthorInput {
@@ -293,9 +504,28 @@ input ScriptUpdateManyWithoutAuthorInput {
   updateMany: [ScriptUpdateManyWithWhereNestedInput!]
 }
 
+input ScriptUpdateManyWithoutFavoritedByInput {
+  create: [ScriptCreateWithoutFavoritedByInput!]
+  delete: [ScriptWhereUniqueInput!]
+  connect: [ScriptWhereUniqueInput!]
+  set: [ScriptWhereUniqueInput!]
+  disconnect: [ScriptWhereUniqueInput!]
+  update: [ScriptUpdateWithWhereUniqueWithoutFavoritedByInput!]
+  upsert: [ScriptUpsertWithWhereUniqueWithoutFavoritedByInput!]
+  deleteMany: [ScriptScalarWhereInput!]
+  updateMany: [ScriptUpdateManyWithWhereNestedInput!]
+}
+
 input ScriptUpdateManyWithWhereNestedInput {
   where: ScriptScalarWhereInput!
   data: ScriptUpdateManyDataInput!
+}
+
+input ScriptUpdateOneRequiredWithoutRatingsInput {
+  create: ScriptCreateWithoutRatingsInput
+  update: ScriptUpdateWithoutRatingsDataInput
+  upsert: ScriptUpsertWithoutRatingsInput
+  connect: ScriptWhereUniqueInput
 }
 
 input ScriptUpdatetagsInput {
@@ -308,7 +538,28 @@ input ScriptUpdateWithoutAuthorDataInput {
   content: String
   visibility: Visibility
   tags: ScriptUpdatetagsInput
-  rating: Int
+  ratings: RatingUpdateManyWithoutScriptInput
+  favoritedBy: UserUpdateManyWithoutFavoriteScriptsInput
+}
+
+input ScriptUpdateWithoutFavoritedByDataInput {
+  name: String
+  description: String
+  content: String
+  visibility: Visibility
+  tags: ScriptUpdatetagsInput
+  ratings: RatingUpdateManyWithoutScriptInput
+  author: UserUpdateOneRequiredWithoutUserScriptsInput
+}
+
+input ScriptUpdateWithoutRatingsDataInput {
+  name: String
+  description: String
+  content: String
+  visibility: Visibility
+  tags: ScriptUpdatetagsInput
+  author: UserUpdateOneRequiredWithoutUserScriptsInput
+  favoritedBy: UserUpdateManyWithoutFavoriteScriptsInput
 }
 
 input ScriptUpdateWithWhereUniqueWithoutAuthorInput {
@@ -316,10 +567,26 @@ input ScriptUpdateWithWhereUniqueWithoutAuthorInput {
   data: ScriptUpdateWithoutAuthorDataInput!
 }
 
+input ScriptUpdateWithWhereUniqueWithoutFavoritedByInput {
+  where: ScriptWhereUniqueInput!
+  data: ScriptUpdateWithoutFavoritedByDataInput!
+}
+
+input ScriptUpsertWithoutRatingsInput {
+  update: ScriptUpdateWithoutRatingsDataInput!
+  create: ScriptCreateWithoutRatingsInput!
+}
+
 input ScriptUpsertWithWhereUniqueWithoutAuthorInput {
   where: ScriptWhereUniqueInput!
   update: ScriptUpdateWithoutAuthorDataInput!
   create: ScriptCreateWithoutAuthorInput!
+}
+
+input ScriptUpsertWithWhereUniqueWithoutFavoritedByInput {
+  where: ScriptWhereUniqueInput!
+  update: ScriptUpdateWithoutFavoritedByDataInput!
+  create: ScriptCreateWithoutFavoritedByInput!
 }
 
 input ScriptWhereInput {
@@ -383,15 +650,13 @@ input ScriptWhereInput {
   visibility_not: Visibility
   visibility_in: [Visibility!]
   visibility_not_in: [Visibility!]
-  rating: Int
-  rating_not: Int
-  rating_in: [Int!]
-  rating_not_in: [Int!]
-  rating_lt: Int
-  rating_lte: Int
-  rating_gt: Int
-  rating_gte: Int
+  ratings_every: RatingWhereInput
+  ratings_some: RatingWhereInput
+  ratings_none: RatingWhereInput
   author: UserWhereInput
+  favoritedBy_every: UserWhereInput
+  favoritedBy_some: UserWhereInput
+  favoritedBy_none: UserWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -418,6 +683,7 @@ input ScriptWhereUniqueInput {
 }
 
 type Subscription {
+  rating(where: RatingSubscriptionWhereInput): RatingSubscriptionPayload
   script(where: ScriptSubscriptionWhereInput): ScriptSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -427,7 +693,8 @@ type User {
   email: String!
   username: String!
   password: String!
-  scripts(where: ScriptWhereInput, orderBy: ScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Script!]
+  userScripts(where: ScriptWhereInput, orderBy: ScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Script!]
+  favoriteScripts(where: ScriptWhereInput, orderBy: ScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Script!]
 }
 
 type UserConnection {
@@ -441,19 +708,39 @@ input UserCreateInput {
   email: String!
   username: String!
   password: String!
-  scripts: ScriptCreateManyWithoutAuthorInput
+  userScripts: ScriptCreateManyWithoutAuthorInput
+  favoriteScripts: ScriptCreateManyWithoutFavoritedByInput
 }
 
-input UserCreateOneWithoutScriptsInput {
-  create: UserCreateWithoutScriptsInput
+input UserCreateManyWithoutFavoriteScriptsInput {
+  create: [UserCreateWithoutFavoriteScriptsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutScriptsInput {
+input UserCreateOneWithoutUserScriptsInput {
+  create: UserCreateWithoutUserScriptsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutFavoriteScriptsInput {
   id: ID
   email: String!
   username: String!
   password: String!
+  userScripts: ScriptCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutUserScriptsInput {
+  id: ID
+  email: String!
+  username: String!
+  password: String!
+  favoriteScripts: ScriptCreateManyWithoutFavoritedByInput
 }
 
 type UserEdge {
@@ -479,6 +766,68 @@ type UserPreviousValues {
   password: String!
 }
 
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
 type UserSubscriptionPayload {
   mutation: MutationType!
   node: User
@@ -497,11 +846,26 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  email: String
+  username: String
+  password: String
+  userScripts: ScriptUpdateManyWithoutAuthorInput
+  favoriteScripts: ScriptUpdateManyWithoutFavoritedByInput
+}
+
 input UserUpdateInput {
   email: String
   username: String
   password: String
-  scripts: ScriptUpdateManyWithoutAuthorInput
+  userScripts: ScriptUpdateManyWithoutAuthorInput
+  favoriteScripts: ScriptUpdateManyWithoutFavoritedByInput
+}
+
+input UserUpdateManyDataInput {
+  email: String
+  username: String
+  password: String
 }
 
 input UserUpdateManyMutationInput {
@@ -510,22 +874,70 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
-input UserUpdateOneRequiredWithoutScriptsInput {
-  create: UserCreateWithoutScriptsInput
-  update: UserUpdateWithoutScriptsDataInput
-  upsert: UserUpsertWithoutScriptsInput
+input UserUpdateManyWithoutFavoriteScriptsInput {
+  create: [UserCreateWithoutFavoriteScriptsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFavoriteScriptsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFavoriteScriptsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutScriptsDataInput {
+input UserUpdateOneRequiredWithoutUserScriptsInput {
+  create: UserCreateWithoutUserScriptsInput
+  update: UserUpdateWithoutUserScriptsDataInput
+  upsert: UserUpsertWithoutUserScriptsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutFavoriteScriptsDataInput {
   email: String
   username: String
   password: String
+  userScripts: ScriptUpdateManyWithoutAuthorInput
 }
 
-input UserUpsertWithoutScriptsInput {
-  update: UserUpdateWithoutScriptsDataInput!
-  create: UserCreateWithoutScriptsInput!
+input UserUpdateWithoutUserScriptsDataInput {
+  email: String
+  username: String
+  password: String
+  favoriteScripts: ScriptUpdateManyWithoutFavoritedByInput
+}
+
+input UserUpdateWithWhereUniqueWithoutFavoriteScriptsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutFavoriteScriptsDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutUserScriptsInput {
+  update: UserUpdateWithoutUserScriptsDataInput!
+  create: UserCreateWithoutUserScriptsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutFavoriteScriptsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutFavoriteScriptsDataInput!
+  create: UserCreateWithoutFavoriteScriptsInput!
 }
 
 input UserWhereInput {
@@ -585,9 +997,12 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  scripts_every: ScriptWhereInput
-  scripts_some: ScriptWhereInput
-  scripts_none: ScriptWhereInput
+  userScripts_every: ScriptWhereInput
+  userScripts_some: ScriptWhereInput
+  userScripts_none: ScriptWhereInput
+  favoriteScripts_every: ScriptWhereInput
+  favoriteScripts_some: ScriptWhereInput
+  favoriteScripts_none: ScriptWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

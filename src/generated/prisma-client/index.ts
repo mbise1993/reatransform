@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  rating: (where?: RatingWhereInput) => Promise<boolean>;
   script: (where?: ScriptWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -39,6 +40,25 @@ export interface Prisma {
    * Queries
    */
 
+  rating: (where: RatingWhereUniqueInput) => RatingNullablePromise;
+  ratings: (args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Rating>;
+  ratingsConnection: (args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => RatingConnectionPromise;
   script: (where: ScriptWhereUniqueInput) => ScriptNullablePromise;
   scripts: (args?: {
     where?: ScriptWhereInput;
@@ -83,6 +103,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createRating: (data: RatingCreateInput) => RatingPromise;
+  updateRating: (args: {
+    data: RatingUpdateInput;
+    where: RatingWhereUniqueInput;
+  }) => RatingPromise;
+  updateManyRatings: (args: {
+    data: RatingUpdateManyMutationInput;
+    where?: RatingWhereInput;
+  }) => BatchPayloadPromise;
+  upsertRating: (args: {
+    where: RatingWhereUniqueInput;
+    create: RatingCreateInput;
+    update: RatingUpdateInput;
+  }) => RatingPromise;
+  deleteRating: (where: RatingWhereUniqueInput) => RatingPromise;
+  deleteManyRatings: (where?: RatingWhereInput) => BatchPayloadPromise;
   createScript: (data: ScriptCreateInput) => ScriptPromise;
   updateScript: (args: {
     data: ScriptUpdateInput;
@@ -124,6 +160,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  rating: (
+    where?: RatingSubscriptionWhereInput
+  ) => RatingSubscriptionPayloadSubscription;
   script: (
     where?: ScriptSubscriptionWhereInput
   ) => ScriptSubscriptionPayloadSubscription;
@@ -140,6 +179,14 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type Visibility = "PUBLIC" | "PRIVATE";
+
+export type RatingOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "value_ASC"
+  | "value_DESC";
+
 export type ScriptOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -151,14 +198,10 @@ export type ScriptOrderByInput =
   | "content_DESC"
   | "visibility_ASC"
   | "visibility_DESC"
-  | "rating_ASC"
-  | "rating_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
-
-export type Visibility = "PUBLIC" | "PRIVATE";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -172,161 +215,28 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ScriptUpdateInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  content?: Maybe<String>;
-  visibility?: Maybe<Visibility>;
-  tags?: Maybe<ScriptUpdatetagsInput>;
-  rating?: Maybe<Int>;
-  author?: Maybe<UserUpdateOneRequiredWithoutScriptsInput>;
+export interface UserUpdateOneRequiredWithoutUserScriptsInput {
+  create?: Maybe<UserCreateWithoutUserScriptsInput>;
+  update?: Maybe<UserUpdateWithoutUserScriptsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutUserScriptsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export type ScriptWhereUniqueInput = AtLeastOne<{
+export type RatingWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface UserUpdateInput {
-  email?: Maybe<String>;
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  scripts?: Maybe<ScriptUpdateManyWithoutAuthorInput>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  username: String;
-  password: String;
-  scripts?: Maybe<ScriptCreateManyWithoutAuthorInput>;
-}
-
-export interface UserUpdateWithoutScriptsDataInput {
-  email?: Maybe<String>;
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface ScriptCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  content: String;
-  visibility?: Maybe<Visibility>;
-  tags?: Maybe<ScriptCreatetagsInput>;
-  rating: Int;
-  author: UserCreateOneWithoutScriptsInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface ScriptCreatetagsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface ScriptUpdateManyWithWhereNestedInput {
-  where: ScriptScalarWhereInput;
-  data: ScriptUpdateManyDataInput;
-}
-
-export interface UserCreateOneWithoutScriptsInput {
-  create?: Maybe<UserCreateWithoutScriptsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface ScriptUpsertWithWhereUniqueWithoutAuthorInput {
-  where: ScriptWhereUniqueInput;
-  update: ScriptUpdateWithoutAuthorDataInput;
-  create: ScriptCreateWithoutAuthorInput;
-}
-
-export interface UserCreateWithoutScriptsInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  username: String;
-  password: String;
-}
-
-export interface ScriptUpdateWithoutAuthorDataInput {
+export interface ScriptUpdateWithoutFavoritedByDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
   content?: Maybe<String>;
   visibility?: Maybe<Visibility>;
   tags?: Maybe<ScriptUpdatetagsInput>;
-  rating?: Maybe<Int>;
+  ratings?: Maybe<RatingUpdateManyWithoutScriptInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutUserScriptsInput>;
 }
 
-export interface ScriptCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  content: String;
-  visibility?: Maybe<Visibility>;
-  tags?: Maybe<ScriptCreatetagsInput>;
-  rating: Int;
-}
-
-export interface ScriptUpdateManyWithoutAuthorInput {
-  create?: Maybe<
-    ScriptCreateWithoutAuthorInput[] | ScriptCreateWithoutAuthorInput
-  >;
-  delete?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
-  connect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
-  set?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
-  disconnect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
-  update?: Maybe<
-    | ScriptUpdateWithWhereUniqueWithoutAuthorInput[]
-    | ScriptUpdateWithWhereUniqueWithoutAuthorInput
-  >;
-  upsert?: Maybe<
-    | ScriptUpsertWithWhereUniqueWithoutAuthorInput[]
-    | ScriptUpsertWithWhereUniqueWithoutAuthorInput
-  >;
-  deleteMany?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
-  updateMany?: Maybe<
-    | ScriptUpdateManyWithWhereNestedInput[]
-    | ScriptUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ScriptUpdatetagsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface ScriptSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ScriptWhereInput>;
-  AND?: Maybe<ScriptSubscriptionWhereInput[] | ScriptSubscriptionWhereInput>;
-  OR?: Maybe<ScriptSubscriptionWhereInput[] | ScriptSubscriptionWhereInput>;
-  NOT?: Maybe<ScriptSubscriptionWhereInput[] | ScriptSubscriptionWhereInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutScriptsInput {
-  create?: Maybe<UserCreateWithoutScriptsInput>;
-  update?: Maybe<UserUpdateWithoutScriptsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutScriptsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface ScriptScalarWhereInput {
+export interface RatingWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -341,86 +251,176 @@ export interface ScriptScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  visibility?: Maybe<Visibility>;
-  visibility_not?: Maybe<Visibility>;
-  visibility_in?: Maybe<Visibility[] | Visibility>;
-  visibility_not_in?: Maybe<Visibility[] | Visibility>;
-  rating?: Maybe<Int>;
-  rating_not?: Maybe<Int>;
-  rating_in?: Maybe<Int[] | Int>;
-  rating_not_in?: Maybe<Int[] | Int>;
-  rating_lt?: Maybe<Int>;
-  rating_lte?: Maybe<Int>;
-  rating_gt?: Maybe<Int>;
-  rating_gte?: Maybe<Int>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
-  OR?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
-  NOT?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
+  value?: Maybe<Int>;
+  value_not?: Maybe<Int>;
+  value_in?: Maybe<Int[] | Int>;
+  value_not_in?: Maybe<Int[] | Int>;
+  value_lt?: Maybe<Int>;
+  value_lte?: Maybe<Int>;
+  value_gt?: Maybe<Int>;
+  value_gte?: Maybe<Int>;
+  script?: Maybe<ScriptWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<RatingWhereInput[] | RatingWhereInput>;
+  OR?: Maybe<RatingWhereInput[] | RatingWhereInput>;
+  NOT?: Maybe<RatingWhereInput[] | RatingWhereInput>;
 }
 
-export interface ScriptCreateManyWithoutAuthorInput {
+export interface RatingUpdateManyWithoutScriptInput {
   create?: Maybe<
-    ScriptCreateWithoutAuthorInput[] | ScriptCreateWithoutAuthorInput
+    RatingCreateWithoutScriptInput[] | RatingCreateWithoutScriptInput
   >;
-  connect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  delete?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  set?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  disconnect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
+  update?: Maybe<
+    | RatingUpdateWithWhereUniqueWithoutScriptInput[]
+    | RatingUpdateWithWhereUniqueWithoutScriptInput
+  >;
+  upsert?: Maybe<
+    | RatingUpsertWithWhereUniqueWithoutScriptInput[]
+    | RatingUpsertWithWhereUniqueWithoutScriptInput
+  >;
+  deleteMany?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  updateMany?: Maybe<
+    | RatingUpdateManyWithWhereNestedInput[]
+    | RatingUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  userScripts_every?: Maybe<ScriptWhereInput>;
+  userScripts_some?: Maybe<ScriptWhereInput>;
+  userScripts_none?: Maybe<ScriptWhereInput>;
+  favoriteScripts_every?: Maybe<ScriptWhereInput>;
+  favoriteScripts_some?: Maybe<ScriptWhereInput>;
+  favoriteScripts_none?: Maybe<ScriptWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface UserCreateManyWithoutFavoriteScriptsInput {
+  create?: Maybe<
+    | UserCreateWithoutFavoriteScriptsInput[]
+    | UserCreateWithoutFavoriteScriptsInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface UserCreateWithoutFavoriteScriptsInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  username: String;
+  password: String;
+  userScripts?: Maybe<ScriptCreateManyWithoutAuthorInput>;
+}
+
+export interface RatingUpdateWithWhereUniqueWithoutScriptInput {
+  where: RatingWhereUniqueInput;
+  data: RatingUpdateWithoutScriptDataInput;
+}
+
+export interface RatingUpdateInput {
+  value?: Maybe<Int>;
+  script?: Maybe<ScriptUpdateOneRequiredWithoutRatingsInput>;
+  user?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface ScriptSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ScriptWhereInput>;
+  AND?: Maybe<ScriptSubscriptionWhereInput[] | ScriptSubscriptionWhereInput>;
+  OR?: Maybe<ScriptSubscriptionWhereInput[] | ScriptSubscriptionWhereInput>;
+  NOT?: Maybe<ScriptSubscriptionWhereInput[] | ScriptSubscriptionWhereInput>;
+}
+
+export interface ScriptUpdateOneRequiredWithoutRatingsInput {
+  create?: Maybe<ScriptCreateWithoutRatingsInput>;
+  update?: Maybe<ScriptUpdateWithoutRatingsDataInput>;
+  upsert?: Maybe<ScriptUpsertWithoutRatingsInput>;
+  connect?: Maybe<ScriptWhereUniqueInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export interface ScriptUpdateWithoutRatingsDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  content?: Maybe<String>;
+  visibility?: Maybe<Visibility>;
+  tags?: Maybe<ScriptUpdatetagsInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutUserScriptsInput>;
+  favoritedBy?: Maybe<UserUpdateManyWithoutFavoriteScriptsInput>;
 }
 
 export interface ScriptUpdateManyMutationInput {
@@ -429,12 +429,75 @@ export interface ScriptUpdateManyMutationInput {
   content?: Maybe<String>;
   visibility?: Maybe<Visibility>;
   tags?: Maybe<ScriptUpdatetagsInput>;
-  rating?: Maybe<Int>;
 }
 
-export interface UserUpsertWithoutScriptsInput {
-  update: UserUpdateWithoutScriptsDataInput;
-  create: UserCreateWithoutScriptsInput;
+export interface ScriptUpdatetagsInput {
+  set?: Maybe<String[] | String>;
+}
+
+export type ScriptWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface RatingUpdateManyWithWhereNestedInput {
+  where: RatingScalarWhereInput;
+  data: RatingUpdateManyDataInput;
+}
+
+export interface RatingUpdateManyMutationInput {
+  value?: Maybe<Int>;
+}
+
+export interface UserUpdateWithoutUserScriptsDataInput {
+  email?: Maybe<String>;
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  favoriteScripts?: Maybe<ScriptUpdateManyWithoutFavoritedByInput>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  username?: Maybe<String>;
+}>;
+
+export interface ScriptUpdateManyWithoutFavoritedByInput {
+  create?: Maybe<
+    ScriptCreateWithoutFavoritedByInput[] | ScriptCreateWithoutFavoritedByInput
+  >;
+  delete?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  connect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  set?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  disconnect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  update?: Maybe<
+    | ScriptUpdateWithWhereUniqueWithoutFavoritedByInput[]
+    | ScriptUpdateWithWhereUniqueWithoutFavoritedByInput
+  >;
+  upsert?: Maybe<
+    | ScriptUpsertWithWhereUniqueWithoutFavoritedByInput[]
+    | ScriptUpsertWithWhereUniqueWithoutFavoritedByInput
+  >;
+  deleteMany?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
+  updateMany?: Maybe<
+    | ScriptUpdateManyWithWhereNestedInput[]
+    | ScriptUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ScriptUpsertWithWhereUniqueWithoutFavoritedByInput {
+  where: ScriptWhereUniqueInput;
+  update: ScriptUpdateWithoutFavoritedByDataInput;
+  create: ScriptCreateWithoutFavoritedByInput;
+}
+
+export interface ScriptUpdateWithWhereUniqueWithoutFavoritedByInput {
+  where: ScriptWhereUniqueInput;
+  data: ScriptUpdateWithoutFavoritedByDataInput;
+}
+
+export interface ScriptCreateOneWithoutRatingsInput {
+  create?: Maybe<ScriptCreateWithoutRatingsInput>;
+  connect?: Maybe<ScriptWhereUniqueInput>;
 }
 
 export interface ScriptWhereInput {
@@ -498,15 +561,13 @@ export interface ScriptWhereInput {
   visibility_not?: Maybe<Visibility>;
   visibility_in?: Maybe<Visibility[] | Visibility>;
   visibility_not_in?: Maybe<Visibility[] | Visibility>;
-  rating?: Maybe<Int>;
-  rating_not?: Maybe<Int>;
-  rating_in?: Maybe<Int[] | Int>;
-  rating_not_in?: Maybe<Int[] | Int>;
-  rating_lt?: Maybe<Int>;
-  rating_lte?: Maybe<Int>;
-  rating_gt?: Maybe<Int>;
-  rating_gte?: Maybe<Int>;
+  ratings_every?: Maybe<RatingWhereInput>;
+  ratings_some?: Maybe<RatingWhereInput>;
+  ratings_none?: Maybe<RatingWhereInput>;
   author?: Maybe<UserWhereInput>;
+  favoritedBy_every?: Maybe<UserWhereInput>;
+  favoritedBy_some?: Maybe<UserWhereInput>;
+  favoritedBy_none?: Maybe<UserWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -528,22 +589,243 @@ export interface ScriptWhereInput {
   NOT?: Maybe<ScriptWhereInput[] | ScriptWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
+export interface ScriptCreatetagsInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface RatingScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  value?: Maybe<Int>;
+  value_not?: Maybe<Int>;
+  value_in?: Maybe<Int[] | Int>;
+  value_not_in?: Maybe<Int[] | Int>;
+  value_lt?: Maybe<Int>;
+  value_lte?: Maybe<Int>;
+  value_gt?: Maybe<Int>;
+  value_gte?: Maybe<Int>;
+  AND?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  OR?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+  NOT?: Maybe<RatingScalarWhereInput[] | RatingScalarWhereInput>;
+}
+
+export interface UserCreateWithoutUserScriptsInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  username: String;
+  password: String;
+  favoriteScripts?: Maybe<ScriptCreateManyWithoutFavoritedByInput>;
+}
+
+export interface RatingUpsertWithWhereUniqueWithoutScriptInput {
+  where: RatingWhereUniqueInput;
+  update: RatingUpdateWithoutScriptDataInput;
+  create: RatingCreateWithoutScriptInput;
+}
+
+export interface ScriptCreateWithoutFavoritedByInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  content: String;
+  visibility?: Maybe<Visibility>;
+  tags?: Maybe<ScriptCreatetagsInput>;
+  ratings?: Maybe<RatingCreateManyWithoutScriptInput>;
+  author: UserCreateOneWithoutUserScriptsInput;
+}
+
+export interface RatingUpdateWithoutScriptDataInput {
+  value?: Maybe<Int>;
+  user?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface RatingCreateWithoutScriptInput {
+  id?: Maybe<ID_Input>;
+  value: Int;
+  user: UserCreateOneInput;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  username: String;
+  password: String;
+  userScripts?: Maybe<ScriptCreateManyWithoutAuthorInput>;
+  favoriteScripts?: Maybe<ScriptCreateManyWithoutFavoritedByInput>;
+}
+
+export interface UserUpdateDataInput {
   email?: Maybe<String>;
   username?: Maybe<String>;
-}>;
+  password?: Maybe<String>;
+  userScripts?: Maybe<ScriptUpdateManyWithoutAuthorInput>;
+  favoriteScripts?: Maybe<ScriptUpdateManyWithoutFavoritedByInput>;
+}
 
-export interface ScriptUpdateManyDataInput {
+export interface ScriptCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  content: String;
+  visibility?: Maybe<Visibility>;
+  tags?: Maybe<ScriptCreatetagsInput>;
+  ratings?: Maybe<RatingCreateManyWithoutScriptInput>;
+  favoritedBy?: Maybe<UserCreateManyWithoutFavoriteScriptsInput>;
+}
+
+export interface ScriptUpdateManyWithoutAuthorInput {
+  create?: Maybe<
+    ScriptCreateWithoutAuthorInput[] | ScriptCreateWithoutAuthorInput
+  >;
+  delete?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  connect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  set?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  disconnect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+  update?: Maybe<
+    | ScriptUpdateWithWhereUniqueWithoutAuthorInput[]
+    | ScriptUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | ScriptUpsertWithWhereUniqueWithoutAuthorInput[]
+    | ScriptUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
+  updateMany?: Maybe<
+    | ScriptUpdateManyWithWhereNestedInput[]
+    | ScriptUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RatingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<RatingWhereInput>;
+  AND?: Maybe<RatingSubscriptionWhereInput[] | RatingSubscriptionWhereInput>;
+  OR?: Maybe<RatingSubscriptionWhereInput[] | RatingSubscriptionWhereInput>;
+  NOT?: Maybe<RatingSubscriptionWhereInput[] | RatingSubscriptionWhereInput>;
+}
+
+export interface ScriptUpdateWithWhereUniqueWithoutAuthorInput {
+  where: ScriptWhereUniqueInput;
+  data: ScriptUpdateWithoutAuthorDataInput;
+}
+
+export interface ScriptUpdateInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
   content?: Maybe<String>;
   visibility?: Maybe<Visibility>;
   tags?: Maybe<ScriptUpdatetagsInput>;
-  rating?: Maybe<Int>;
+  ratings?: Maybe<RatingUpdateManyWithoutScriptInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutUserScriptsInput>;
+  favoritedBy?: Maybe<UserUpdateManyWithoutFavoriteScriptsInput>;
 }
 
-export interface UserWhereInput {
+export interface ScriptUpdateWithoutAuthorDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  content?: Maybe<String>;
+  visibility?: Maybe<Visibility>;
+  tags?: Maybe<ScriptUpdatetagsInput>;
+  ratings?: Maybe<RatingUpdateManyWithoutScriptInput>;
+  favoritedBy?: Maybe<UserUpdateManyWithoutFavoriteScriptsInput>;
+}
+
+export interface ScriptUpsertWithoutRatingsInput {
+  update: ScriptUpdateWithoutRatingsDataInput;
+  create: ScriptCreateWithoutRatingsInput;
+}
+
+export interface UserUpdateManyWithoutFavoriteScriptsInput {
+  create?: Maybe<
+    | UserCreateWithoutFavoriteScriptsInput[]
+    | UserCreateWithoutFavoriteScriptsInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutFavoriteScriptsInput[]
+    | UserUpdateWithWhereUniqueWithoutFavoriteScriptsInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutFavoriteScriptsInput[]
+    | UserUpsertWithWhereUniqueWithoutFavoriteScriptsInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RatingUpdateManyDataInput {
+  value?: Maybe<Int>;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutFavoriteScriptsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutFavoriteScriptsDataInput;
+}
+
+export interface ScriptCreateWithoutRatingsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  content: String;
+  visibility?: Maybe<Visibility>;
+  tags?: Maybe<ScriptCreatetagsInput>;
+  author: UserCreateOneWithoutUserScriptsInput;
+  favoritedBy?: Maybe<UserCreateManyWithoutFavoriteScriptsInput>;
+}
+
+export interface UserUpdateWithoutFavoriteScriptsDataInput {
+  email?: Maybe<String>;
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  userScripts?: Maybe<ScriptUpdateManyWithoutAuthorInput>;
+}
+
+export interface ScriptCreateManyWithoutFavoritedByInput {
+  create?: Maybe<
+    ScriptCreateWithoutFavoritedByInput[] | ScriptCreateWithoutFavoritedByInput
+  >;
+  connect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutFavoriteScriptsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutFavoriteScriptsDataInput;
+  create: UserCreateWithoutFavoriteScriptsInput;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -600,17 +882,183 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  scripts_every?: Maybe<ScriptWhereInput>;
-  scripts_some?: Maybe<ScriptWhereInput>;
-  scripts_none?: Maybe<ScriptWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
 }
 
-export interface ScriptUpdateWithWhereUniqueWithoutAuthorInput {
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface ScriptCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  content: String;
+  visibility?: Maybe<Visibility>;
+  tags?: Maybe<ScriptCreatetagsInput>;
+  ratings?: Maybe<RatingCreateManyWithoutScriptInput>;
+  author: UserCreateOneWithoutUserScriptsInput;
+  favoritedBy?: Maybe<UserCreateManyWithoutFavoriteScriptsInput>;
+}
+
+export interface UserUpdateManyDataInput {
+  email?: Maybe<String>;
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export interface RatingCreateInput {
+  id?: Maybe<ID_Input>;
+  value: Int;
+  script: ScriptCreateOneWithoutRatingsInput;
+  user: UserCreateOneInput;
+}
+
+export interface ScriptUpdateManyDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  content?: Maybe<String>;
+  visibility?: Maybe<Visibility>;
+  tags?: Maybe<ScriptUpdatetagsInput>;
+}
+
+export interface ScriptUpdateManyWithWhereNestedInput {
+  where: ScriptScalarWhereInput;
+  data: ScriptUpdateManyDataInput;
+}
+
+export interface ScriptScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  visibility?: Maybe<Visibility>;
+  visibility_not?: Maybe<Visibility>;
+  visibility_in?: Maybe<Visibility[] | Visibility>;
+  visibility_not_in?: Maybe<Visibility[] | Visibility>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
+  OR?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
+  NOT?: Maybe<ScriptScalarWhereInput[] | ScriptScalarWhereInput>;
+}
+
+export interface ScriptUpsertWithWhereUniqueWithoutAuthorInput {
   where: ScriptWhereUniqueInput;
-  data: ScriptUpdateWithoutAuthorDataInput;
+  update: ScriptUpdateWithoutAuthorDataInput;
+  create: ScriptCreateWithoutAuthorInput;
+}
+
+export interface UserCreateOneWithoutUserScriptsInput {
+  create?: Maybe<UserCreateWithoutUserScriptsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutUserScriptsInput {
+  update: UserUpdateWithoutUserScriptsDataInput;
+  create: UserCreateWithoutUserScriptsInput;
+}
+
+export interface UserUpdateInput {
+  email?: Maybe<String>;
+  username?: Maybe<String>;
+  password?: Maybe<String>;
+  userScripts?: Maybe<ScriptUpdateManyWithoutAuthorInput>;
+  favoriteScripts?: Maybe<ScriptUpdateManyWithoutFavoritedByInput>;
+}
+
+export interface ScriptCreateManyWithoutAuthorInput {
+  create?: Maybe<
+    ScriptCreateWithoutAuthorInput[] | ScriptCreateWithoutAuthorInput
+  >;
+  connect?: Maybe<ScriptWhereUniqueInput[] | ScriptWhereUniqueInput>;
+}
+
+export interface RatingCreateManyWithoutScriptInput {
+  create?: Maybe<
+    RatingCreateWithoutScriptInput[] | RatingCreateWithoutScriptInput
+  >;
+  connect?: Maybe<RatingWhereUniqueInput[] | RatingWhereUniqueInput>;
 }
 
 export interface NodeNode {
@@ -642,91 +1090,20 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateScript {
-  count: Int;
-}
-
-export interface AggregateScriptPromise
-  extends Promise<AggregateScript>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateScriptSubscription
-  extends Promise<AsyncIterator<AggregateScript>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Script {
-  id: ID_Output;
-  name: String;
-  description?: String;
-  content: String;
-  visibility: Visibility;
-  tags: String[];
-  rating: Int;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface ScriptPromise extends Promise<Script>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  description: () => Promise<String>;
-  content: () => Promise<String>;
-  visibility: () => Promise<Visibility>;
-  tags: () => Promise<String[]>;
-  rating: () => Promise<Int>;
-  author: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface ScriptSubscription
-  extends Promise<AsyncIterator<Script>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  visibility: () => Promise<AsyncIterator<Visibility>>;
-  tags: () => Promise<AsyncIterator<String[]>>;
-  rating: () => Promise<AsyncIterator<Int>>;
-  author: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface ScriptNullablePromise
-  extends Promise<Script | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  description: () => Promise<String>;
-  content: () => Promise<String>;
-  visibility: () => Promise<Visibility>;
-  tags: () => Promise<String[]>;
-  rating: () => Promise<Int>;
-  author: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface ScriptEdge {
-  node: Script;
+export interface RatingEdge {
+  node: Rating;
   cursor: String;
 }
 
-export interface ScriptEdgePromise extends Promise<ScriptEdge>, Fragmentable {
-  node: <T = ScriptPromise>() => T;
+export interface RatingEdgePromise extends Promise<RatingEdge>, Fragmentable {
+  node: <T = RatingPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface ScriptEdgeSubscription
-  extends Promise<AsyncIterator<ScriptEdge>>,
+export interface RatingEdgeSubscription
+  extends Promise<AsyncIterator<RatingEdge>>,
     Fragmentable {
-  node: <T = ScriptSubscription>() => T;
+  node: <T = RatingSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -742,7 +1119,16 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   username: () => Promise<String>;
   password: () => Promise<String>;
-  scripts: <T = FragmentableArray<Script>>(args?: {
+  userScripts: <T = FragmentableArray<Script>>(args?: {
+    where?: ScriptWhereInput;
+    orderBy?: ScriptOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  favoriteScripts: <T = FragmentableArray<Script>>(args?: {
     where?: ScriptWhereInput;
     orderBy?: ScriptOrderByInput;
     skip?: Int;
@@ -760,7 +1146,16 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  scripts: <T = Promise<AsyncIterator<ScriptSubscription>>>(args?: {
+  userScripts: <T = Promise<AsyncIterator<ScriptSubscription>>>(args?: {
+    where?: ScriptWhereInput;
+    orderBy?: ScriptOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  favoriteScripts: <T = Promise<AsyncIterator<ScriptSubscription>>>(args?: {
     where?: ScriptWhereInput;
     orderBy?: ScriptOrderByInput;
     skip?: Int;
@@ -778,7 +1173,16 @@ export interface UserNullablePromise
   email: () => Promise<String>;
   username: () => Promise<String>;
   password: () => Promise<String>;
-  scripts: <T = FragmentableArray<Script>>(args?: {
+  userScripts: <T = FragmentableArray<Script>>(args?: {
+    where?: ScriptWhereInput;
+    orderBy?: ScriptOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  favoriteScripts: <T = FragmentableArray<Script>>(args?: {
     where?: ScriptWhereInput;
     orderBy?: ScriptOrderByInput;
     skip?: Int;
@@ -789,20 +1193,109 @@ export interface UserNullablePromise
   }) => T;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface Script {
+  id: ID_Output;
+  name: String;
+  description?: String;
+  content: String;
+  visibility: Visibility;
+  tags: String[];
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface ScriptPromise extends Promise<Script>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  content: () => Promise<String>;
+  visibility: () => Promise<Visibility>;
+  tags: () => Promise<String[]>;
+  ratings: <T = FragmentableArray<Rating>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  author: <T = UserPromise>() => T;
+  favoritedBy: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface ScriptSubscription
+  extends Promise<AsyncIterator<Script>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+  visibility: () => Promise<AsyncIterator<Visibility>>;
+  tags: () => Promise<AsyncIterator<String[]>>;
+  ratings: <T = Promise<AsyncIterator<RatingSubscription>>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  author: <T = UserSubscription>() => T;
+  favoritedBy: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ScriptNullablePromise
+  extends Promise<Script | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  content: () => Promise<String>;
+  visibility: () => Promise<Visibility>;
+  tags: () => Promise<String[]>;
+  ratings: <T = FragmentableArray<Rating>>(args?: {
+    where?: RatingWhereInput;
+    orderBy?: RatingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  author: <T = UserPromise>() => T;
+  favoritedBy: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ScriptSubscriptionPayload {
@@ -830,25 +1323,41 @@ export interface ScriptSubscriptionPayloadSubscription
   previousValues: <T = ScriptPreviousValuesSubscription>() => T;
 }
 
-export interface ScriptConnection {
-  pageInfo: PageInfo;
-  edges: ScriptEdge[];
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface ScriptConnectionPromise
-  extends Promise<ScriptConnection>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ScriptEdge>>() => T;
-  aggregate: <T = AggregateScriptPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface ScriptConnectionSubscription
-  extends Promise<AsyncIterator<ScriptConnection>>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ScriptEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateScriptSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -874,37 +1383,42 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface UserEdge {
-  node: User;
+export interface ScriptEdge {
+  node: Script;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface ScriptEdgePromise extends Promise<ScriptEdge>, Fragmentable {
+  node: <T = ScriptPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface ScriptEdgeSubscription
+  extends Promise<AsyncIterator<ScriptEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = ScriptSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface RatingConnection {
+  pageInfo: PageInfo;
+  edges: RatingEdge[];
+}
+
+export interface RatingConnectionPromise
+  extends Promise<RatingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<RatingEdge>>() => T;
+  aggregate: <T = AggregateRatingPromise>() => T;
+}
+
+export interface RatingConnectionSubscription
+  extends Promise<AsyncIterator<RatingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<RatingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateRatingSubscription>() => T;
 }
 
 export interface UserSubscriptionPayload {
@@ -939,7 +1453,6 @@ export interface ScriptPreviousValues {
   content: String;
   visibility: Visibility;
   tags: String[];
-  rating: Int;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -953,7 +1466,6 @@ export interface ScriptPreviousValuesPromise
   content: () => Promise<String>;
   visibility: () => Promise<Visibility>;
   tags: () => Promise<String[]>;
-  rating: () => Promise<Int>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -967,30 +1479,168 @@ export interface ScriptPreviousValuesSubscription
   content: () => Promise<AsyncIterator<String>>;
   visibility: () => Promise<AsyncIterator<Visibility>>;
   tags: () => Promise<AsyncIterator<String[]>>;
-  rating: () => Promise<AsyncIterator<Int>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface RatingPreviousValues {
+  id: ID_Output;
+  value: Int;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface RatingPreviousValuesPromise
+  extends Promise<RatingPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  value: () => Promise<Int>;
+}
+
+export interface RatingPreviousValuesSubscription
+  extends Promise<AsyncIterator<RatingPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  value: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface RatingSubscriptionPayload {
+  mutation: MutationType;
+  node: Rating;
+  updatedFields: String[];
+  previousValues: RatingPreviousValues;
+}
+
+export interface RatingSubscriptionPayloadPromise
+  extends Promise<RatingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = RatingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = RatingPreviousValuesPromise>() => T;
+}
+
+export interface RatingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RatingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = RatingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = RatingPreviousValuesSubscription>() => T;
+}
+
+export interface Rating {
+  id: ID_Output;
+  value: Int;
+}
+
+export interface RatingPromise extends Promise<Rating>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  value: () => Promise<Int>;
+  script: <T = ScriptPromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface RatingSubscription
+  extends Promise<AsyncIterator<Rating>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  value: () => Promise<AsyncIterator<Int>>;
+  script: <T = ScriptSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface RatingNullablePromise
+  extends Promise<Rating | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  value: () => Promise<Int>;
+  script: <T = ScriptPromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface ScriptConnection {
+  pageInfo: PageInfo;
+  edges: ScriptEdge[];
+}
+
+export interface ScriptConnectionPromise
+  extends Promise<ScriptConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<ScriptEdge>>() => T;
+  aggregate: <T = AggregateScriptPromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface ScriptConnectionSubscription
+  extends Promise<AsyncIterator<ScriptConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ScriptEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateScriptSubscription>() => T;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AggregateScript {
+  count: Int;
+}
+
+export interface AggregateScriptPromise
+  extends Promise<AggregateScript>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateScriptSubscription
+  extends Promise<AsyncIterator<AggregateScript>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateRating {
+  count: Int;
+}
+
+export interface AggregateRatingPromise
+  extends Promise<AggregateRating>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRatingSubscription
+  extends Promise<AsyncIterator<AggregateRating>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 /*
@@ -998,13 +1648,18 @@ The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
 
-export type Long = string;
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+export type Long = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -1015,11 +1670,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
@@ -1041,6 +1691,10 @@ export const models: Model[] = [
   },
   {
     name: "Script",
+    embedded: false
+  },
+  {
+    name: "Rating",
     embedded: false
   }
 ];

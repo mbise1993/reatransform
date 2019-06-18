@@ -3,7 +3,8 @@ type User {
   email: String! @unique
   username: String! @unique
   password: String!
-  scripts: [Script!]!
+  userScripts: [Script!]! @relation(name: "UserScripts", onDelete: CASCADE)
+  favoriteScripts: [Script!]! @relation(name: "FavoriteScripts", onDelete: SET_NULL)
 }
 
 enum Visibility {
@@ -18,8 +19,16 @@ type Script {
   content: String!
   visibility: Visibility! @default(value: PUBLIC)
   tags: [String!]! @scalarList(strategy: RELATION)
-  rating: Int!
-  author: User!
+  ratings: [Rating!]!
+  author: User! @relation(name: "UserScripts")
+  favoritedBy: [User!]! @relation(name: "FavoriteScripts")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+}
+
+type Rating {
+  id: ID! @id
+  value: Int!
+  script: Script!
+  user: User!
 }

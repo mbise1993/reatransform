@@ -1,11 +1,12 @@
 type Query {
-  publicScripts(userId: String): [Script!]!
-  userScripts(userId: String!): [Script!]!
+  publicScripts: [Script!]!
+  userScripts(visibility: Visibility!): [Script!]!
+  favoriteScripts(userId: String!): [Script!]!
 }
 
 type Mutation {
   signup(email: String!, username: String!, password: String!): AuthPayload
-  login(username: String!, password: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
   createScript(name: String!, description: String, content: String!, tags: [String!]!, visibility: Visibility!): Script!
   updateScript(
     id: ID!
@@ -17,6 +18,7 @@ type Mutation {
   ): Script!
   deleteScript(id: ID!): Script!
   rateScript(id: ID!, rating: Int!): Script!
+  favoriteScript(id: ID!): Script!
 }
 
 type Subscription {
@@ -28,7 +30,8 @@ type User {
   email: String!
   username: String!
   password: String!
-  scripts: [Script!]!
+  userScripts: [Script!]!
+  favoriteScripts: [Script!]!
 }
 
 type AuthPayload {
@@ -48,6 +51,14 @@ type Script {
   content: String!
   tags: [String!]!
   visibility: Visibility!
-  rating: Int!
+  ratings: [Rating!]!
   author: User!
+  favoritedBy: [User!]!
+}
+
+type Rating {
+  id: ID!
+  value: Int!
+  script: Script!
+  user: User!
 }
