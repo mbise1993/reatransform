@@ -1,0 +1,116 @@
+:root {
+  --primary: #317cf6;
+  --text: white;
+  --dark-gray: #1f1f1f;
+  --med-gray: #272722;
+  --light-gray: #333333;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  color: var(--text);
+  background-color: var(--dark-gray);
+}
+
+#app-container {
+  height: 100%;
+  padding: 0px 20px;
+  display: grid;
+  grid:
+    'header' 60px
+    'content' 1fr
+    'footer' auto
+    / 1fr;
+}
+
+#app-header {
+  grid-area: header;
+}
+
+#app-footer {
+  grid-area: footer;
+  padding: 10px 0px;
+}
+
+#app-content {
+  grid-area: content;
+  position: relative;
+}
+
+#projects-panel {
+  flex-basis: 25%;
+}
+
+#project-json-panel {
+  flex-basis: 30%;
+}
+
+#transform-script-panel {
+  flex-basis: 45%;
+}
+
+#transform-list-panel {
+  background-color: var(--light-gray);
+}
+
+.card-header {
+  background-color: var(--primary);
+  padding: 0px 12px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body {
+  background-color: var(--med-gray);
+  padding: 0px;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--med-gray);
+  padding: 8px;
+  border: none;
+  cursor: default;
+}
+
+.list-group-item:first-child {
+  border-radius: 0px;
+}
+
+.list-group-item.active {
+  background-color: var(--med-gray);
+  filter: brightness(150%);
+}
+
+.modal-content {
+  background-color: var(--med-gray);
+}
+
+.nav-tabs {
+  border: none !important;
+}
+
+.nav-item {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  color: gray !important;
+  background-color: var(--dark-gray) !important;
+  padding: 8px 16px !important;
+  border: none !important;
+}
+
+.nav-item.active {
+  color: white !important;
+  background-color: var(--light-gray) !important;
+}
+
+.btn-primar {
+  background-color: var(--primary) !important;
+}
