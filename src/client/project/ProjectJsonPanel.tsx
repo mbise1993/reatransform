@@ -1,19 +1,19 @@
-import * as React from "react";
-import { Card } from "react-bootstrap";
+import * as React from 'react';
+import { Card } from 'react-bootstrap';
 
-import EditorView from "../common/EditorView";
+import EditorView from '../common/EditorView';
 
 type ProjectJsonPanelProps = {
   title: string;
   json: string;
-} & React.ComponentPropsWithoutRef<"div">;
+} & React.ComponentPropsWithoutRef<'div'>;
 
 export default ({ title, json, ...otherProps }: ProjectJsonPanelProps) => {
   return (
     <Card {...otherProps}>
       <Card.Header>{title}</Card.Header>
       <Card.Body>
-        <EditorView text={json} isEditable={false} onTextChange={text => {}} />
+        <EditorView text={json} isEditable={false} onTextChange={_text => {}} />
       </Card.Body>
     </Card>
   );

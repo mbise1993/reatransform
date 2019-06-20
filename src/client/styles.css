@@ -8,8 +8,7 @@
 
 html,
 body,
-#___gatsby,
-#___gatsby > div {
+#root {
   height: 100%;
   color: var(--text);
   background-color: var(--dark-gray);
@@ -20,9 +19,9 @@ body,
   padding: 0px 20px;
   display: grid;
   grid:
-    "header" 60px
-    "content" 1fr
-    "footer" auto
+    'header' 60px
+    'content' 1fr
+    'footer' auto
     / 1fr;
 }
 

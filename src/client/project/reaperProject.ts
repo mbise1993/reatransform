@@ -1,8 +1,8 @@
-import { saveAs } from "file-saver";
-import JSZip from "jszip";
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 
-import rppToElement from "./rppToElement";
-import elementToRpp from "./elementToRpp";
+import rppToElement from './rppToElement';
+import elementToRpp from './elementToRpp';
 
 export interface IRppProperty {
   name: string;
@@ -49,7 +49,7 @@ export class ReaperProject {
     if (this._data === null) {
       this._data = {
         name: this._name,
-        rootElement: await rppToElement(this._content)
+        rootElement: await rppToElement(this._content),
       };
     }
 
@@ -75,16 +75,16 @@ const readFile = async (file: File) => {
   return await new Promise<ReaperProject>((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = e => {
+    reader.onload = _e => {
       if (reader.result === null) {
-        reject("Result was null");
+        reject('Result was null');
       }
 
       resolve(new ReaperProject(file.name, reader.result as string));
     };
 
-    reader.onerror = e => {
-      reject("Error reading file");
+    reader.onerror = _e => {
+      reject('Error reading file');
     };
 
     reader.readAsText(file);
@@ -98,12 +98,12 @@ export const saveProjects = async (projects: IRppData[]) => {
     zip.file(getName(proj), content);
   }
 
-  const blob = await zip.generateAsync({ type: "blob" });
-  saveAs(blob, "transforms.zip");
+  const blob = await zip.generateAsync({ type: 'blob' });
+  saveAs(blob, 'transforms.zip');
 };
 
 const getName = (project: IRppData) => {
-  const index = project.name.lastIndexOf(".");
+  const index = project.name.lastIndexOf('.');
   const nameWithoutExt = index > -1 ? project.name.substring(0, index) : project.name;
   return `${nameWithoutExt}_Transformed.rpp`;
 };

@@ -15,8 +15,8 @@ const server = new GraphQLServer({
   },
 });
 
-server.express.get('/', (_req, res) => {
-  res.sendFile(path.join(__dirname, './client/index.html'));
+server.express.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, `./client/${req.path}`));
 });
 
 server.start(
