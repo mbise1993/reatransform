@@ -19,7 +19,7 @@
     "gatsby-source-filesystem": "^2.0.29",
     "gatsby-transformer-sharp": "^2.1.18",
     "jquery": "^3.4.0",
-    "jszip": "3.2.1",
+    "jszip": "3.7.0",
     "lodash": "4.17.11",
     "react": "^16.8.6",
     "react-ace": "6.4.0",
